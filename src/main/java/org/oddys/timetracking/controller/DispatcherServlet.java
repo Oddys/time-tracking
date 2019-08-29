@@ -44,10 +44,10 @@ public class DispatcherServlet extends HttpServlet {
 
         if (page != null) {
 //            req.getRequestDispatcher(page).forward(req, resp);
-            log.info("Redirected to " + page);
+            log.info("Redirecting to " + page);
             resp.sendRedirect(req.getContextPath() + "/" + page);
         } else {  /* Default */
-            log.info("Redirected to the home page");
+            log.info("Redirecting to the home page");
             resp.sendRedirect(req.getContextPath());
         }
     }
