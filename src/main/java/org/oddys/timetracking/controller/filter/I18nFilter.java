@@ -1,5 +1,8 @@
 package org.oddys.timetracking.controller.filter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,6 +19,8 @@ import java.io.IOException;
         urlPatterns = {"/*"}
 )
 public class I18nFilter implements Filter {
+    private static final Logger log = LogManager.getLogger();
+
     private static final String LANG_STRING = "lang";
     private static final String DEFAULT_LANG = "en";
 
@@ -35,6 +40,7 @@ public class I18nFilter implements Filter {
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         if (langParam != null) {
             session.setAttribute(LANG_STRING, langParam);
+            log.info("Session language is set to " + langParam);
 //            ((HttpServletResponse) servletResponse).sendRedirect(((HttpServletRequest) servletRequest).getRequestURI()); // TODO Check if it's ok
         } else if (session.getAttribute(LANG_STRING) == null) {
             servletRequest.setAttribute(LANG_STRING, DEFAULT_LANG);

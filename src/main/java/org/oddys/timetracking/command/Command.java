@@ -1,8 +1,11 @@
 package org.oddys.timetracking.command;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public enum Command {
     LOGIN {
@@ -13,8 +16,10 @@ public enum Command {
             if (user.getLogin().equals(req.getParameter("login"))
                     && user.getPassword().equals(req.getParameter("password"))) {
                 req.getSession().setAttribute("user", user);
+                log.info("User " + user.getLogin() + " logged in");
                 page = "pages/cabinet.jsp";
             } else {
+                log.info(req.getParameter("login") + " failed to log in");
                 page = "pages/login.jsp";
             }
             return page;
@@ -24,17 +29,15 @@ public enum Command {
     LOGOUT {
         @Override
         public String execute(HttpServletRequest req) {
-            req.getSession().invalidate();
+            HttpSession session = req.getSession();
+            String login = ((User) session.getAttribute("user")).getLogin();
+            session.invalidate();
+            log.info(login + " logged out");
             return "pages/login.jsp";
         }
-    },
-
-    DEFAULT {
-        @Override
-        public String execute(HttpServletRequest req) {
-            return null;
-        }
     };
+
+    private static final Logger log = LogManager.getLogger();
 
     public abstract String execute(HttpServletRequest req);
 }

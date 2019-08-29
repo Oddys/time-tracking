@@ -18,7 +18,7 @@ import java.io.IOException;
         }
 )
 public class DispatcherServlet extends HttpServlet {
-    private static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
 //    @Override
 //    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -35,19 +35,20 @@ public class DispatcherServlet extends HttpServlet {
     private void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String page = null;
-        String commandName = req.getParameter("command");
-        log.info("Command name provided in the request: " + commandName);
-        Command command = CommandFactory.COMMAND_FACTORY.getCommand(commandName);
-        try {
-            page = command.execute(req);
-        } catch (Exception e) {
 
+        Command command = CommandFactory.COMMAND_FACTORY.getCommand(
+                req.getParameter("command"));
+        if (command != null) {
+            page = command.execute(req);
         }
-        log.info("Page obtained by execution of the command: " +  page);
 
         if (page != null) {
 //            req.getRequestDispatcher(page).forward(req, resp);
+            log.info("Redirected to " + page);
             resp.sendRedirect(req.getContextPath() + "/" + page);
+        } else {  /* Default */
+            log.info("Redirected to the home page");
+            resp.sendRedirect(req.getContextPath());
         }
     }
 

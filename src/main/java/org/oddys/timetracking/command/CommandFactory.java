@@ -5,15 +5,15 @@ import org.apache.logging.log4j.Logger;
 
 public enum CommandFactory {
     COMMAND_FACTORY;
-    Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
     public Command getCommand(String name) {
         Command command = null;
         try {
             command = Command.valueOf(name.toUpperCase());
+            log.info(command + " command is created");
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            // An attempt to create a non-existing command
+            log.error("Failed to created a command with name '" + name + "'");
         }
         return command;
     }

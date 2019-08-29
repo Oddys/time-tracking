@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" strict="true">
+<Configuration status="WARN">
     <Appenders>
-<!--        <Appender type="Console" name="STDOUT">-->
-<!--            <Layout type="PatternLayout">-->
-<!--                <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>-->
-<!--            </Layout>-->
-<!--        </Appender>-->
         <Console name="STDOUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%highlight{%d{DEFAULT} [%t] %-5level %logger{} - %msg%n}{FATAL=bright red, ERROR=red, WARN=yellow, INFO=cyan, DEBUG=blue, TRACE=white}"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org.oddys.timetracking" level="DEBUG" additivity="false">
+        <Logger name="org.oddys.timetracking" level="ALL" additivity="false">
             <AppenderRef ref="STDOUT"/>
         </Logger>
 
