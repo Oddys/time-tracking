@@ -37,6 +37,20 @@ public enum Command {
             log.info(login + " logged out");
             return ConfigProvider.getProperty("path.home");
         }
+    },
+
+    CHANGE_LANG {
+        @Override
+        public String execute(HttpServletRequest req) {
+            String langParam = req.getParameter("lang");
+            if (langParam != null) {
+                req.getSession().setAttribute("lang", langParam);
+                log.info("Session language is set to " + langParam);
+                return req.getParameter("sentFromPage");
+            } else {
+                return null;
+            }
+        }
     };
 
     private static final Logger log = LogManager.getLogger();

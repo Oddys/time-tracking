@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="i18n.messages"/>
-<html lang="${lang}">
+<html lang="${not empty lang ? lang : 'en'}">
 <head>
 </head>
 <body>
@@ -20,8 +20,9 @@
 <%--    <a href="?lang=en"><fmt:message key="lang.en"/></a>--%>
 <%--    <a href="?lang=uk"><fmt:message key="lang.ua"/></a>--%>
 
-    <form>
-<%--        <input type="hidden" name="command" value="change_lang"/>--%>
+    <form action="controller">
+        <input type="hidden" name="command" value="change_lang"/>
+        <input type="hidden" name="sentFromPage" value="${pageContext.request.servletPath}"/>
         <select name="lang" onchange="submit()">
             <option value="en" ${lang == 'en' ? 'selected' : ''}><fmt:message key="lang.en"/></option>
             <option value="uk" ${lang == 'uk' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
