@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebFilter(
         urlPatterns = {
-                "/pages/cabinet.jsp",
+                "/WEB-INF/pages/*",
         }
 )
 public class AuthFilter implements Filter {

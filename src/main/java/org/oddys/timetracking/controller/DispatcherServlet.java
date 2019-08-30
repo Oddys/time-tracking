@@ -49,7 +49,7 @@ public class DispatcherServlet extends HttpServlet {
         } else {  /* Default */
             log.info("Forwarding to the home page");
 //            resp.sendRedirect(req.getContextPath());
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
     }
 

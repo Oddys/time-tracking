@@ -17,10 +17,10 @@ public enum Command {
                     && user.getPassword().equals(req.getParameter("password"))) {
                 req.getSession().setAttribute("user", user);
                 log.info("User " + user.getLogin() + " logged in");
-                page = "pages/cabinet.jsp";
+                page = "/WEB-INF/pages/cabinet.jsp";
             } else {
                 log.info(req.getParameter("login") + " failed to log in");
-                page = "pages/login.jsp";
+                page = "/index.jsp";
             }
             return page;
         }
@@ -33,7 +33,7 @@ public enum Command {
             String login = ((User) session.getAttribute("user")).getLogin();
             session.invalidate();
             log.info(login + " logged out");
-            return "pages/login.jsp";
+            return "/index.jsp";
         }
     };
 
