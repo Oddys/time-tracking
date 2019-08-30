@@ -3,6 +3,7 @@ package org.oddys.timetracking.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.entity.User;
+import org.oddys.timetracking.util.ConfigProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,10 +18,10 @@ public enum Command {
                     && user.getPassword().equals(req.getParameter("password"))) {
                 req.getSession().setAttribute("user", user);
                 log.info("User " + user.getLogin() + " logged in");
-                page = "/WEB-INF/pages/cabinet.jsp";
+                page = ConfigProvider.getProperty("path.cabinet");
             } else {
                 log.info(req.getParameter("login") + " failed to log in");
-                page = "/index.jsp";
+                page = ConfigProvider.getProperty("path.home");
             }
             return page;
         }
@@ -33,7 +34,7 @@ public enum Command {
             String login = ((User) session.getAttribute("user")).getLogin();
             session.invalidate();
             log.info(login + " logged out");
-            return "/index.jsp";
+            return ConfigProvider.getProperty("path.home");
         }
     };
 

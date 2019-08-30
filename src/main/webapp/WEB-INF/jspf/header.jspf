@@ -1,10 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <fmt:setLocale value="${lang}"/>
-<fmt:setBundle basename="i18n/messages"/>
+<fmt:setBundle basename="i18n.messages"/>
 <html lang="${lang}">
 <head>
-    <script src="scripts/script.js"></script>
 </head>
 <body>
     <header>
@@ -28,19 +27,5 @@
             <option value="uk" ${lang == 'uk' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
         </select>
     </form>
-
-<%--    <form method="post" action="controller">--%>
-<%--        <input type="hidden" name="command" value="change_language"/>--%>
-<%--        <input type="hidden" name="currentURL" value="${pageContext.request.servletPath}"/>--%>
-<%--        <select name="lang" onchange="submit()">--%>
-<%--            <option value="en" <c:if test="${lang == 'en'}"><c:out value="selected"/></c:if>>EN</option>--%>
-<%--            <option value="uk" <c:if test="${lang == 'uk'}"><c:out value="selected"/></c:if>>UA</option>--%>
-<%--        </select>--%>
-<%--    </form>--%>
-<%--    <script>--%>
-<%--        function submit() {--%>
-<%--            this.form.submit();--%>
-<%--        }--%>
-<%--    </script>--%>
 </body>
 </html>
