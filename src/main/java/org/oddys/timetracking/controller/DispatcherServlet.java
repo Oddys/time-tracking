@@ -20,11 +20,11 @@ import java.io.IOException;
 public class DispatcherServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger();
 
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        process(req, resp);
-//    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        process(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -43,12 +43,13 @@ public class DispatcherServlet extends HttpServlet {
         }
 
         if (page != null) {
-//            req.getRequestDispatcher(page).forward(req, resp);
-            log.info("Redirecting to " + page);
-            resp.sendRedirect(req.getContextPath() + "/" + page);
+            log.info("Forwarding to " + page);
+//            resp.sendRedirect(req.getContextPath() + "/" + page);
+            req.getRequestDispatcher(page).forward(req, resp);
         } else {  /* Default */
-            log.info("Redirecting to the home page");
-            resp.sendRedirect(req.getContextPath());
+            log.info("Forwarding to the home page");
+//            resp.sendRedirect(req.getContextPath());
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 

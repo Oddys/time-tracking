@@ -12,7 +12,7 @@ public enum CommandFactory {
         try {
             command = Command.valueOf(name.toUpperCase());
             log.info(command + " command is created");
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             log.error("Failed to created a command with name '" + name + "'");
         }
         return command;
