@@ -3,13 +3,14 @@ package org.oddys.timetracking.entity;
 public class User {
     private String login;
     private String password;
-    private String role;
+    private Role role;
 
     public User() {}
 
-    public User(String login, String password) {
+    public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     public String getLogin() {
@@ -26,5 +27,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -2,6 +2,7 @@ package org.oddys.timetracking.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigProvider;
 
@@ -12,7 +13,7 @@ public enum Command {
     LOGIN {
         @Override
         public String execute(HttpServletRequest req) {
-            User user = new User("user1", "pass1");
+            User user = new User("user1", "pass1", Role.USER);
             String page = null;
             if (user.getLogin().equals(req.getParameter("login"))
                     && user.getPassword().equals(req.getParameter("password"))) {

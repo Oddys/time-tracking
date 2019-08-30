@@ -1,0 +1,16 @@
+<html>
+<head>
+</head>
+<body>
+    <p>User interface</p>
+    <p>Propose an activity</p>
+    <p> Select a new activity from a list</p>
+    <p>List activities</p>
+    <form>
+        <input type="hidden" name="command" value="suggest_activity">
+        <fmt:message key="form.text.activity.suggest"/><br/>
+        <input type="text" placeholder="<fmt:message key="form.text.activity.enter"/>"/>
+        <input type="submit" value="<fmt:message key="form.button.send"/>"/>
+    </form>
+</body>
+</html>
