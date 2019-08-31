@@ -2,9 +2,22 @@
 <head>
 </head>
 <body>
-    <p>Admin interface</p>
-    <p>List activity proposals</p>
-    <p>List user requests</p>
-    <p>See user activities</p>
+    <h3><fmt:message key="activity.suggestions"/></h3>
+    <form action="controller">
+        <input type="hidden" name="command" value="show_suggested_activities">
+        <input type="submit" value="<fmt:message key="button.show"/>"/>
+    </form>
+    <h3><fmt:message key="activity.requests"/></h3>
+    <form action="controller">
+        <input type="hidden" name="command" value="show_activity_requests"/>
+        <input type="submit" value="<fmt:message key="button.show"/>"/>
+    </form>
+    <h3><fmt:message key="user.find"/></h3>
+    <form action="controller">
+        <input type="hidden" name="command" value="find_user"/>
+        <fmt:message key="user.lastname"/>:
+        <input type="text" name="lastName" value=""/>
+        <input type="submit" value="<fmt:message key="button.search"/>"/>
+    </form>
 </body>
 </html>

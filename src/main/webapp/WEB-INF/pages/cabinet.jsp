@@ -6,9 +6,10 @@
     <h2><fmt:message key="title.cabinet"/></h2>
     <p><fmt:message key="greet.user"/><c:out value="${sessionScope.user.login}"/></p>
 
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+<%--    <form action="${pageContext.request.contextPath}/controller" method="post">--%>
+    <form action="controller" method="post">
         <input type="hidden" name="command" value="logout"/>
-        <input type="submit" value="<fmt:message key="form.button.logout"/>">
+        <input type="submit" value="<fmt:message key="button.logout"/>">
     </form>
 
     <c:choose>

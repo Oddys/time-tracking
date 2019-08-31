@@ -1,16 +1,22 @@
 <html>
 <head>
 </head>
-<body>
-    <p>User interface</p>
-    <p>Propose an activity</p>
-    <p> Select a new activity from a list</p>
-    <p>List activities</p>
-    <form>
-        <input type="hidden" name="command" value="suggest_activity">
-        <fmt:message key="form.text.activity.suggest"/><br/>
-        <input type="text" placeholder="<fmt:message key="form.text.activity.enter"/>"/>
-        <input type="submit" value="<fmt:message key="form.button.send"/>"/>
-    </form>
-</body>
+    <body>
+        <h3><fmt:message key="activity.suggest"/></h3>
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="suggest_activity">
+            <input type="text" placeholder="<fmt:message key="activity.enter"/>"/>
+            <input type="submit" value="<fmt:message key="button.send"/>"/>
+        </form>
+        <h3><fmt:message key="activity.all"/></h3>
+        <form action="controller">
+            <input type="hidden" name="command" value="show_all_activities"/>
+            <input type="submit" value="<fmt:message key="button.show"/>"/>
+        </form>
+        <h3><fmt:message key="activity.my"/></h3>
+        <form action="controller">
+            <input type="hidden" name="command" value="show_my_activities"/>
+            <input type="submit" value="<fmt:message key="button.show"/>"/>
+        </form>
+    </body>
 </html>

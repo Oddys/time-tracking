@@ -4,11 +4,11 @@
 <body>
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="login"/>
-        <fmt:message key="form.text.login"/><br/>
+        <fmt:message key="auth.login"/><br/>
         <input type="text" name="login" value=""/><br/>
-        <fmt:message key="form.text.password"/><br/>
+        <fmt:message key="auth.password"/><br/>
         <input type="password" name="password" value=""/><br/>
-        <input type="submit" value="<fmt:message key="from.button.login"/>"/>
+        <input type="submit" value="<fmt:message key="button.login"/>"/>
     </form>
 </body>
 </html>
