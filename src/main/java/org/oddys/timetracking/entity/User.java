@@ -1,16 +1,24 @@
 package org.oddys.timetracking.entity;
 
-public class User {
+import java.util.Arrays;
+
+public class User extends Entity {
     private String login;
-    private String password;
-    private Role role;
+    private char[] password;
+    private String firstName;
+    private String lastName;
+    private Integer roleId;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String login, String password, Role role) {
+    public User(Integer id, String login, char[] password, String firstName, String lastName, Integer roleId) {
+        super(id);
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roleId = roleId;
     }
 
     public String getLogin() {
@@ -21,19 +29,39 @@ public class User {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public char[] getPassword() {
+        return Arrays.copyOf(password, password.length);
+    }
+
+    public void setPassword(char[] password) {
+        this.password = Arrays.copyOf(password, password.length);
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.toCharArray();
     }
 
-    public Role getRole() {
-        return role;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

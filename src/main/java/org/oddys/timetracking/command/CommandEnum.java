@@ -2,7 +2,7 @@ package org.oddys.timetracking.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.entity.Role;
+import org.oddys.timetracking.dto.Role;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigProvider;
 

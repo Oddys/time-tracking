@@ -5,7 +5,7 @@ create database timetracking character set utf8mb4;
 use timetracking;
 
 create table roles (
-    id smallint unsigned auto_increment,
+    id int unsigned auto_increment,
     name varchar(45) unique not null,
 
     primary key (id)
@@ -17,7 +17,7 @@ create table users (
     password varchar(45) not null,
     first_name varchar(90) not null,
     last_name varchar(90) not null,
-    role_id smallint unsigned not null,
+    role_id int unsigned not null,
 
     primary key (id),
     foreign key fk_role_id (role_id)
@@ -35,7 +35,7 @@ create table activities (
 );
 
 create table user_activities (
-    id serial,
+    id int unsigned auto_increment,
     assigned boolean not null,
     user_id int unsigned not null,
     activity_id int unsigned not null,
@@ -52,10 +52,10 @@ create table user_activities (
 );
 
 create table activity_records (
-    id serial,
+    id int unsigned auto_increment,
     activity_date date not null,
-    duration smallint unsigned not null,
-    user_activity_id bigint unsigned not null,
+    duration int unsigned not null,
+    user_activity_id int unsigned not null,
 
     primary key (id),
     foreign key fk_user_activity_id (user_activity_id)

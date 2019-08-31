@@ -1,5 +1,21 @@
 package org.oddys.timetracking.entity;
 
-public enum Role {
-    USER, ADMIN
+public class Role extends Entity {
+    private String name;
+
+    public Role() {
+    }
+
+    public Role(Integer id, String name) {
+        super(id);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
