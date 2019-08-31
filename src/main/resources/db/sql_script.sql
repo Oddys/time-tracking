@@ -15,6 +15,8 @@ create table users (
     id int unsigned auto_increment,
     login varchar(45) unique not null,
     password varchar(45) not null,
+    first_name varchar(90) not null,
+    last_name varchar(90) not null,
     role_id smallint unsigned not null,
 
     primary key (id),
