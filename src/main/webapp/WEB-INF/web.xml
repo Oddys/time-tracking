@@ -8,7 +8,8 @@
 
   <jsp-config>
     <jsp-property-group>
-      <url-pattern>*.jsp</url-pattern>
+      <url-pattern>/index.jsp</url-pattern>
+      <url-pattern>/WEB-INF/pages/*</url-pattern>
       <url-pattern>*.jspf</url-pattern>
       <page-encoding>UTF-8</page-encoding>
       <scripting-invalid>true</scripting-invalid>
@@ -18,4 +19,7 @@
 <!--      <default-content-type>text/html;charset=UTF-8</default-content-type>-->
     </jsp-property-group>
   </jsp-config>
+  <error-page>
+    <location>/WEB-INF/error.jsp</location>
+  </error-page>
 </web-app>
