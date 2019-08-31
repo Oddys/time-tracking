@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.Map;
 
 public class MysqlDaoFactory implements DaoFactory {
-    private DaoFactory INSTANCE = new MysqlDaoFactory();
+    private static DaoFactory INSTANCE = new MysqlDaoFactory();
 //    private Map<String, Dao> daoInstances;
 
     private MysqlDaoFactory() {
@@ -17,8 +17,7 @@ public class MysqlDaoFactory implements DaoFactory {
         // TODO Add other daos
     }
 
-    @Override
-    public DaoFactory getInstance() {
+    public static DaoFactory getInstance() {
         return INSTANCE;
     }
 
