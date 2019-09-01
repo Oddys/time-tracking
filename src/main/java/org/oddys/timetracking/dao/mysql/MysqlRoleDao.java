@@ -1,7 +1,5 @@
 package org.oddys.timetracking.dao.mysql;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.RoleDao;
 import org.oddys.timetracking.entity.Role;
 
@@ -40,15 +38,15 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public Optional<Role> findById(Integer id) {
+    public Role findById(Integer id) {
         try (PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
+            Role role = null;
             if (rs.next()) {
-                return Optional.of(new Role(rs.getInt(1), rs.getString(2)));
-            } else {
-                return Optional.empty();
+                role = new Role(rs.getInt(1), rs.getString(2));
             }
+            return role;
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve Role", e);
         }

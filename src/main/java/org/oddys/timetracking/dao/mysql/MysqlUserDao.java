@@ -18,12 +18,13 @@ public class MysqlUserDao implements UserDao {
         this.connection = connection;
     }
 
-    public Optional<User> findByLogin(String login) {
+    public User findByLogin(String login) {
         try (PreparedStatement statement = connection.prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
+            User user = null;
             if (rs.next()) {
-                User user = new User(
+                user = new User(
                         rs.getInt("id"),
                         rs.getString("login"),
                         rs.getString("password").toCharArray(),
@@ -31,10 +32,8 @@ public class MysqlUserDao implements UserDao {
                         rs.getString("last_name"),
                         rs.getInt("role_id")
                 );
-                return Optional.of(user);
-            } else {
-                return Optional.empty();
             }
+            return user;
         } catch (SQLException e) {
             throw new DaoException("Failed to find User by login", e);
         }
@@ -46,8 +45,8 @@ public class MysqlUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> findById(Integer id) {
-        return Optional.empty();
+    public User findById(Integer id) {
+        return null;
     }
 
     @Override

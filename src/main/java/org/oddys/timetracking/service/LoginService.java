@@ -11,7 +11,6 @@ import org.oddys.timetracking.entity.User;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class LoginService {
@@ -29,13 +28,11 @@ public class LoginService {
 //            connection.setAutoCommit(false);
             UserDao userDao = DaoFactoryProvider.getInstance()
                  .getFactory().getUserDao(connection);
-            User user = userDao.findByLogin(login).orElseThrow(
-                    NoSuchElementException::new);
+            User user = userDao.findByLogin(login);
             if (checkCredentials(login, password, user)) {
                 RoleDao roleDao = DaoFactoryProvider.getInstance()
                                                     .getFactory().getRoleDao(connection);
-                Role role = roleDao.findById(user.getRoleId()).orElseThrow(
-                        NoSuchElementException::new);
+                Role role = roleDao.findById(user.getRoleId());
                 userDto = new UserDto(user, role);
             }
 //            connection.commit();
@@ -46,6 +43,9 @@ public class LoginService {
     }
 
     private boolean checkCredentials(String login, char[] password, User user) {
+        if (user == null) {
+            return false;
+        }
         return Objects.equals(login, user.getLogin())
                 && Arrays.equals(password, user.getPassword());
     }

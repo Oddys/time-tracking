@@ -3,11 +3,23 @@
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/controller" method="post">
+        <div id="error-message"></div>
+        <c:if test="${not empty requestScope.errorMessageKey}">
+            <fmt:message key="${requestScope.errorMessageKey}"/>
+        </c:if><br/>
         <input type="hidden" name="command" value="login"/>
         <fmt:message key="auth.login"/><br/>
-        <input type="text" name="login" value=""/><br/>
+        <input type="text" name="login" value=""
+               required
+               oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nologin"/>')"
+               oninput="setCustomValidity('')"
+        /><br/>
         <fmt:message key="auth.password"/><br/>
-        <input type="password" name="password" value=""/><br/>
+        <input type="password" name="password" value=""
+               required
+               oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nopassword"/>')"
+               oninput="setCustomValidity('')"
+        /><br/>
         <input type="submit" value="<fmt:message key="button.login"/>"/>
     </form>
 </body>

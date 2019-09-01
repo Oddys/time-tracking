@@ -13,17 +13,28 @@ public enum Commands implements Command {
     LOGIN {
         @Override
         public String execute(HttpServletRequest req) {
+            // TODO Rewrite to make method shorter
             String page = null;
-            UserDto user = LoginService.getInstance().logIn(
-                req.getParameter("login"),
-                req.getParameter("password").toCharArray()
-            );
+            String errorMessageKey = null;
+            if ("".equals(req.getParameter("login"))) {
+                errorMessageKey = "auth.error.nologin";
+            } else if ("".equals(req.getParameter("password"))) {
+                errorMessageKey = "auth.error.nopassword";
+            }
+            if (errorMessageKey != null) {
+                req.setAttribute("errorMessageKey", errorMessageKey);
+                return ConfigProvider.getInstance().getProperty("path.home");
+            }
+            UserDto user = LoginService.getInstance().logIn(req.getParameter("login"),
+                    req.getParameter("password").toCharArray());
             if (user != null){
+                req.removeAttribute("errorMessageKey");
                 req.getSession().setAttribute("user", user);
                 log.info("User " + user.getLogin() + " logged in");
                 page = ConfigProvider.getInstance().getProperty("path.cabinet");
             } else {
                 log.info(req.getParameter("login") + " failed to log in");
+                req.setAttribute("errorMessageKey", "auth.error.notfound");
                 page = ConfigProvider.getInstance().getProperty("path.home");
             }
             return page;
