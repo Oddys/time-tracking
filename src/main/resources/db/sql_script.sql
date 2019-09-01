@@ -72,8 +72,8 @@ values ('ADMIN'),
 ;
 
 insert into users (login, password, first_name, last_name, role_id)
-values ('john', 'john_p', 'John', 'Doe', 1),
-    ('ivan', 'ivan_p', 'Іван', 'Іваненко', 2)
+values ('john', 'john', 'John', 'Doe', 1),
+    ('ivan', 'ivan', 'Іван', 'Іваненко', 2)
 ;
 
 commit;

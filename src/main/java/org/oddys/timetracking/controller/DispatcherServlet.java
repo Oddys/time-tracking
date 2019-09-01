@@ -36,28 +36,18 @@ public class DispatcherServlet extends HttpServlet {
             throws ServletException, IOException {
         String page = null;
 
-        Command command = CommandFactory.COMMAND_FACTORY.getCommand(
-                req.getParameter("command"));
+        Command command = CommandFactory.COMMAND_FACTORY
+                .getCommand(req.getParameter("command"));
         if (command != null) {
             page = command.execute(req);
         }
 
         if (page != null) {
             log.info("Forwarding to " + page);
-//            resp.sendRedirect(req.getContextPath() + "/" + page);
             req.getRequestDispatcher(page).forward(req, resp);
         } else {  /* Default */
             log.info("Forwarding to the home page");
-//            resp.sendRedirect(req.getContextPath());
             req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
     }
-
-//    private void processPRG(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        if ("change_language".equals(req.getParameter("command"))) {
-//            resp.sendRedirect("prg?postResult=success&postURL="
-//                                      + req.getParameter("currentURL"));
-//        }
-//    }
 }

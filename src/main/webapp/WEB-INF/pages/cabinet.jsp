@@ -14,7 +14,7 @@
 
     <c:choose>
         <c:when test="${user.role == 'ADMIN'}">
-            <%@ include file="/WEB-INF/jspf/cabinet-admin.jspf"%>>
+            <%@ include file="/WEB-INF/jspf/cabinet-admin.jspf"%>
         </c:when>
         <c:otherwise>
             <%@ include file="/WEB-INF/jspf/cabinet-user.jspf"%>

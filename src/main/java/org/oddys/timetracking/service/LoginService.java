@@ -37,7 +37,7 @@ public class LoginService {
             }
 //            connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // TODO Write a custom exception
         }
         return userDto;
     }
