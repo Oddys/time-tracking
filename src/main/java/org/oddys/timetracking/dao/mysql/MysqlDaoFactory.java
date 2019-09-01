@@ -1,20 +1,15 @@
 package org.oddys.timetracking.dao.mysql;
 
-import org.oddys.timetracking.dao.Dao;
 import org.oddys.timetracking.dao.DaoFactory;
 import org.oddys.timetracking.dao.RoleDao;
+import org.oddys.timetracking.dao.UserDao;
 
 import java.sql.Connection;
-import java.util.Map;
 
 public class MysqlDaoFactory implements DaoFactory {
     private static DaoFactory INSTANCE = new MysqlDaoFactory();
-//    private Map<String, Dao> daoInstances;
 
     private MysqlDaoFactory() {
-//        daoInstances.put("roleDao", new MysqlRoleDao());
-//        daoInstances.put("userDao", new MysqlUserDao());
-        // TODO Add other daos
     }
 
     public static DaoFactory getInstance() {
@@ -26,11 +21,11 @@ public class MysqlDaoFactory implements DaoFactory {
         return new MysqlRoleDao(connection);
     }
 
-//    @Override
-//    public UserDao getUserDao() {
-//        return null;
-//    }
-//
+    @Override
+    public UserDao getUserDao(Connection connection) {
+        return new MysqlUserDao(connection);
+    }
+
 //    @Override
 //    public ActivityDao getActivityDao() {
 //        return null;

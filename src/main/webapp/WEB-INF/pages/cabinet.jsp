@@ -4,7 +4,7 @@
 </head>
 <body>
     <h2><fmt:message key="title.cabinet"/></h2>
-    <p><fmt:message key="greet.user"/><c:out value="${sessionScope.user.login}"/></p>
+    <p><fmt:message key="greet.user"/><c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></p>
 
 <%--    <form action="${pageContext.request.contextPath}/controller" method="post">--%>
     <form action="controller" method="post">

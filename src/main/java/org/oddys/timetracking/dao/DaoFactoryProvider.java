@@ -5,7 +5,7 @@ import org.oddys.timetracking.util.ConfigProvider;
 import org.oddys.timetracking.util.ResourceInitializationException;
 
 public class DaoFactoryProvider {
-    private static volatile DaoFactoryProvider INSTANCE;
+    private static final DaoFactoryProvider INSTANCE = new DaoFactoryProvider();
     private final DaoFactory FACTORY = MysqlDaoFactory.getInstance();
 
     private DaoFactoryProvider() {}
@@ -33,6 +33,10 @@ public class DaoFactoryProvider {
 //        }
 //        return INSTANCE;
 //    }
+
+    public static DaoFactoryProvider getInstance() {
+        return INSTANCE;
+    }
 
     public DaoFactory getFactory() {
         return FACTORY;

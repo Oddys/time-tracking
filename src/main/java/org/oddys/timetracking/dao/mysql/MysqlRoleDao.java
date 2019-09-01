@@ -81,7 +81,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public boolean delete(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {

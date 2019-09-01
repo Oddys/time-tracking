@@ -63,3 +63,17 @@ create table activity_records (
     on update restrict
     on delete restrict
 );
+
+begin;
+
+insert into roles (name)
+values ('ADMIN'),
+    ('USER')
+;
+
+insert into users (login, password, first_name, last_name, role_id)
+values ('john', 'john_p', 'John', 'Doe', 1),
+    ('ivan', 'ivan_p', 'Іван', 'Іваненко', 2)
+;
+
+commit;

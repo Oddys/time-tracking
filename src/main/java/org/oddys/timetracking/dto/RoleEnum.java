@@ -1,5 +1,5 @@
 package org.oddys.timetracking.dto;
 
-public enum Role {
+public enum RoleEnum {
     USER, ADMIN
 }
