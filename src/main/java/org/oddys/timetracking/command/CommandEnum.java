@@ -20,15 +20,15 @@ public enum CommandEnum implements Command {
                     && user.getPassword().equals(req.getParameter("password"))) {
                 req.getSession().setAttribute("user", user);
                 log.info("User " + user.getLogin() + " logged in");
-                page = ConfigProvider.getProperty("path.cabinet");
+                page = ConfigProvider.getInstance().getProperty("path.cabinet");
             } else if (admin.getLogin().equals(req.getParameter("login"))
                         && admin.getPassword().equals(req.getParameter("password"))) {
                     req.getSession().setAttribute("user", admin);
                     log.info("User " + admin.getLogin() + " logged in");
-                    page = ConfigProvider.getProperty("path.cabinet");
+                    page = ConfigProvider.getInstance().getProperty("path.cabinet");
             } else {
                 log.info(req.getParameter("login") + " failed to log in");
-                page = ConfigProvider.getProperty("path.home");
+                page = ConfigProvider.getInstance().getProperty("path.home");
             }
             return page;
         }
