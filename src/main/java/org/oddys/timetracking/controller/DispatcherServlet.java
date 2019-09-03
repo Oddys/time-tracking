@@ -34,20 +34,10 @@ public class DispatcherServlet extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String page = null;
-
         Command command = CommandFactory.COMMAND_FACTORY
                 .getCommand(req.getParameter("command"));
-        if (command != null) {
-            page = command.execute(req);
-        }
-
-        if (page != null) {
-            log.info("Forwarding to " + page);
-            req.getRequestDispatcher(page).forward(req, resp);
-        } else {  /* Default */
-            log.info("Forwarding to the home page");
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        }
+        String page = command.execute(req);
+        log.info("Forwarding to " + page);
+        req.getRequestDispatcher(page).forward(req, resp);
     }
 }

@@ -19,10 +19,11 @@ public class ChangeLangCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String langParam = req.getParameter("lang");
-        if (langParam != null) {
+        String page = req.getParameter("sentFromPage");
+        if (langParam != null && page != null) {
             req.getSession().setAttribute("lang", langParam);
             log.info("Session language is set to " + langParam);
-            return req.getParameter("sentFromPage");
+            return page;
         } else {
             return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
         }
