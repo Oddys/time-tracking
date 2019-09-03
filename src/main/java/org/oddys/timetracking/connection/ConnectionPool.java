@@ -10,30 +10,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionPool {
+    private static final ConnectionPool INSTANCE;
+    private static final String ENVIRONMENT_NAME = "java:comp/env";
+    private static final String SOURCE_NAME = "jdbc/timetracking";
     private final DataSource DATA_SOURCE;
+
+    static {
+        DataSource ds = null;
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup(ENVIRONMENT_NAME);
+            ds = (DataSource) envContext.lookup(SOURCE_NAME);
+        } catch (NamingException e) {
+            throw new ResourceInitializationException(e);
+        }
+        INSTANCE = new ConnectionPool(ds);
+    }
 
     private ConnectionPool(DataSource ds) {
         DATA_SOURCE = ds;
     }
 
-    private static class InitializationHelper {
-        private static final ConnectionPool CONNECTION_POOL;
-
-        static {
-            DataSource ds = null;
-            try {
-                Context initContext = new InitialContext();
-                Context envContext = (Context) initContext.lookup("java:comp/env");
-                ds = (DataSource) envContext.lookup("jdbc/timetracking");
-            } catch (NamingException e) {
-                throw new ResourceInitializationException(e);
-            }
-            CONNECTION_POOL = new ConnectionPool(ds);
-        }
-    }
-
     public static ConnectionPool getInstance() {
-        return InitializationHelper.CONNECTION_POOL;
+        return INSTANCE;
     }
 
     public Connection getConnection() throws SQLException {
