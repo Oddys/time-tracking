@@ -5,34 +5,27 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigManager {
+    private static final ConfigManager INSTANCE = new ConfigManager();
     public static final String DBMS = "db.dbms";
     public static final String HOME_PATH = "path.home";
     public static final String CABINET_PATH = "path.cabinet";
+    private static final String CONFIG_FILE_NAME = "config.properties";
     private final Properties PROPERTIES;
 
-    private ConfigManager(Properties properties) {
+    private ConfigManager() {
+        InputStream inputStream = ConfigManager.class.getClassLoader()
+                .getResourceAsStream(CONFIG_FILE_NAME);
+        Properties properties = new Properties();
+        try {
+            properties.load(inputStream);
+        } catch (IOException | NullPointerException | IllegalArgumentException e) {
+            throw new ResourceInitializationException(e);
+        }
         PROPERTIES = properties;
     }
 
-    private static class InitializationHelper {
-        private static final ConfigManager PROVIDER;
-        private static final String CONFIG_FILE_NAME = "config.properties";
-
-        static {
-            InputStream inputStream = InitializationHelper.class.getClassLoader()
-                    .getResourceAsStream(CONFIG_FILE_NAME);
-            Properties properties = new Properties();
-            try {
-                properties.load(inputStream);
-            } catch (IOException e) {
-                throw new ResourceInitializationException(e);
-            }
-            PROVIDER = new ConfigManager(properties);
-        }
-    }
-
     public static ConfigManager getInstance() {
-        return InitializationHelper.PROVIDER;
+        return INSTANCE;
     }
 
     public String getProperty(String key) {
