@@ -8,18 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class MysqlUserDao implements UserDao {
-    private final Connection connection;
+    private final Connection CONNECTION;
     private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
 
     public MysqlUserDao(Connection connection) {
-        this.connection = connection;
+        this.CONNECTION = connection;
     }
 
     public User findByLogin(String login) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_LOGIN)) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             User user = null;

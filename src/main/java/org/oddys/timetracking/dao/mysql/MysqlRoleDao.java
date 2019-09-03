@@ -10,11 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MysqlRoleDao implements RoleDao {
 //    private static final Logger log = LogManager.getLogger();
-    private final Connection connection;
+    private final Connection CONNECTION;
     private static final String CREATE = "INSERT INTO roles (name) VALUES (?)";
     private static final String FIND_BY_ID = "SELECT * FROM roles WHERE id = ?";
     private static final String FIND_ALL = "SELECT * FROM roles";
@@ -22,12 +21,12 @@ public class MysqlRoleDao implements RoleDao {
     private static final String DELETE = "DELETE FROM roles WHERE id = ?";
 
     MysqlRoleDao(Connection connection) {
-        this.connection = connection;
+        this.CONNECTION = connection;
     }
 
     @Override
     public Integer create(Role entity) {
-        try (PreparedStatement statement = connection
+        try (PreparedStatement statement = CONNECTION
                 .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             statement.executeUpdate();
@@ -39,7 +38,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public Role findById(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement(FIND_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             Role role = null;
@@ -54,7 +53,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public List<Role> findAll() {
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = CONNECTION.createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Role> roles = new ArrayList<>();
             while (rs.next()) {
@@ -68,7 +67,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public boolean update(Role entity) {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement(UPDATE)) {
             statement.setInt(1, entity.getId());
             statement.setString(2, entity.getName());
             return statement.executeUpdate() > 0;
@@ -79,7 +78,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public boolean delete(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE)) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement(DELETE)) {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
