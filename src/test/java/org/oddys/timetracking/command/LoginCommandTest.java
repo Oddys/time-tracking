@@ -30,7 +30,7 @@ public class LoginCommandTest {
     HttpSession session;
 
     @InjectMocks
-    LoginCommand loginCommand = new LoginCommand();
+    LoginCommand loginCommand = LoginCommand.getInstance();
 
     @Test
     public void returnCabinetPageIfValidCredentials() {

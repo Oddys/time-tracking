@@ -7,6 +7,7 @@ import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
+import org.oddys.timetracking.util.ConfigManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,12 +27,14 @@ public class LoginService {
         UserDto userDto = null;
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
 //            connection.setAutoCommit(false);
-            UserDao userDao = DaoFactoryProvider.getInstance()
-                 .getFactory().getUserDao(connection);
+            String dbmsName = ConfigManager.getInstance().getProperty(
+                    ConfigManager.DBMS);
+            UserDao userDao = DaoFactoryProvider.getInstance().getFactory(dbmsName)
+                    .getUserDao(connection);
             User user = userDao.findByLogin(login);
             if (checkCredentials(login, password, user)) {
-                RoleDao roleDao = DaoFactoryProvider.getInstance()
-                                                    .getFactory().getRoleDao(connection);
+                RoleDao roleDao = DaoFactoryProvider.getInstance().getFactory(dbmsName)
+                        .getRoleDao(connection);
                 Role role = roleDao.findById(user.getRoleId());
                 userDto = new UserDto(user, role);
             }
