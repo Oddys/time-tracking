@@ -1,12 +1,18 @@
 package org.oddys.timetracking.transaction;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.service.ServiceException;
+
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManager {
+    private static final Logger log = LogManager.getLogger();
     private static TransactionManager INSTANCE = new TransactionManager();
     private final ConnectionWrapper CONNECTION_WRAPPER;
 
@@ -36,13 +42,13 @@ public class TransactionManager {
                     connection.setAutoCommit(false);
                     try {
                         result = method.invoke(target, args);
-                    } catch (Throwable e) {
+                    } catch (InvocationTargetException e) {
                         connection.rollback();
-                        throw new RuntimeException(e.getCause());
+                        throw new ServiceException("Failed to perform a transaction", e.getCause());
                     }
                     connection.commit();
-                } catch (SQLException e) {
-                    e.printStackTrace(); // FIXME Handle exceptions
+                } catch (SQLException | NullPointerException e) {
+                    throw new ServiceException("Failed to perform a transaction", e);
                 }
                 return result;
             }

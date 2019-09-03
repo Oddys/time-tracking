@@ -2,23 +2,24 @@ package org.oddys.timetracking.dao.mysql;
 
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
+import org.oddys.timetracking.transaction.ConnectionWrapper;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class MysqlUserDao implements UserDao {
-    private final Connection CONNECTION;
+    private final ConnectionWrapper CONNECTION_WRAPPER;
     private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
 
-    public MysqlUserDao(Connection connection) {
-        this.CONNECTION = connection;
+    public MysqlUserDao() {
+        CONNECTION_WRAPPER = ConnectionWrapper.getInstance();
     }
 
     public User findByLogin(String login) {
-        try (PreparedStatement statement = CONNECTION.prepareStatement(FIND_BY_LOGIN)) {
+        try (PreparedStatement statement = CONNECTION_WRAPPER.getConnection()
+                .prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             User user = null;

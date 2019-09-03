@@ -11,14 +11,15 @@ import org.oddys.timetracking.transaction.TransactionManager;
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
-    private static final LoginCommand INSTANCE = new LoginCommand();
     private static final Logger log = LogManager.getLogger();
+    private static final LoginCommand INSTANCE = new LoginCommand();
     private static final String I18N_ERROR_MESSAGE_KEY = "auth.error.notfound";
-    private final LoginService LOGIN_SERVICE;
+    private LoginService LOGIN_SERVICE;
 
     private LoginCommand() {
         LOGIN_SERVICE = TransactionManager.getInstance()
                 .getProxy(LoginServiceImpl.getInstance());
+//        LOGIN_SERVICE = LoginServiceImpl.getInstance();
     }
 
     public static LoginCommand getInstance() {
@@ -27,13 +28,10 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        log.debug(Thread.currentThread());
         UserDto user = null;
-        try {
-            user = LOGIN_SERVICE.logIn(
-                    req.getParameter("login"), req.getParameter("password").toCharArray());
-        } catch (Exception e) {
-            e.printStackTrace(); // FIXME
-        }
+        user = LOGIN_SERVICE.logIn(
+                req.getParameter("login"), req.getParameter("password").toCharArray());
         if (user != null){
             req.getSession().setAttribute("user", user);
             log.info(user.getLogin() + " signed in");

@@ -22,7 +22,7 @@ public class ConnectionPool {
             Context envContext = (Context) initContext.lookup(ENVIRONMENT_NAME);
             ds = (DataSource) envContext.lookup(SOURCE_NAME);
         } catch (NamingException e) {
-            throw new ResourceInitializationException(e);
+            throw new ResourceInitializationException("Failed to obtain a data source for ConnectionPool", e);
         }
         DATA_SOURCE = ds;
     }

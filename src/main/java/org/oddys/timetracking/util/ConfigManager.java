@@ -19,7 +19,7 @@ public class ConfigManager {
         try {
             properties.load(inputStream);
         } catch (IOException | NullPointerException | IllegalArgumentException e) {
-            throw new ResourceInitializationException(e);
+            throw new ResourceInitializationException("Failed to obtain configuration properties from a file", e);
         }
         PROPERTIES = properties;
     }
