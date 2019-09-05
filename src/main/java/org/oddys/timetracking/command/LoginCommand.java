@@ -6,7 +6,7 @@ import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.LoginService;
 import org.oddys.timetracking.service.LoginServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
-import org.oddys.timetracking.transaction.TransactionManager;
+import org.oddys.timetracking.transaction.TransactionProxy;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +17,7 @@ public class LoginCommand implements Command {
     private LoginService LOGIN_SERVICE;
 
     private LoginCommand() {
-        LOGIN_SERVICE = TransactionManager.getInstance()
+        LOGIN_SERVICE = TransactionProxy.getInstance()
                 .getProxy(LoginServiceImpl.getInstance());
 //        LOGIN_SERVICE = LoginServiceImpl.getInstance();
     }
@@ -28,7 +28,6 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        log.debug(Thread.currentThread());
         UserDto user = null;
         user = LOGIN_SERVICE.logIn(
                 req.getParameter("login"), req.getParameter("password").toCharArray());

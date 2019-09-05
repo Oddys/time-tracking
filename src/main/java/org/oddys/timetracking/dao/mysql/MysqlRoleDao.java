@@ -13,20 +13,18 @@ import java.util.List;
 
 public class MysqlRoleDao implements RoleDao {
 //    private static final Logger log = LogManager.getLogger();
-    private final ConnectionWrapper CONNECTION_WRAPPER;
+    private final ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
     private static final String CREATE = "INSERT INTO roles (name) VALUES (?)";
     private static final String FIND_BY_ID = "SELECT * FROM roles WHERE id = ?";
     private static final String FIND_ALL = "SELECT * FROM roles";
     private static final String UPDATE = "UPDATE roles SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM roles WHERE id = ?";
 
-    MysqlRoleDao() {
-        CONNECTION_WRAPPER = ConnectionWrapper.getInstance();
-    }
+    MysqlRoleDao() {}
 
     @Override
     public Integer create(Role entity) {
-        try (PreparedStatement statement = CONNECTION_WRAPPER.getConnection()
+        try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             statement.executeUpdate();
@@ -38,7 +36,7 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public Role findById(Integer id) {
-        try (PreparedStatement statement = CONNECTION_WRAPPER.getConnection()
+        try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(FIND_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
@@ -49,12 +47,14 @@ public class MysqlRoleDao implements RoleDao {
             return role;
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve Role", e);
+        } finally {
+            connectionWrapper.close();
         }
     }
 
     @Override
     public List<Role> findAll() {
-        try (Statement statement = CONNECTION_WRAPPER.getConnection()
+        try (Statement statement = connectionWrapper.getConnection()
                 .createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Role> roles = new ArrayList<>();
@@ -64,29 +64,35 @@ public class MysqlRoleDao implements RoleDao {
             return roles;
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve Roles");
+        } finally {
+            connectionWrapper.close();
         }
     }
 
     @Override
     public boolean update(Role entity) {
-        try (PreparedStatement statement = CONNECTION_WRAPPER.getConnection()
+        try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(UPDATE)) {
             statement.setInt(1, entity.getId());
             statement.setString(2, entity.getName());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to update Role", e);
+        } finally {
+            connectionWrapper.close();
         }
     }
 
     @Override
     public boolean delete(Integer id) {
-        try (PreparedStatement statement = CONNECTION_WRAPPER.getConnection()
+        try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(DELETE)) {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to delete Role", e);
+        } finally {
+            connectionWrapper.close();
         }
     }
 }

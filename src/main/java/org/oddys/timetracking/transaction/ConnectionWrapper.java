@@ -3,48 +3,47 @@ package org.oddys.timetracking.transaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.connection.ConnectionPool;
-import org.oddys.timetracking.util.ResourceInitializationException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ConnectionWrapper {
+public class ConnectionWrapper implements AutoCloseable {
     private static final Logger log = LogManager.getLogger();
-    private static final ConnectionWrapper INSTANCE = new ConnectionWrapper();
-    private static final ThreadLocal<Connection> CONNECTION = new ThreadLocal<>() {
-        @Override
-        protected Connection initialValue() {
-            Connection connection = null;
-            try {
-                connection = ConnectionPool.getInstance().getConnection();
-            } catch (SQLException e) {
-                throw new ResourceInitializationException("Failed to obtain a connection for ConnectionWrapper", e);
-            }
-            return connection;
-        }
-    };
+    private static ConnectionWrapper INSTANCE = new ConnectionWrapper();
+    private ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
+    private ThreadLocal<Boolean> isTransactionThreadLocal = new ThreadLocal<>();
 
-//    private ConnectionWrapper() {
-//        try {
-//            Connection connection = ConnectionPool.getInstance().getConnection();
-//            CONNECTION.set(connection);
-//        } catch (SQLException e) {
-//            throw new ResourceInitializationException("Failed to obtain a connection for ConnectionWrapper", e);
-//        }
-//    }
+    private ConnectionWrapper() { ;
+    }
 
     public static ConnectionWrapper getInstance() {
         return INSTANCE;
     }
 
     public Connection getConnection() {
-        if (CONNECTION.get() == null) {
-            try {
-                CONNECTION.set(ConnectionPool.getInstance().getConnection());
-            } catch (SQLException e) {
-                throw new ResourceInitializationException("Failed to obtain a connection for ConnectionWrapper", e);
+        try {
+            if (connectionThreadLocal.get() == null) {
+                connectionThreadLocal.set(ConnectionPool.getInstance().getConnection());
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e); // FIXME
         }
-        return CONNECTION.get();
+        return connectionThreadLocal.get();
+    }
+
+    public void setTransaction(boolean isTransaction) {
+        isTransactionThreadLocal.set(isTransaction);
+    }
+
+    @Override
+    public void close() {
+        if (!isTransactionThreadLocal.get()) {
+            try {
+                connectionThreadLocal.get().close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // FIXME
+            }
+            connectionThreadLocal.remove();
+        }
     }
 }

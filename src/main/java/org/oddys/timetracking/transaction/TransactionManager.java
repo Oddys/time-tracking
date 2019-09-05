@@ -1,57 +1,54 @@
 package org.oddys.timetracking.transaction;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.service.ServiceException;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManager {
-    private static final Logger log = LogManager.getLogger();
-    private static TransactionManager INSTANCE = new TransactionManager();
-    private final ConnectionWrapper CONNECTION_WRAPPER;
+    private static final TransactionManager INSTANCE = new TransactionManager();
+    private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
 
-    private TransactionManager() {
-        CONNECTION_WRAPPER = ConnectionWrapper.getInstance();
-    }
+    private TransactionManager() {}
 
     public static TransactionManager getInstance() {
         return INSTANCE;
     }
 
-    public <T> T getProxy(T object) {
-        Class<?> targetClass = object.getClass();
-        ClassLoader classLoader = targetClass.getClassLoader();
-        Class<?>[] interfaces = targetClass.getInterfaces();
-        @SuppressWarnings("unchecked")
-        T proxy = (T) Proxy.newProxyInstance(classLoader, interfaces, getInvocationHandler(object));
-        return proxy;
+    public void beginTransaction() {
+        connectionWrapper.setTransaction(true);
+        Connection connection = connectionWrapper.getConnection();
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();  // FIXME
+        }
     }
 
-    private InvocationHandler getInvocationHandler(Object target) {
-        return new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Object result = null;
-                try (Connection connection = CONNECTION_WRAPPER.getConnection()) {
-                    connection.setAutoCommit(false);
-                    try {
-                        result = method.invoke(target, args);
-                    } catch (InvocationTargetException e) {
-                        connection.rollback();
-                        throw new ServiceException("Failed to perform a transaction", e.getCause());
-                    }
-                    connection.commit();
-                } catch (SQLException | NullPointerException e) {
-                    throw new ServiceException("Failed to perform a transaction", e);
-                }
-                return result;
-            }
-        };
+    public void commit() {
+        Connection connection = connectionWrapper.getConnection();
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();  // FIXME
+        }
+    }
+
+    public void rollback() {
+        Connection connection = connectionWrapper.getConnection();
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();  // FIXME
+        }
+    }
+
+    public void endTransaction() {
+        connectionWrapper.setTransaction(false);
+        Connection connection = connectionWrapper.getConnection();
+        try {
+            connection.setAutoCommit(true);
+            ConnectionWrapper.getInstance().close();
+        } catch (SQLException e) {
+            e.printStackTrace();  // FIXME
+        }
     }
 }
