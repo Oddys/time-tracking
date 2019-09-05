@@ -31,7 +31,11 @@ public class ConnectionPool {
         return INSTANCE;
     }
 
-    public Connection getConnection() throws SQLException {
-        return DATA_SOURCE.getConnection();
+    public Connection getConnection() {
+        try {
+            return DATA_SOURCE.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);  // FIXME
+        }
     }
 }

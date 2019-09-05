@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MysqlUserDao implements UserDao {
     private static final Logger log = LogManager.getLogger();
-    private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+//    private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
     private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
 
     MysqlUserDao() {
@@ -21,8 +21,30 @@ public class MysqlUserDao implements UserDao {
     }
 
     public User findByLogin(String login) {
-        try (PreparedStatement statement = connectionWrapper.getConnection()
-                .prepareStatement(FIND_BY_LOGIN)) {
+//        try (PreparedStatement statement = connectionWrapper.getConnection()
+//                .prepareStatement(FIND_BY_LOGIN)) {
+//            statement.setString(1, login);
+//            ResultSet rs = statement.executeQuery();
+//            User user = null;
+//            if (rs.next()) {
+//                user = new User(
+//                        rs.getInt("id"),
+//                        rs.getString("login"),
+//                        rs.getString("password").toCharArray(),
+//                        rs.getString("first_name"),
+//                        rs.getString("last_name"),
+//                        rs.getInt("role_id")
+//                );
+//            }
+//            return user;
+//        } catch (SQLException e) {
+//            throw new DaoException("Failed to find User by login", e);
+//        } finally {
+//            connectionWrapper.close();
+//        }
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.getConnection()
+                     .prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             User user = null;
@@ -39,8 +61,6 @@ public class MysqlUserDao implements UserDao {
             return user;
         } catch (SQLException e) {
             throw new DaoException("Failed to find User by login", e);
-        } finally {
-            connectionWrapper.close();
         }
     }
 

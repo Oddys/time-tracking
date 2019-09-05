@@ -10,8 +10,9 @@ import java.sql.SQLException;
 public class ConnectionWrapper implements AutoCloseable {
     private static final Logger log = LogManager.getLogger();
     private static ConnectionWrapper INSTANCE = new ConnectionWrapper();
-    private ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<>();
-    private ThreadLocal<Boolean> isTransactionThreadLocal = new ThreadLocal<>();
+    private ThreadLocal<Connection> connectionThreadLocal = ThreadLocal
+            .withInitial(() -> ConnectionPool.getInstance().getConnection());
+    private ThreadLocal<Boolean> isTransactionThreadLocal = ThreadLocal.withInitial(() -> false);
 
     private ConnectionWrapper() { ;
     }
@@ -21,13 +22,6 @@ public class ConnectionWrapper implements AutoCloseable {
     }
 
     public Connection getConnection() {
-        try {
-            if (connectionThreadLocal.get() == null) {
-                connectionThreadLocal.set(ConnectionPool.getInstance().getConnection());
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e); // FIXME
-        }
         return connectionThreadLocal.get();
     }
 
