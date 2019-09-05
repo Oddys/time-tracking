@@ -1,9 +1,12 @@
 package org.oddys.timetracking.transaction;
 
-import java.sql.Connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.SQLException;
 
 public class TransactionManager {
+    private static final Logger log = LogManager.getLogger();
     private static final TransactionManager INSTANCE = new TransactionManager();
     private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
 
@@ -13,42 +16,26 @@ public class TransactionManager {
         return INSTANCE;
     }
 
-    public void beginTransaction() {
+    public void beginTransaction() throws SQLException {
         connectionWrapper.setTransaction(true);
-        Connection connection = connectionWrapper.getConnection();
-        try {
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            e.printStackTrace();  // FIXME
-        }
+        connectionWrapper.getConnection().setAutoCommit(false);
     }
 
-    public void commit() {
-        Connection connection = connectionWrapper.getConnection();
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();  // FIXME
-        }
+    public void commit() throws SQLException {
+        connectionWrapper.getConnection().commit();
     }
 
-    public void rollback() {
-        Connection connection = connectionWrapper.getConnection();
-        try {
-            connection.rollback();
-        } catch (SQLException e) {
-            e.printStackTrace();  // FIXME
-        }
+    public void rollback() throws SQLException {
+        connectionWrapper.getConnection().rollback();
     }
 
     public void endTransaction() {
         connectionWrapper.setTransaction(false);
-        Connection connection = connectionWrapper.getConnection();
         try {
-            connection.setAutoCommit(true);
-            ConnectionWrapper.getInstance().close();
+            connectionWrapper.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();  // FIXME
+            log.error("Transaction manager failed to set autocommit to true", e);
         }
+        ConnectionWrapper.getInstance().close();
     }
 }

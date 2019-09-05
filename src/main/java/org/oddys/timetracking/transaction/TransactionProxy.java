@@ -2,12 +2,11 @@ package org.oddys.timetracking.transaction;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.service.ServiceException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.sql.SQLException;
 
 public class TransactionProxy {
     private static final Logger log = LogManager.getLogger();
@@ -30,26 +29,24 @@ public class TransactionProxy {
     }
 
     private InvocationHandler getInvocationHandler(Object target) {
-        return new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                Object result = null;
+        return (proxy, method, args) -> {
+            Object result = null;
+            try {
+                transactionManager.beginTransaction();
                 try {
-                    transactionManager.beginTransaction();
-                    try {
-                        result = method.invoke(target, args);
-                    } catch (InvocationTargetException e) {
-                        transactionManager.rollback();
-                        throw new ServiceException("Failed to perform a transaction", e.getCause());
-                    }
-                    transactionManager.commit();
-                } catch (Exception e) {
-                    throw new ServiceException("Failed to perform a transaction", e);
-                } finally {
-                    transactionManager.endTransaction();
+                    result = method.invoke(target, args);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    transactionManager.rollback();
+                    throw new ProxyException("Transaction proxy failed to invoke a target method",
+                            e.getCause());
                 }
-                return result;
+                transactionManager.commit();
+            } catch (SQLException | ProxyException e) {
+                log.error("Transaction proxy failed to perform a transaction", e);
+            } finally {
+                transactionManager.endTransaction();
             }
+            return result;
         };
     }
 }

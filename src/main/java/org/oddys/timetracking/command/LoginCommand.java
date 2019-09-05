@@ -14,13 +14,10 @@ public class LoginCommand implements Command {
     private static final Logger log = LogManager.getLogger();
     private static final LoginCommand INSTANCE = new LoginCommand();
     private static final String I18N_ERROR_MESSAGE_KEY = "auth.error.notfound";
-    private LoginService LOGIN_SERVICE;
+    private LoginService loginService = TransactionProxy.getInstance()
+            .getProxy(LoginServiceImpl.getInstance());
 
-    private LoginCommand() {
-        LOGIN_SERVICE = TransactionProxy.getInstance()
-                .getProxy(LoginServiceImpl.getInstance());
-//        LOGIN_SERVICE = LoginServiceImpl.getInstance();
-    }
+    private LoginCommand() {}
 
     public static LoginCommand getInstance() {
         return INSTANCE;
@@ -28,9 +25,8 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        UserDto user = null;
-        user = LOGIN_SERVICE.logIn(
-                req.getParameter("login"), req.getParameter("password").toCharArray());
+        UserDto user = loginService.logIn(req.getParameter("login"),
+                req.getParameter("password").toCharArray());
         if (user != null){
             req.getSession().setAttribute("user", user);
             log.info(user.getLogin() + " signed in");

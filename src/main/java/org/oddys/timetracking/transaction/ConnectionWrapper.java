@@ -35,7 +35,7 @@ public class ConnectionWrapper implements AutoCloseable {
             try {
                 connectionThreadLocal.get().close();
             } catch (SQLException e) {
-                e.printStackTrace(); // FIXME
+                log.error("Connection wrapper failed to close a connection", e);
             }
             connectionThreadLocal.remove();
         }
