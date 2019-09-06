@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
     private static final Logger log = LogManager.getLogger();
     private static final LoginCommand INSTANCE = new LoginCommand();
-    private static final String I18N_ERROR_MESSAGE_KEY = "auth.error.notfound";
     private LoginService loginService = TransactionProxy.getInstance()
             .getProxy(LoginServiceImpl.getInstance());
 
@@ -32,7 +31,7 @@ public class LoginCommand implements Command {
             log.info(user.getLogin() + " signed in");
             return ConfigManager.getInstance().getProperty(ConfigManager.CABINET_PATH);
         } else {
-            req.setAttribute("errorMessageKey", I18N_ERROR_MESSAGE_KEY);
+            req.setAttribute("errorMessageKey", "auth.error.notfound");
             return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
         }
     }
