@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginCommand implements Command {
     private static final Logger log = LogManager.getLogger();
     private static final LoginCommand INSTANCE = new LoginCommand();
-    private LoginService loginService = TransactionProxy.getInstance()
-            .getProxy(LoginServiceImpl.getInstance());
+//    private LoginService loginService = TransactionProxy.getInstance()
+//            .getProxy(LoginServiceImpl.getInstance());
+    private LoginService loginService = LoginServiceImpl.getInstance();
 
     private LoginCommand() {}
 

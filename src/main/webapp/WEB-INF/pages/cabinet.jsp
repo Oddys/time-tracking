@@ -13,7 +13,7 @@
     </form>
 
     <c:choose>
-        <c:when test="${user.role == 'ADMIN'}">
+        <c:when test="${user.roleName == 'ADMIN'}">
             <%@ include file="/WEB-INF/jspf/cabinet-admin.jspf"%>
         </c:when>
         <c:otherwise>

@@ -1,5 +1,6 @@
 package org.oddys.timetracking.service;
 
+import org.modelmapper.ModelMapper;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.RoleDao;
 import org.oddys.timetracking.dao.UserDao;
@@ -30,11 +31,14 @@ public class LoginServiceImpl implements LoginService {
             UserDao userDao = DaoFactoryProvider.getInstance().getFactory(dbmsName)
                     .getUserDao();
             User user = userDao.findByLogin(login);
+//            if (checkCredentials(login, password, user)) {
+//                RoleDao roleDao = DaoFactoryProvider.getInstance().getFactory(dbmsName)
+//                        .getRoleDao();
+//                Role role = roleDao.findById(user.getRoleId());
+//                userDto = new UserDto(user, role);
+//            }
             if (checkCredentials(login, password, user)) {
-                RoleDao roleDao = DaoFactoryProvider.getInstance().getFactory(dbmsName)
-                        .getRoleDao();
-                Role role = roleDao.findById(user.getRoleId());
-                userDto = new UserDto(user, role);
+                userDto = new ModelMapper().map(user, UserDto.class);
             }
         } catch (DaoException e) {
             throw new ServiceException(e);

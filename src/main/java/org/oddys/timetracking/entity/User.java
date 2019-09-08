@@ -7,18 +7,33 @@ public class User extends Entity {
     private char[] password;
     private String firstName;
     private String lastName;
-    private Long roleId;
+//    private Long roleId;
+    private Role role;
 
     public User() {
     }
 
-    public User(Long id, String login, char[] password, String firstName, String lastName, Long roleId) {
+//    public User(Long id, String login, char[] password, String firstName, String lastName, Long roleId) {
+//        super(id);
+//        this.login = login;
+//        this.password = password;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.roleId = roleId;
+//    }
+
+    public User(Long id, String login, char[] password, String firstName,
+            String lastName, Long roleId, String roleName) {
+        this(id, login, password, firstName, lastName, new Role(roleId, roleName));
+    }
+
+    public User(Long id, String login, char[] password, String firstName, String lastName, Role role) {
         super(id);
         this.login = login;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.roleId = roleId;
+        this.role = role;
     }
 
     public String getLogin() {
@@ -57,11 +72,20 @@ public class User extends Entity {
         this.lastName = lastName;
     }
 
-    public Long getRoleId() {
-        return roleId;
+//    public Long getRoleId() {
+//        return roleId;
+//    }
+//
+//    public void setRoleId(Long roleId) {
+//        this.roleId = roleId;
+//    }
+
+
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

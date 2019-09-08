@@ -6,6 +6,11 @@ public class Role extends Entity {
     public Role() {
     }
 
+    public Role(Role role) {
+        super(role.getId());
+        this.name = role.name;
+    }
+
     public Role(Long id, String name) {
         super(id);
         this.name = name;

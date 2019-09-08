@@ -15,7 +15,8 @@ import java.util.List;
 public class MysqlUserDao implements UserDao {
     private static final Logger log = LogManager.getLogger();
 //    private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-    private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+//    private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final String FIND_BY_LOGIN = "SELECT u.*, r.name role_name FROM users u JOIN roles r on u.role_id = r.id WHERE login = ?";
     private static final String FIND_BY_LAST_NAME = "SELECT * FROM users WHERE last_name = ?";
 
     MysqlUserDao() {
@@ -87,7 +88,8 @@ public class MysqlUserDao implements UserDao {
                 rs.getString("password").toCharArray(),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
-                rs.getLong("role_id")
+                rs.getLong("role_id"),
+                rs.getString("role_name")
         );
     }
 }
