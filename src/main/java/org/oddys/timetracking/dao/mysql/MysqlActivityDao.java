@@ -22,20 +22,20 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public Integer create(Activity entity) {
+    public Long create(Activity entity) {
         try (PreparedStatement statement = CONNECTION.prepareStatement(CREATE,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             statement.setBoolean(2, entity.isApproved());
             statement.executeUpdate();
-            return statement.getGeneratedKeys().getInt(1);
+            return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
             throw new DaoException("Failed to create Activity", e);
         }
     }
 
     @Override
-    public Activity findById(Integer id) {
+    public Activity findById(Long id) {
         return null;
     }
 
@@ -45,7 +45,7 @@ public class MysqlActivityDao implements ActivityDao {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Activity> activities = new ArrayList<>();
             while (rs.next()) {
-                Activity activity = new Activity(rs.getInt(1), rs.getString(2),
+                Activity activity = new Activity(rs.getLong(1), rs.getString(2),
                         rs.getBoolean(3));
                 activities.add(activity);
             }
@@ -67,7 +67,7 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Long id) {
         return false;
     }
 }

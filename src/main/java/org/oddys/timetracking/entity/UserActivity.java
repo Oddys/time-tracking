@@ -8,7 +8,7 @@ public class UserActivity extends Entity {
     public UserActivity() {
     }
 
-    public UserActivity(Integer id, Boolean assigned, Integer userId, Integer activityId) {
+    public UserActivity(Long id, Boolean assigned, Integer userId, Integer activityId) {
         super(id);
         this.assigned = assigned;
         this.userId = userId;

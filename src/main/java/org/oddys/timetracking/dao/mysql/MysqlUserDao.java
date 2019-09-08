@@ -23,27 +23,6 @@ public class MysqlUserDao implements UserDao {
     }
 
     public User findByLogin(String login) {
-//        try (PreparedStatement statement = connectionWrapper.getConnection()
-//                .prepareStatement(FIND_BY_LOGIN)) {
-//            statement.setString(1, login);
-//            ResultSet rs = statement.executeQuery();
-//            User user = null;
-//            if (rs.next()) {
-//                user = new User(
-//                        rs.getInt("id"),
-//                        rs.getString("login"),
-//                        rs.getString("password").toCharArray(),
-//                        rs.getString("first_name"),
-//                        rs.getString("last_name"),
-//                        rs.getInt("role_id")
-//                );
-//            }
-//            return user;
-//        } catch (SQLException e) {
-//            throw new DaoException("Failed to find User by login", e);
-//        } finally {
-//            connectionWrapper.close();
-//        }
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.getConnection()
                      .prepareStatement(FIND_BY_LOGIN)) {
@@ -51,14 +30,7 @@ public class MysqlUserDao implements UserDao {
             ResultSet rs = statement.executeQuery();
             User user = null;
             if (rs.next()) {
-                user = new User(
-                        rs.getInt("id"),
-                        rs.getString("login"),
-                        rs.getString("password").toCharArray(),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getInt("role_id")
-                );
+                user = retrieveUser(rs);
             }
             return user;
         } catch (SQLException e) {
@@ -84,12 +56,12 @@ public class MysqlUserDao implements UserDao {
     }
 
     @Override
-    public Integer create(User entity) {
+    public Long create(User entity) {
         return null;
     }
 
     @Override
-    public User findById(Integer id) {
+    public User findById(Long id) {
         return null;
     }
 
@@ -104,18 +76,18 @@ public class MysqlUserDao implements UserDao {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Long id) {
         return false;
     }
 
     private User retrieveUser(ResultSet rs) throws SQLException {
         return new User(
-                rs.getInt("id"),
+                rs.getLong("id"),
                 rs.getString("login"),
                 rs.getString("password").toCharArray(),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
-                rs.getInt("role_id")
+                rs.getLong("role_id")
         );
     }
 }

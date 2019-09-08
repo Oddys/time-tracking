@@ -4,7 +4,7 @@ import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
 
 public class UserDto {
-    private Integer userId;
+    private Long userId;
     private String login;
     private String firstName;
     private String lastName;
@@ -18,7 +18,7 @@ public class UserDto {
         role = RoleEnum.valueOf(roleEntity.getName().toUpperCase());
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 

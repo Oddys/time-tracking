@@ -7,7 +7,7 @@ public class Activity extends Entity {
     public Activity() {
     }
 
-    public Activity(Integer id, String name, Boolean approved) {
+    public Activity(Long id, String name, Boolean approved) {
         super(id);
         this.name = name;
         this.approved = approved;

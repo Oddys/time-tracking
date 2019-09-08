@@ -23,26 +23,26 @@ public class MysqlRoleDao implements RoleDao {
     MysqlRoleDao() {}
 
     @Override
-    public Integer create(Role entity) {
+    public Long create(Role entity) {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             statement.executeUpdate();
-            return statement.getGeneratedKeys().getInt(1);
+            return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
             throw new DaoException("Failed to create Role", e);
         }
     }
 
     @Override
-    public Role findById(Integer id) {
+    public Role findById(Long id) {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(FIND_BY_ID)) {
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             Role role = null;
             if (rs.next()) {
-                role = new Role(rs.getInt(1), rs.getString(2));
+                role = new Role(rs.getLong(1), rs.getString(2));
             }
             return role;
         } catch (SQLException e) {
@@ -59,7 +59,7 @@ public class MysqlRoleDao implements RoleDao {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Role> roles = new ArrayList<>();
             while (rs.next()) {
-                roles.add(new Role(rs.getInt(1), rs.getString(2)));
+                roles.add(new Role(rs.getLong(1), rs.getString(2)));
             }
             return roles;
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class MysqlRoleDao implements RoleDao {
     public boolean update(Role entity) {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(UPDATE)) {
-            statement.setInt(1, entity.getId());
+            statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -84,10 +84,10 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Long id) {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(DELETE)) {
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to delete Role", e);

@@ -7,12 +7,12 @@ public class User extends Entity {
     private char[] password;
     private String firstName;
     private String lastName;
-    private Integer roleId;
+    private Long roleId;
 
     public User() {
     }
 
-    public User(Integer id, String login, char[] password, String firstName, String lastName, Integer roleId) {
+    public User(Long id, String login, char[] password, String firstName, String lastName, Long roleId) {
         super(id);
         this.login = login;
         this.password = password;
@@ -57,11 +57,11 @@ public class User extends Entity {
         this.lastName = lastName;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 }

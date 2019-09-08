@@ -6,7 +6,7 @@ public class Role extends Entity {
     public Role() {
     }
 
-    public Role(Integer id, String name) {
+    public Role(Long id, String name) {
         super(id);
         this.name = name;
     }
