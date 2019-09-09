@@ -19,17 +19,17 @@ public class MysqlDaoFactory implements DaoFactory {
 
     @Override
     public RoleDao getRoleDao() {
-        return new MysqlRoleDao();
+        return MysqlRoleDao.getInstance();
     }
 
     @Override
     public UserDao getUserDao() {
-        return new MysqlUserDao();
+        return MysqlUserDao.getInstance();
     }
 
     @Override
     public ActivityDao getActivityDao(Connection connection) {
-        return new MysqlActivityDao(connection);
+        return MysqlActivityDao.getInstance();
     }
 
 //    @Override

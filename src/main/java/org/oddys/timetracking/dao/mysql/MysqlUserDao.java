@@ -1,7 +1,5 @@
 package org.oddys.timetracking.dao.mysql;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.connection.ConnectionWrapper;
@@ -13,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlUserDao implements UserDao {
-    private static final Logger log = LogManager.getLogger();
-//    private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-//    private static final String FIND_BY_LOGIN = "SELECT * FROM users WHERE login = ?";
+    private static final MysqlUserDao INSTANCE = new MysqlUserDao();
     private static final String FIND_BY_LOGIN = "SELECT u.*, r.name role_name FROM users u JOIN roles r on u.role_id = r.id WHERE login = ?";
     private static final String FIND_BY_LAST_NAME = "SELECT * FROM users WHERE last_name = ?";
 
-    MysqlUserDao() {
+    private MysqlUserDao() {}
 
+    public static MysqlUserDao getInstance() {
+        return INSTANCE;
     }
 
     public User findByLogin(String login) throws DaoException {

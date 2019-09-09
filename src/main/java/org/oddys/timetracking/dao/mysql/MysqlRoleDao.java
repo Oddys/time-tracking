@@ -12,20 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlRoleDao implements RoleDao {
-//    private static final Logger log = LogManager.getLogger();
-    private final ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+    private static final MysqlRoleDao INSTANCE = new MysqlRoleDao();
     private static final String CREATE = "INSERT INTO roles (name) VALUES (?)";
     private static final String FIND_BY_ID = "SELECT * FROM roles WHERE id = ?";
     private static final String FIND_ALL = "SELECT * FROM roles";
     private static final String UPDATE = "UPDATE roles SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM roles WHERE id = ?";
 
-    MysqlRoleDao() {}
+    private MysqlRoleDao() {}
+
+    public static MysqlRoleDao getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public Long create(Role entity) throws DaoException {
-        try (PreparedStatement statement = connectionWrapper.getConnection()
-                .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper
+                     .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             statement.executeUpdate();
             return statement.getGeneratedKeys().getLong(1);
@@ -36,8 +40,8 @@ public class MysqlRoleDao implements RoleDao {
 
     @Override
     public Role findById(Long id) throws DaoException {
-        try (PreparedStatement statement = connectionWrapper.getConnection()
-                .prepareStatement(FIND_BY_ID)) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             Role role = null;
@@ -47,15 +51,13 @@ public class MysqlRoleDao implements RoleDao {
             return role;
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve Role", e);
-        } finally {
-            connectionWrapper.close();
         }
     }
 
     @Override
     public List<Role> findAll() throws DaoException {
-        try (Statement statement = connectionWrapper.getConnection()
-                .createStatement()) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             Statement statement = connectionWrapper.createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Role> roles = new ArrayList<>();
             while (rs.next()) {
@@ -64,35 +66,29 @@ public class MysqlRoleDao implements RoleDao {
             return roles;
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve Roles");
-        } finally {
-            connectionWrapper.close();
         }
     }
 
     @Override
     public boolean update(Role entity) throws DaoException {
-        try (PreparedStatement statement = connectionWrapper.getConnection()
-                .prepareStatement(UPDATE)) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to update Role", e);
-        } finally {
-            connectionWrapper.close();
         }
     }
 
     @Override
     public boolean delete(Long id) throws DaoException {
-        try (PreparedStatement statement = connectionWrapper.getConnection()
-                .prepareStatement(DELETE)) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(DELETE)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to delete Role", e);
-        } finally {
-            connectionWrapper.close();
         }
     }
 }
