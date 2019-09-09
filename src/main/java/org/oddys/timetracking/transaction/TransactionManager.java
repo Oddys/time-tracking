@@ -17,17 +17,29 @@ public class TransactionManager {
         return INSTANCE;
     }
 
-    public void beginTransaction() throws SQLException {
+    public void beginTransaction() throws TransactionException {
         connectionWrapper.setTransaction(true);
-        connectionWrapper.getConnection().setAutoCommit(false);
+        try {
+            connectionWrapper.getConnection().setAutoCommit(false);
+        } catch (SQLException e) {
+            throw new TransactionException("Failed to begin a transaction", e);
+        }
     }
 
-    public void commit() throws SQLException {
-        connectionWrapper.getConnection().commit();
+    public void commit() throws TransactionException {
+        try {
+            connectionWrapper.getConnection().commit();
+        } catch (SQLException e) {
+            throw new TransactionException("Failed to commit a transaction", e);
+        }
     }
 
-    public void rollback() throws SQLException {
-        connectionWrapper.getConnection().rollback();
+    public void rollback() throws TransactionException {
+        try {
+            connectionWrapper.getConnection().rollback();
+        } catch (SQLException e) {
+            throw new TransactionException("Failed to rollback a transaction", e);
+        }
     }
 
     public void endTransaction() {

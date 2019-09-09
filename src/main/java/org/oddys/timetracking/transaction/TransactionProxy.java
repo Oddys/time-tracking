@@ -41,7 +41,7 @@ public class TransactionProxy {
                             e.getCause());
                 }
                 transactionManager.commit();
-            } catch (SQLException | ProxyException e) {
+            } catch (TransactionException | ProxyException e) {
                 log.error("Transaction proxy failed to perform a transaction", e);
             } finally {
                 transactionManager.endTransaction();
