@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public UserDto logIn(String login, char[] password) {
+    public UserDto logIn(String login, char[] password) throws ServiceException {
         UserDto userDto = null;
         try {
             User user = userDao.findByLogin(login);

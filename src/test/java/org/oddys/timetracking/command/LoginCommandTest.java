@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.LoginService;
+import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class LoginCommandTest {
     }
 
     @Test
-    public void setUserAttrInSessionAndReturnCabinetPageIfValidCredentials() {
+    public void setUserAttrInSessionAndReturnCabinetPageIfValidCredentials() throws ServiceException {
         when(loginService.logIn(any(String.class), any(char[].class))).thenReturn(userDto);
         String page = loginCommand.execute(request);
         verify(session).setAttribute("user", userDto);
@@ -56,7 +57,7 @@ public class LoginCommandTest {
     }
 
     @Test
-    public void setErrorMessageKeyAttrInSessionAndReturnHomePageIfNonValidCredentials() {
+    public void setErrorMessageKeyAttrInSessionAndReturnHomePageIfNonValidCredentials() throws ServiceException {
         when(loginService.logIn(any(String.class), any(char[].class))).thenReturn(null);
         String page = loginCommand.execute(request);
         verify(request).setAttribute("errorMessageKey", "auth.error.notfound");

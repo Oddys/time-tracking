@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.LoginService;
 import org.oddys.timetracking.service.LoginServiceImpl;
+import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.transaction.TransactionProxy;
 
@@ -25,8 +26,14 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        UserDto user = loginService.logIn(req.getParameter("login"),
-                req.getParameter("password").toCharArray());
+        UserDto user = null;
+        try {
+            user = loginService.logIn(req.getParameter("login"),
+                    req.getParameter("password").toCharArray());
+        } catch (ServiceException e) {
+            log.error("Login Service failed", e);
+            return null;
+        }
         if (user != null){
             req.getSession().setAttribute("user", user);
             log.info(user.getLogin() + " signed in");

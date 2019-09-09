@@ -23,7 +23,7 @@ public class MysqlRoleDao implements RoleDao {
     MysqlRoleDao() {}
 
     @Override
-    public Long create(Role entity) {
+    public Long create(Role entity) throws DaoException {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
@@ -35,7 +35,7 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public Role findById(Long id) {
+    public Role findById(Long id) throws DaoException {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
@@ -53,7 +53,7 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public List<Role> findAll() {
+    public List<Role> findAll() throws DaoException {
         try (Statement statement = connectionWrapper.getConnection()
                 .createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
@@ -70,7 +70,7 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public boolean update(Role entity) {
+    public boolean update(Role entity) throws DaoException {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(UPDATE)) {
             statement.setLong(1, entity.getId());
@@ -84,7 +84,7 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Long id) throws DaoException {
         try (PreparedStatement statement = connectionWrapper.getConnection()
                 .prepareStatement(DELETE)) {
             statement.setLong(1, id);

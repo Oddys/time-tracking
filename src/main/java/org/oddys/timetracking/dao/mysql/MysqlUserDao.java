@@ -23,7 +23,7 @@ public class MysqlUserDao implements UserDao {
 
     }
 
-    public User findByLogin(String login) {
+    public User findByLogin(String login) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.getConnection()
                      .prepareStatement(FIND_BY_LOGIN)) {
@@ -40,7 +40,7 @@ public class MysqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findByLastName(String lastName) {
+    public List<User> findByLastName(String lastName) throws DaoException {
         List<User> users = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(

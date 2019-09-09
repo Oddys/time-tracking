@@ -37,6 +37,9 @@ public class DispatcherServlet extends HttpServlet {
         Command command = CommandFactory.COMMAND_FACTORY
                 .getCommand(req.getParameter("command"));
         String page = command.execute(req);
+        if (page == null) {
+            resp.sendError(500);
+        }
         log.info("Forwarding to " + page);
         req.getRequestDispatcher(page).forward(req, resp);
     }

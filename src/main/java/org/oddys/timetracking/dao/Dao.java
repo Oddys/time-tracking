@@ -1,13 +1,14 @@
 package org.oddys.timetracking.dao;
 
+import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.entity.Entity;
 
 import java.util.List;
 
 public interface Dao<K, T extends Entity> {
-    K create(T entity);
-    T findById(K id);
-    List<T> findAll();
-    boolean update(T entity);
-    boolean delete(K id);
+    K create(T entity) throws DaoException;
+    T findById(K id) throws DaoException;
+    List<T> findAll() throws DaoException;
+    boolean update(T entity) throws DaoException;
+    boolean delete(K id) throws DaoException;
 }

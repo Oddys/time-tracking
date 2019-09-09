@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.oddys.timetracking.dao.UserDao;
+import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.User;
 
@@ -27,21 +28,21 @@ public class LoginServiceImplTest {
     private final LoginService service = LoginServiceImpl.getInstance();
 
     @Test
-    public void returnUserDtoIfValidCredentials() {
+    public void returnUserDtoIfValidCredentials() throws DaoException, ServiceException {
         UserDto userDto = new UserDto(USER);
         when(userDao.findByLogin(LOGIN)).thenReturn(USER);
         assertEquals(userDto, service.logIn(LOGIN, CORRECT_PASSWORD));
     }
 
     @Test
-    public void returnNullIfNonValidCredentials() {
+    public void returnNullIfNonValidCredentials() throws DaoException, ServiceException {
         char[] incorrectPassword = "not a password".toCharArray();
         when(userDao.findByLogin(LOGIN)).thenReturn(USER);
         assertNull(service.logIn(LOGIN, incorrectPassword));
     }
 
     @Test
-    public void returnNullIfNonExistingLogin() {
+    public void returnNullIfNonExistingLogin() throws DaoException, ServiceException {
         String misspelledLogin = "oglin";
         when(userDao.findByLogin(misspelledLogin)).thenReturn(null);
         assertNull(service.logIn(misspelledLogin, CORRECT_PASSWORD));

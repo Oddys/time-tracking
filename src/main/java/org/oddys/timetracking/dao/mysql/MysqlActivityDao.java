@@ -22,7 +22,7 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public Long create(Activity entity) {
+    public Long create(Activity entity) throws DaoException {
         try (PreparedStatement statement = CONNECTION.prepareStatement(CREATE,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
@@ -40,7 +40,7 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public List<Activity> findAll() {
+    public List<Activity> findAll() throws DaoException {
         try (Statement statement = CONNECTION.createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
             List<Activity> activities = new ArrayList<>();
@@ -56,7 +56,7 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public boolean update(Activity entity) {
+    public boolean update(Activity entity) throws DaoException {
         try (PreparedStatement statement = CONNECTION.prepareStatement(UPDATE)) {
             statement.setBoolean(1, entity.isApproved());
             statement.setString(2, entity.getName());
