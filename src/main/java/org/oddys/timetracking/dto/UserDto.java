@@ -1,24 +1,16 @@
 package org.oddys.timetracking.dto;
 
-import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
+
+import java.util.Objects;
 
 public class UserDto {
     private Long userId;
     private String login;
     private String firstName;
     private String lastName;
-//    private RoleEnum role;
     private Long roleId;
     private String roleName;
-
-//    public UserDto(User userEntity, Role roleEntity) {
-//        userId = userEntity.getId();
-//        login = userEntity.getLogin();
-//        firstName = userEntity.getFirstName();
-//        lastName = userEntity.getLastName();
-//        role = RoleEnum.valueOf(roleEntity.getName().toUpperCase());
-//    }
 
     public UserDto(User user) {
         userId = user.getId();
@@ -29,29 +21,26 @@ public class UserDto {
         roleName = user.getRole().getName();
     }
 
-    public UserDto() {
+    public UserDto() {}
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, login, firstName, lastName, roleId, roleName);
     }
 
-    //    public Long getUserId() {
-//        return userId;
-//    }
-//
-//    public String getLogin() {
-//        return login;
-//    }
-//
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-
-//    public RoleEnum getRole() {
-//        return role;
-//    }
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof UserDto)) {
+            return false;
+        }
+        UserDto o = (UserDto) obj;
+        return Objects.equals(userId, o.userId) && Objects.equals(login, o.login)
+                && Objects.equals(firstName, o.firstName) && Objects.equals(lastName, o.lastName)
+                && Objects.equals(roleId, o.roleId) && Objects.equals(roleName, o.roleName);
+    }
 
     public Long getUserId() {
         return userId;
