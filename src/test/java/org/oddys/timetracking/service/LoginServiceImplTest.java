@@ -10,16 +10,15 @@ import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.User;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginServiceImplTest {
     private final String LOGIN = "login";
     private final char[] CORRECT_PASSWORD = "password".toCharArray();
-    private final char[] INCORRECT_PASSWORD = "not a password".toCharArray();
     private final User USER = new User(7L, LOGIN, CORRECT_PASSWORD,
             "first name", "last name", 7L, "role");
-    private final UserDto USER_DTO = new UserDto(USER);
 
     @Mock
     private UserDao userDao;
@@ -29,7 +28,22 @@ public class LoginServiceImplTest {
 
     @Test
     public void returnUserDtoIfValidCredentials() {
+        UserDto userDto = new UserDto(USER);
         when(userDao.findByLogin(LOGIN)).thenReturn(USER);
-        assertEquals(USER_DTO, service.logIn(LOGIN, CORRECT_PASSWORD));
+        assertEquals(userDto, service.logIn(LOGIN, CORRECT_PASSWORD));
+    }
+
+    @Test
+    public void returnNullIfNonValidCredentials() {
+        char[] incorrectPassword = "not a password".toCharArray();
+        when(userDao.findByLogin(LOGIN)).thenReturn(USER);
+        assertNull(service.logIn(LOGIN, incorrectPassword));
+    }
+
+    @Test
+    public void returnNullIfNonExistingLogin() {
+        String misspelledLogin = "oglin";
+        when(userDao.findByLogin(misspelledLogin)).thenReturn(null);
+        assertNull(service.logIn(misspelledLogin, CORRECT_PASSWORD));
     }
 }
