@@ -9,6 +9,7 @@ public class ConfigManager {
     public static final String DBMS = "db.dbms";
     public static final String HOME_PATH = "path.home";
     public static final String CABINET_PATH = "path.cabinet";
+    public static final String USERS_LIST_PATH = "path.users.list";
     private static final String CONFIG_FILE_NAME = "config.properties";
     private final Properties PROPERTIES;
 

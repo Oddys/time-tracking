@@ -38,7 +38,7 @@ public class DispatcherServlet extends HttpServlet {
                 .getCommand(req.getParameter("command"));
         String page = command.execute(req);
         if (page == null) {
-            resp.sendError(500);
+            resp.sendError(500); // FIXME
         }
         log.info("Forwarding to " + page);
         req.getRequestDispatcher(page).forward(req, resp);

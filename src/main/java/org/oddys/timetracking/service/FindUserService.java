@@ -5,5 +5,5 @@ import org.oddys.timetracking.dto.UserDto;
 import java.util.List;
 
 public interface FindUserService {
-    List<UserDto> search(String lastName);
+    List<UserDto> search(String lastName) throws ServiceException;
 }

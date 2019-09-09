@@ -17,6 +17,12 @@ public enum Commands {
         {
             command = ChangeLangCommand.getInstance();
         }
+    },
+
+    FIND_USER {
+        {
+            command = FindUserCommand.getInstance();
+        }
     };
 
     Command command;
