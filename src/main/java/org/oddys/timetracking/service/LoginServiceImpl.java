@@ -9,6 +9,7 @@ import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigManager;
+import org.oddys.timetracking.util.ModelMapperWrapper;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -38,7 +39,7 @@ public class LoginServiceImpl implements LoginService {
 //                userDto = new UserDto(user, role);
 //            }
             if (checkCredentials(login, password, user)) {
-                userDto = new ModelMapper().map(user, UserDto.class);
+                userDto = ModelMapperWrapper.getMapper().map(user, UserDto.class);
             }
         } catch (DaoException e) {
             throw new ServiceException(e);
