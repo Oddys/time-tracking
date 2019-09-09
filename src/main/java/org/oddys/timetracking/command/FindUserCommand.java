@@ -33,8 +33,9 @@ public class FindUserCommand implements Command {
             return null;
         }
         if (users.isEmpty()) {
-            req.setAttribute("message", "No user with last name " + lastName + " found" );
+            req.getSession().setAttribute("message", "No user with last name " + lastName + " found" ); // FIXME
         }
+        req.getSession().setAttribute("users", users);
         return ConfigManager.getInstance().getProperty(ConfigManager.USERS_LIST_PATH);
     }
 

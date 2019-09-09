@@ -35,7 +35,7 @@ public class FindUserServiceImpl implements FindUserService {
                 }
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return userDTOs;
     }

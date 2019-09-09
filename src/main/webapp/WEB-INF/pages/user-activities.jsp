@@ -9,7 +9,7 @@
             <th><fmt:message key="title.activity"/></th>
             <th></th>
         </tr>
-        <c:forEach var="activity" items="activities">
+        <c:forEach var="activity" items="${activities}">
             <td><c:out value="${activity}"/></td>
             <td></td>
         </c:forEach>
