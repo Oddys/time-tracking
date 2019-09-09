@@ -1,8 +1,7 @@
-package org.oddys.timetracking.transaction;
+package org.oddys.timetracking.connection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.connection.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

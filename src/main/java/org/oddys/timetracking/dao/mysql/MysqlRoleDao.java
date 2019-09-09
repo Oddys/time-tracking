@@ -2,7 +2,7 @@ package org.oddys.timetracking.dao.mysql;
 
 import org.oddys.timetracking.dao.RoleDao;
 import org.oddys.timetracking.entity.Role;
-import org.oddys.timetracking.transaction.ConnectionWrapper;
+import org.oddys.timetracking.connection.ConnectionWrapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

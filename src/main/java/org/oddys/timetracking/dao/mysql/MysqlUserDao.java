@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
-import org.oddys.timetracking.transaction.ConnectionWrapper;
+import org.oddys.timetracking.connection.ConnectionWrapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
