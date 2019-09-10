@@ -15,7 +15,7 @@
         </form>
         <h3><fmt:message key="activity.my"/></h3>
         <form action="controller">
-            <input type="hidden" name="command" value="show_my_activities"/>
+            <input type="hidden" name="command" value="show_user_activities"/>
             <input type="submit" value="<fmt:message key="button.show"/>"/>
         </form>
     </body>
