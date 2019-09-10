@@ -4,12 +4,12 @@ import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.dto.UserDto;
-import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FindUserServiceImpl implements FindUserService {
     private static final FindUserServiceImpl INSTANCE = new FindUserServiceImpl();
@@ -26,17 +26,12 @@ public class FindUserServiceImpl implements FindUserService {
 
     @Override
     public List<UserDto> search(String lastName) throws ServiceException {
-        List<UserDto> userDTOs = new ArrayList<>();
         try {
-            List<User> users = userDao.findByLastName(lastName);
-            if (!users.isEmpty()) {
-                for (User user: users) {
-                    userDTOs.add(ModelMapperWrapper.getMapper().map(user, UserDto.class));
-                }
-            }
+            return userDao.findByLastName(lastName).stream()
+                    .map(u -> ModelMapperWrapper.getMapper().map(u, UserDto.class))
+                    .collect(Collectors.toCollection(ArrayList::new));
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        return userDTOs;
     }
 }
