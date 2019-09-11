@@ -7,8 +7,10 @@
 <body>
     <h2>
         <fmt:message key="title.activities.user">
-            <fmt:param value="${user.firstName}"/>
-            <fmt:param value="${user.lastName}"/>
+<%--            <fmt:param value="${user.firstName}"/>--%>
+<%--            <fmt:param value="${user.lastName}"/>--%>
+            <fmt:param value="${userActivities[0].userFirstName}"/>
+            <fmt:param value="${userActivities[0].userLastName}"/>
         </fmt:message> </h2>
     <table>
         <tr>

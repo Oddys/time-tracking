@@ -1,3 +1,4 @@
+<%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
 <html>
 <head>
 </head>
@@ -11,11 +12,13 @@
         <h3><fmt:message key="activity.all"/></h3>
         <form action="controller">
             <input type="hidden" name="command" value="show_all_activities"/>
+            <input type="hidden" name="userId" value="user.userId"/>
             <input type="submit" value="<fmt:message key="button.show"/>"/>
         </form>
         <h3><fmt:message key="activity.my"/></h3>
         <form action="controller">
             <input type="hidden" name="command" value="show_user_activities"/>
+            <input type="hidden" name="userId" value="${user.userId}"/>
             <input type="submit" value="<fmt:message key="button.show"/>"/>
         </form>
     </body>

@@ -3,6 +3,7 @@ package org.oddys.timetracking.dao.mysql;
 import org.oddys.timetracking.connection.ConnectionWrapper;
 import org.oddys.timetracking.dao.UserActivityDao;
 import org.oddys.timetracking.entity.Activity;
+import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.entity.UserActivity;
 
 import java.sql.PreparedStatement;
@@ -14,8 +15,10 @@ import java.util.List;
 public class MysqlUserActivityDao implements UserActivityDao {
     private static final MysqlUserActivityDao INSTANCE = new MysqlUserActivityDao();
     private static final String FIND_ALL_BY_USER_ID = "SELECT ua.*, a.id AS activity_id, "
-            + "a.name AS activity_name, a.approved AS activity_approved FROM user_activities ua "
-            + "JOIN activities a ON ua.activity_id = a.id WHERE user_id = ?";
+            + "a.name AS activity_name, a.approved AS activity_approved, "
+            + "u.first_name AS user_first_name, u.last_name AS user_last_name FROM user_activities ua "
+            + "JOIN users u ON ua.user_id = u.id "
+            + "JOIN activities a ON ua.activity_id = a.id WHERE ua.user_id = ?";
 
     private MysqlUserActivityDao() {}
 
@@ -37,6 +40,11 @@ public class MysqlUserActivityDao implements UserActivityDao {
                 userActivity.setActivity(new Activity(rs.getLong("activity_id"),
                         rs.getString("activity_name"),
                         rs.getBoolean("activity_approved")));
+                User user = new User();  // FIXME
+                user.setId(userId);
+                user.setFirstName(rs.getString("user_first_name"));
+                user.setLastName(rs.getString("user_last_name"));
+                userActivity.setUser(user);
                 activities.add(userActivity);
             }
         } catch (SQLException e) {

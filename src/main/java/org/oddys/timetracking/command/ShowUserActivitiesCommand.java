@@ -25,13 +25,19 @@ public class ShowUserActivitiesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        UserDto userDto = ((UserDto) req.getSession().getAttribute("user"));
-        if (userDto == null) {
+//        UserDto userDto = ((UserDto) req.getSession().getAttribute("user"));
+//        if (userDto == null) {
+//            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+//        }
+        String userIdString = req.getParameter("userId");
+        if (userIdString == null) {
             return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
         }
+        Long userId = Long.valueOf(userIdString);
         List<UserActivityDto> userActivityDTOs = null;
         try {
-            userActivityDTOs = searchService.searchUserActivitiesByUserId(userDto.getUserId());
+//            userActivityDTOs = searchService.searchUserActivitiesByUserId(userDto.getUserId());
+            userActivityDTOs = searchService.searchUserActivitiesByUserId(userId);
         } catch (ServiceException e) {
             log.error("SearchUserActivitiesService failed", e);
             return null;

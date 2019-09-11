@@ -6,6 +6,9 @@ public class UserActivityDto {
     private Long activityId;
     private String activityName;
     private Boolean activityApproved;
+    private Long userId;
+    private String userFirstName;
+    private String userLastName;
 
     public UserActivityDto() {}
 
@@ -47,5 +50,29 @@ public class UserActivityDto {
 
     public void setActivityApproved(Boolean activityApproved) {
         this.activityApproved = activityApproved;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 }
