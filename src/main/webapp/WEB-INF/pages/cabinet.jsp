@@ -4,8 +4,12 @@
 </head>
 <body>
     <h2><fmt:message key="title.cabinet"/></h2>
-    <p><fmt:message key="greet.user"/><c:out value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"/></p>
-
+    <p>
+        <fmt:message key="greet.user">
+            <fmt:param value="${sessionScope.user.firstName}"/>
+            <fmt:param value="${sessionScope.user.lastName}"/>
+        </fmt:message>
+    </p>
 <%--    <form action="${pageContext.request.contextPath}/controller" method="post">--%>
     <form action="controller" method="post">
         <input type="hidden" name="command" value="logout"/>

@@ -14,7 +14,7 @@
 <table>
     <tr>
         <th><fmt:message key="user.user"/></th>
-        <th><fmt:message key="option"/></th>
+        <th><fmt:message key="action"/></th>
     </tr>
     <c:forEach var="currentUser" items="${users}">
         <tr>

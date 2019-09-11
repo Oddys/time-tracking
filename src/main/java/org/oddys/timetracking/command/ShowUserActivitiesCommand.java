@@ -36,4 +36,9 @@ public class ShowUserActivitiesCommand implements Command {
         req.getSession().setAttribute("userActivities", userActivityDTOs);
         return ConfigManager.getInstance().getProperty("path.user.activities");
     }
+
+    @Override
+    public String toString() {
+        return "ShowUserActivitiesCommand";
+    }
 }
