@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 public class ActivityRecord extends Entity {
     private LocalDate date;
-    private Short duration;
+    private Long duration;
     private Long userActivityId;
 
     public ActivityRecord() {
     }
 
-    public ActivityRecord(Long id, LocalDate date, Short duration, Long userActivityId) {
+    public ActivityRecord(Long id, LocalDate date, Long duration, Long userActivityId) {
         super(id);
         this.date = date;
         this.duration = duration;
@@ -25,11 +25,11 @@ public class ActivityRecord extends Entity {
         this.date = date;
     }
 
-    public Short getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(Short duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 

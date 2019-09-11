@@ -23,6 +23,12 @@ public enum Commands {
         {
             command = FindUserCommand.getInstance();
         }
+    },
+
+    SHOW_USER_ACTIVITIES {
+        {
+            command = ShowUserActivitiesCommand.getInstance();
+        }
     };
 
     Command command;

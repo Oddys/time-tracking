@@ -2,20 +2,20 @@ package org.oddys.timetracking.entity;
 
 public class UserActivity extends Entity {
     private Boolean assigned;
-    private Integer userId;
-    private Integer activityId;
+    private User user;
+    private Activity activity;
 
     public UserActivity() {
     }
 
-    public UserActivity(Long id, Boolean assigned, Integer userId, Integer activityId) {
+    public UserActivity(Long id, Boolean assigned, User user, Activity activity) {
         super(id);
         this.assigned = assigned;
-        this.userId = userId;
-        this.activityId = activityId;
+        this.user = user;
+        this.activity = activity;
     }
 
-    public Boolean isAssigned() {
+    public Boolean getAssigned() {
         return assigned;
     }
 
@@ -23,19 +23,19 @@ public class UserActivity extends Entity {
         this.assigned = assigned;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getActivityId() {
-        return activityId;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

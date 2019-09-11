@@ -17,13 +17,15 @@
         <th><fmt:message key="option"/></th>
     </tr>
     <c:forEach var="currentUser" items="${users}">
-        <td>${currentUser.firstName}&nbsp;${currentUser.lastName}</td>
-        <td>
-            <form action="controller">
-                <input type="hidden" name="command" value="show_user_activities"/>
-                <input type="submit" value="<fmt:message key="button.show"/>"/>
-            </form>
-        </td>
+        <tr>
+            <td>${currentUser.firstName}&nbsp;${currentUser.lastName}</td>
+            <td>
+                <form action="controller">
+                    <input type="hidden" name="command" value="show_user_activities"/>
+                    <input type="submit" value="<fmt:message key="button.show"/>"/>
+                </form>
+            </td>
+        </tr>
     </c:forEach>
 </table>
 <form action="${pageContext.request.contextPath}">

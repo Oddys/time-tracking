@@ -76,4 +76,15 @@ values ('john', 'john', 'John', 'Doe', 1),
     ('ivan', 'ivan', 'Іван', 'Іваненко', 2)
 ;
 
+insert into activities (name, approved)
+values ('Написання статті', true),
+      ('Проведення інтерв''ю', true),
+      ('Редагування', false)
+;
+
+insert into user_activities (assigned, user_id, activity_id)
+values (true, 2, 1),
+       (false, 2, 2)
+;
+
 commit;
