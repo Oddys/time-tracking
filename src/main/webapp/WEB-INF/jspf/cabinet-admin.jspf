@@ -16,7 +16,9 @@
     <form action="controller">
         <input type="hidden" name="command" value="find_user"/>
         <fmt:message key="user.lastname"/>:
-        <input type="text" name="lastName" value=""/>
+        <input type="text" name="lastName" value="" required
+               oninvalid="this.setCustomValidity('<fmt:message key="user.search.error.nolastname"/>')"
+               oninput="setCustomValidity('')"/>
         <input type="submit" value="<fmt:message key="button.search"/>"/>
     </form>
 </body>

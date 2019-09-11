@@ -1,5 +1,6 @@
 package org.oddys.timetracking.command;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.UserDto;
@@ -24,8 +25,11 @@ public class FindUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        List<UserDto> users = null;
         String lastName = req.getParameter("lastName");
+        if (StringUtils.isBlank(lastName)) {
+            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+        }
+        List<UserDto> users = null;
         try {
             users = findUserService.search(lastName);
         } catch (ServiceException e) {
