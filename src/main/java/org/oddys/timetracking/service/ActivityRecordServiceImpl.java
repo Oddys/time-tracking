@@ -28,9 +28,11 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     }
 
     @Override
-    public long getNumberOfRows() throws ServiceException {
+    public long getNumberOfPages(int rowsPerPage) throws ServiceException {
         try {
-            return dao.getNumberOfRows();
+            long numRows = dao.getNumberOfRows();
+            long numPages = numRows / rowsPerPage;
+            return numRows % rowsPerPage == 0 ? numPages : ++numPages;
         } catch (DaoException e) {
             throw new ServiceException("Failed to obtain number of rows", e);
         }

@@ -23,17 +23,14 @@ public class ShowActivityRecordsCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         long currentPage = Long.parseLong(req.getParameter("currentPage")); // TODO Check for exceptions
-        int recordsPerPage = Integer.parseInt(req.getParameter("recordsPerPage"));
+        int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
-            req.setAttribute("activityRecords", service.findActivityRecords(currentPage, recordsPerPage));
-            long numRows =  service.getNumberOfRows();
-            long numPages = numRows / recordsPerPage;
-            if (numRows / recordsPerPage != 0) {
-                numPages++;
-            }
-            req.setAttribute("numPages", numPages);
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("recordsPerPage", recordsPerPage);
+            req.getSession().setAttribute("activityRecords",
+                    service.findActivityRecords(currentPage, rowsPerPage));
+            req.getSession().setAttribute("numPages",
+                    service.getNumberOfPages(rowsPerPage));
+            req.getSession().setAttribute("currentPage", currentPage);
+            req.getSession().setAttribute("rowsPerPage", rowsPerPage);
             return ConfigManager.getInstance().getProperty("path.activity.records");
         } catch (ServiceException e) {
             log.error("ActivityRecordService failed to obtain the number of rows", e);  // FIXME
