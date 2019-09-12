@@ -22,11 +22,19 @@ public class ShowActivityRecordsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        long currentPage = Long.parseLong(req.getParameter("currentPage")); // TODO Check for exceptions
+        int recordsPerPage = Integer.parseInt(req.getParameter("recordsPerPage"));
         try {
-            req.getSession().setAttribute("numRows", service.getNumberOfRows());
+            req.setAttribute("activityRecords", service.findActivityRecords(currentPage, recordsPerPage));
+            long numRows =  service.getNumberOfRows();
+            long numPages = numRows / recordsPerPage;
+            if (numRows / recordsPerPage != 0) {
+                numPages++;
+            }
+            req.setAttribute("numPages", numPages);
             return ConfigManager.getInstance().getProperty("path.activity.records");
         } catch (ServiceException e) {
-            log.error("ActivityRecordService failed to obtain the number of rows", e);
+            log.error("ActivityRecordService failed to obtain the number of rows", e);  // FIXME
             return null;
         }
     }

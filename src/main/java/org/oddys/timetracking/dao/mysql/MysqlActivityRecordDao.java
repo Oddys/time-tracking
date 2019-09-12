@@ -38,18 +38,17 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public List<ActivityRecord> findActivityRecords(int currentPage, int recordsPerPage) throws DaoException {
+    public List<ActivityRecord> findActivityRecords(long currentPage, int recordsPerPage) throws DaoException {
         List<ActivityRecord> records = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance()
                              .getProperty("sql.activity.record.find.all.page"))) {
-            statement.setInt(1, currentPage);
+            statement.setLong(1, currentPage);
             statement.setInt(2, recordsPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                records.add(EntityMapper.getInstance()
-                        .mapActivityRecord(rs));
+                records.add(EntityMapper.getInstance().mapActivityRecord(rs));
             }
         } catch (SQLException e) {
             throw new DaoException("Failed to retrieve a page of records", e);

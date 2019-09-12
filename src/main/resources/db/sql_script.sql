@@ -87,4 +87,14 @@ values (true, 2, 1),
        (false, 2, 2)
 ;
 
+insert into activity_records (activity_date, duration, user_activity_id)
+values ('2019-01-01', 8, 1),
+       ('2019-01-02', 8, 1),
+       ('2019-01-03', 8, 1),
+       ('2019-01-04', 8, 1),
+       ('2019-01-05', 8, 1),
+       ('2019-01-06', 8, 1),
+       ('2019-01-07', 8, 1)
+;
+
 commit;

@@ -8,5 +8,5 @@ import java.util.List;
 public interface ActivityRecordDao {
     long getNumberOfRows() throws DaoException;
 
-    List<ActivityRecord> findActivityRecords(int currentPage, int RecordsPerPage) throws DaoException;
+    List<ActivityRecord> findActivityRecords(long currentPage, int RecordsPerPage) throws DaoException;
 }
