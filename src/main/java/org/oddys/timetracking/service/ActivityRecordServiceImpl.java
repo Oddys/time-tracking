@@ -39,9 +39,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     }
 
     @Override
-    public List<ActivityRecordDto> findActivityRecords(long currentPage, int recordsPerPage) throws ServiceException {
+    public List<ActivityRecordDto> findActivityRecords(long userActivityId, long currentPage, int recordsPerPage) throws ServiceException {
         try {
-            return dao.findActivityRecords(currentPage, recordsPerPage).stream()
+            return dao.findActivityRecords(userActivityId, currentPage, recordsPerPage).stream()
                     .map(ar -> ModelMapperWrapper.getMapper().map(ar, ActivityRecordDto.class))
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (DaoException e) {

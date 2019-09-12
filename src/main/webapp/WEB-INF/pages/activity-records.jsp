@@ -2,6 +2,7 @@
 <%--@elvariable id="currentPage" type="java.util.Long"--%>
 <%--@elvariable id="numPages" type="java.util.Long"--%>
 <%--@elvariable id="rowsPerPage" type="java.util.Integer"--%>
+<%--@elvariable id="userActivityId" type="java.util.Long"--%>
 <html>
 <head>
     <title>Activity Records</title>
@@ -32,7 +33,7 @@
     <ul>
         <c:if test="${currentPage != 1}">
             <li>
-                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
                     <fmt:message key="nav.previous"/>
                 </a>
             </li>
@@ -43,17 +44,20 @@
                     <li>${i}</li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
+                    <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
         <c:if test="${currentPage lt numPages}">
             <li>
-                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
                     <fmt:message key="nav.next"/>
                 </a>
             </li>
         </c:if>
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="add_activity_records"/>
+        </form>
     </ul>
 </body>
 </html>

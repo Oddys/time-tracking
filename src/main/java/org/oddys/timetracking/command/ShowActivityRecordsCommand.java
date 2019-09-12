@@ -22,13 +22,15 @@ public class ShowActivityRecordsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
         long currentPage = Long.parseLong(req.getParameter("currentPage")); // TODO Check for exceptions
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
             req.getSession().setAttribute("activityRecords",
-                    service.findActivityRecords(currentPage, rowsPerPage));
+                    service.findActivityRecords(userActivityId, currentPage, rowsPerPage));
             req.getSession().setAttribute("numPages",
                     service.getNumberOfPages(rowsPerPage));
+            req.getSession().setAttribute("userActivityId", userActivityId);
             req.getSession().setAttribute("currentPage", currentPage);
             req.getSession().setAttribute("rowsPerPage", rowsPerPage);
             return ConfigManager.getInstance().getProperty("path.activity.records");
