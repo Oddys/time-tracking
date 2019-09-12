@@ -25,11 +25,13 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public int getNumberOfRows() throws DaoException {
+    public long getNumberOfRows() throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              Statement statement = connectionWrapper.createStatement()) {
-            return statement.executeQuery(ConfigManager.getInstance()
-                    .getProperty("sql.activity.record.count.rows")).getInt("num_rows");
+            ResultSet rs = statement.executeQuery(
+                    ConfigManager.getInstance().getProperty("sql.activity.record.count.rows"));
+            rs.next();
+            return rs.getLong("num_rows");
         } catch (SQLException e) {
             throw new DaoException("Failed to get the number of rows", e);
         }

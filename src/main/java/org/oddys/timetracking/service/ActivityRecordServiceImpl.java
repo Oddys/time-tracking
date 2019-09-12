@@ -6,6 +6,7 @@ import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.util.ConfigManager;
 
 public class ActivityRecordServiceImpl implements ActivityRecordService {
+    private static final ActivityRecordService INSTANCE = new ActivityRecordServiceImpl();
     private ActivityRecordDao dao;
 
     private ActivityRecordServiceImpl() {
@@ -13,8 +14,12 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
         dao = DaoFactoryProvider.getInstance().getFactory(dbmsName).getActivityRecordDao();
     }
 
+    public static ActivityRecordService getInstance() {
+        return INSTANCE;
+    }
+
     @Override
-    public int getNumberOfRows() throws ServiceException {
+    public long getNumberOfRows() throws ServiceException {
         try {
             return dao.getNumberOfRows();
         } catch (DaoException e) {
