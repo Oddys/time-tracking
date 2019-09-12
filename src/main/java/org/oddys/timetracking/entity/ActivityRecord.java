@@ -5,16 +5,16 @@ import java.time.LocalDate;
 public class ActivityRecord extends Entity {
     private LocalDate date;
     private Long duration;
-    private Long userActivityId;
+    private UserActivity userActivity;
 
     public ActivityRecord() {
     }
 
-    public ActivityRecord(Long id, LocalDate date, Long duration, Long userActivityId) {
+    public ActivityRecord(Long id, LocalDate date, Long duration, UserActivity userActivity) {
         super(id);
         this.date = date;
         this.duration = duration;
-        this.userActivityId = userActivityId;
+        this.userActivity = userActivity;
     }
 
     public LocalDate getDate() {
@@ -33,11 +33,11 @@ public class ActivityRecord extends Entity {
         this.duration = duration;
     }
 
-    public Long getUserActivityId() {
-        return userActivityId;
+    public UserActivity getUserActivity() {
+        return userActivity;
     }
 
-    public void setUserActivityId(Long userActivityId) {
-        this.userActivityId = userActivityId;
+    public void setUserActivity(UserActivity userActivity) {
+        this.userActivity = userActivity;
     }
 }
