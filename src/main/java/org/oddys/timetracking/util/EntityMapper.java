@@ -47,7 +47,13 @@ public class EntityMapper {
         );
     }
 
-    public Activity mapActivity(ResultSet rs) {return null;}
+    public Activity mapActivity(ResultSet rs) throws SQLException {
+        return new Activity(
+                rs.getLong("activity_id"),
+                rs.getString("activity_name"),
+                rs.getBoolean("approved")
+        );
+    }
 
     public Role mapRole(ResultSet rs) throws SQLException {
         return new Role(rs.getLong("role_id"), rs.getString("role_name"));
