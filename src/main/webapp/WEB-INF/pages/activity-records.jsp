@@ -3,6 +3,7 @@
 <%--@elvariable id="numPages" type="java.util.Long"--%>
 <%--@elvariable id="rowsPerPage" type="java.util.Integer"--%>
 <%--@elvariable id="userActivityId" type="java.util.Long"--%>
+<%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
 <html>
 <head>
     <title><fmt:message key="title.activity.records"/></title>
@@ -55,9 +56,13 @@
                 </a>
             </li>
         </c:if>
-        <form action="controller" method="post">
-            <input type="hidden" name="command" value="add_activity_records"/>
-        </form>
+        <c:if test="${user.roleName eq 'USER'}">
+            <form action="controller" method="post">
+                <input type="hidden" name="command" value="add_activity_record"/>
+                <input type="hidden" name="userActivityId" value="${userActivityId}"/>
+                <input type="submit" value="Add Record"/>
+            </form>
+        </c:if>
     </ul>
 </body>
 </html>
