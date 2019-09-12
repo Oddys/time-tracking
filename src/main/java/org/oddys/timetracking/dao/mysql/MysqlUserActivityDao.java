@@ -14,11 +14,11 @@ import java.util.List;
 
 public class MysqlUserActivityDao implements UserActivityDao {
     private static final MysqlUserActivityDao INSTANCE = new MysqlUserActivityDao();
-    private static final String FIND_ALL_BY_USER_ID = "SELECT ua.*, a.id AS activity_id, "
-            + "a.name AS activity_name, a.approved AS activity_approved, "
-            + "u.first_name AS user_first_name, u.last_name AS user_last_name FROM user_activities ua "
-            + "JOIN users u ON ua.user_id = u.id "
-            + "JOIN activities a ON ua.activity_id = a.id WHERE ua.user_id = ?";
+    private static final String FIND_ALL_BY_USER_ID = "SELECT ua.*, a.activity_id, "
+            + "a.activity_name, a.approved, "
+            + "u.first_name, u.last_name FROM user_activities ua "
+            + "JOIN users u ON ua.user_id = u.user_id "
+            + "JOIN activities a ON ua.activity_id = a.activity_id WHERE ua.user_id = ?";
 
     private MysqlUserActivityDao() {}
 
@@ -35,15 +35,15 @@ public class MysqlUserActivityDao implements UserActivityDao {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 UserActivity userActivity = new UserActivity();
-                userActivity.setId(rs.getLong("id"));
+                userActivity.setId(rs.getLong("user_activity_id"));
                 userActivity.setAssigned(rs.getBoolean("assigned"));
                 userActivity.setActivity(new Activity(rs.getLong("activity_id"),
                         rs.getString("activity_name"),
-                        rs.getBoolean("activity_approved")));
+                        rs.getBoolean("approved")));
                 User user = new User();  // FIXME
                 user.setId(userId);
-                user.setFirstName(rs.getString("user_first_name"));
-                user.setLastName(rs.getString("user_last_name"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
                 userActivity.setUser(user);
                 activities.add(userActivity);
             }

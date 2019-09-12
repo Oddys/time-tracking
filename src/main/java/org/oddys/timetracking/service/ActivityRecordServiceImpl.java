@@ -1,5 +1,7 @@
 package org.oddys.timetracking.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.ActivityRecordDao;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.mysql.DaoException;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ActivityRecordServiceImpl implements ActivityRecordService {
+    private static final Logger log = LogManager.getLogger();
     private static final ActivityRecordService INSTANCE = new ActivityRecordServiceImpl();
     private ActivityRecordDao dao;
 

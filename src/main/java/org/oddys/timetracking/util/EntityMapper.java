@@ -21,7 +21,7 @@ public class EntityMapper {
     public ActivityRecord mapActivityRecord(ResultSet rs) throws SQLException {
         UserActivity userActivity = mapUserActivity(rs);
         return new ActivityRecord(
-                rs.getLong("id"),
+                rs.getLong("activity_record_id"),
                 rs.getDate("activity_date").toLocalDate(),
                 rs.getLong("duration"),
                 userActivity

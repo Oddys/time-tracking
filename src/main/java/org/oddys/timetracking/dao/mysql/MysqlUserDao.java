@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.connection.ConnectionWrapper;
+import org.oddys.timetracking.util.EntityMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +16,8 @@ import java.util.List;
 public class MysqlUserDao implements UserDao {
     private static final Logger log = LogManager.getLogger();
     private static final MysqlUserDao INSTANCE = new MysqlUserDao();
-    private static final String FIND_BY_LOGIN = "SELECT u.*, r.name role_name FROM users u JOIN roles r on u.role_id = r.id WHERE u.login = ?";
-    private static final String FIND_BY_LAST_NAME = "SELECT u.*, r.name role_name FROM users u JOIN roles r on u.role_id = r.id WHERE u.last_name = ?";
+    private static final String FIND_BY_LOGIN = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.login = ?";
+    private static final String FIND_BY_LAST_NAME = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.last_name = ?";
 
     private MysqlUserDao() {}
 
@@ -31,7 +32,7 @@ public class MysqlUserDao implements UserDao {
             ResultSet rs = statement.executeQuery();
             User user = null;
             if (rs.next()) {
-                user = retrieveUser(rs);
+                user = EntityMapper.getInstance().mapUser(rs);
             }
             return user;
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class MysqlUserDao implements UserDao {
             statement.setString(1, lastName);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                users.add(retrieveUser(rs));
+                users.add(EntityMapper.getInstance().mapUser(rs));
             }
         } catch (SQLException e) {
             throw new DaoException("Failed to find User by last name", e);
@@ -79,17 +80,5 @@ public class MysqlUserDao implements UserDao {
     @Override
     public boolean delete(Long id) {
         return false;
-    }
-
-    private User retrieveUser(ResultSet rs) throws SQLException {
-        return new User(
-                rs.getLong("id"),
-                rs.getString("login"),
-                rs.getString("password").toCharArray(),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
-                rs.getLong("role_id"),
-                rs.getString("role_name")
-        );
     }
 }
