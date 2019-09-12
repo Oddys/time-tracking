@@ -8,6 +8,8 @@ public class ActivityRecordDto {
     private LocalDate activityDate;
     private Long duration;
     private Long userId;
+    private String userFirstName;
+    private String userLastName;
     private Long activityId;
 
     public ActivityRecordDto() {}
@@ -50,6 +52,22 @@ public class ActivityRecordDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
     public Long getActivityId() {

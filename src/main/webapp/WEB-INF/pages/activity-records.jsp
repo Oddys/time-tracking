@@ -7,15 +7,19 @@
     <title>Activity Records</title>
 </head>
 <body>
-    <h2>Activity ${activityRecords[0].activityName}</h2>
-    DEBUG:<br/>
-    Current page: ${currentPage}<br/>
-    Records per page: ${rowsPerPage}<br/>
-    Num pages: ${numPages}<br/>
+    <h2>
+        <c:if test="${not empty activityRecords}">
+            <fmt:message key='title.activity.records'>
+                <fmt:param value='${activityRecords[0].userFirstName}'/>
+                <fmt:param value='${activityRecords[0].userLastName}'/>
+                <fmt:param value='${activityRecords[0].activityName}'/>
+            </fmt:message>
+        </c:if>
+    </h2>
     <table>
         <tr>
-            <th>Date</th>
-            <th>Duration</th>
+            <th><fmt:message key="date"/></th>
+            <th><fmt:message key="duration"/></th>
         </tr>
         <c:forEach items="${activityRecords}" var="record">
             <tr>
@@ -27,7 +31,10 @@
 
     <ul>
         <c:if test="${currentPage != 1}">
-            <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">Previous</a>
+            <li>
+                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                    <fmt:message key="nav.previous"/>
+                </a>
             </li>
         </c:if>
         <c:forEach begin="1" end="${numPages}" var="i">
@@ -41,7 +48,10 @@
             </c:choose>
         </c:forEach>
         <c:if test="${currentPage lt numPages}">
-            <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">Next</a>
+            <li>
+                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                    <fmt:message key="nav.next"/>
+                </a>
             </li>
         </c:if>
     </ul>
