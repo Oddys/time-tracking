@@ -32,10 +32,17 @@ public class ShowActivityRecordsCommand implements Command {
                 numPages++;
             }
             req.setAttribute("numPages", numPages);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("recordsPerPage", recordsPerPage);
             return ConfigManager.getInstance().getProperty("path.activity.records");
         } catch (ServiceException e) {
             log.error("ActivityRecordService failed to obtain the number of rows", e);  // FIXME
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ShowActivityRecordsCommand";
     }
 }

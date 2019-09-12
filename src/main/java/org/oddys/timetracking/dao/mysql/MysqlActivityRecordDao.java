@@ -44,7 +44,7 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance()
                              .getProperty("sql.activity.record.find.all.page"))) {
-            statement.setLong(1, currentPage);
+            statement.setLong(1, (currentPage - 1) * recordsPerPage);
             statement.setInt(2, recordsPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
