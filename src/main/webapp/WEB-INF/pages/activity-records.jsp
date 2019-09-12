@@ -30,39 +30,40 @@
             </tr>
         </c:forEach>
     </table>
-
-    <ul>
-        <c:if test="${currentPage != 1}">
-            <li>
-                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
-                    <fmt:message key="nav.previous"/>
-                </a>
-            </li>
-        </c:if>
-        <c:forEach begin="1" end="${numPages}" var="i">
-            <c:choose>
-                <c:when test="${currentPage eq i}">
-                    <li>${i}</li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-        <c:if test="${currentPage lt numPages}">
-            <li>
-                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
-                    <fmt:message key="nav.next"/>
-                </a>
-            </li>
-        </c:if>
-        <c:if test="${user.roleName eq 'USER'}">
-            <form action="controller">
-                <input type="hidden" name="command" value="add_activity_record"/>
-                <input type="hidden" name="userActivityId" value="${userActivityId}"/>
-                <input type="submit" value="Add Record"/>
-            </form>
-        </c:if>
-    </ul>
+    <c:if test="${not empty activityRecords}">
+        <ul>
+            <c:if test="${currentPage != 1}">
+                <li>
+                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                        <fmt:message key="nav.previous"/>
+                    </a>
+                </li>
+            </c:if>
+            <c:forEach begin="1" end="${numPages}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <li>${i}</li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${currentPage lt numPages}">
+                <li>
+                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                        <fmt:message key="nav.next"/>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${user.roleName eq 'USER'}">
+                <form action="controller">
+                    <input type="hidden" name="command" value="add_activity_record"/>
+                    <input type="hidden" name="userActivityId" value="${userActivityId}"/>
+                    <input type="submit" value="Add Record"/>
+                </form>
+            </c:if>
+        </ul>
+    </c:if>
 </body>
 </html>
