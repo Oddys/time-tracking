@@ -2,7 +2,7 @@
 <%--@elvariable id="users" type="java.util.List"--%>
 <html>
 <head>
-    <title>Users List</title>
+    <title><fmt:message key="title.users"/></title>
 </head>
 <body>
 <h2><fmt:message key="user.search.heading"/></h2>

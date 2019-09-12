@@ -5,12 +5,12 @@
 <%--@elvariable id="userActivityId" type="java.util.Long"--%>
 <html>
 <head>
-    <title>Activity Records</title>
+    <title><fmt:message key="title.activity.records"/></title>
 </head>
 <body>
     <h2>
         <c:if test="${not empty activityRecords}">
-            <fmt:message key='title.activity.records'>
+            <fmt:message key='title.user.activity.records'>
                 <fmt:param value='${activityRecords[0].userFirstName}'/>
                 <fmt:param value='${activityRecords[0].userLastName}'/>
                 <fmt:param value='${activityRecords[0].activityName}'/>
