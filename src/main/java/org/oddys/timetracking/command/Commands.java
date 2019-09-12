@@ -35,6 +35,12 @@ public enum Commands {
         {
             command = ShowActivityRecordsCommand.getInstance();
         }
+    },
+
+    ADD_ACTIVITY_RECORD {
+        {
+            command = AddActivityRecordCommand.getInstance();
+        }
     };
 
     Command command;

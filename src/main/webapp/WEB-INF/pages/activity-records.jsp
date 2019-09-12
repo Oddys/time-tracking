@@ -57,7 +57,7 @@
             </li>
         </c:if>
         <c:if test="${user.roleName eq 'USER'}">
-            <form action="controller" method="post">
+            <form action="controller">
                 <input type="hidden" name="command" value="add_activity_record"/>
                 <input type="hidden" name="userActivityId" value="${userActivityId}"/>
                 <input type="submit" value="Add Record"/>
