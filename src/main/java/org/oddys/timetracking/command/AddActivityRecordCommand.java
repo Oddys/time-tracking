@@ -2,8 +2,10 @@ package org.oddys.timetracking.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.service.ActivityRecordService;
 import org.oddys.timetracking.service.ActivityRecordServiceImpl;
 import org.oddys.timetracking.service.ServiceException;
+import org.oddys.timetracking.transaction.TransactionProxy;
 import org.oddys.timetracking.util.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AddActivityRecordCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Command INSTANCE = new AddActivityRecordCommand();
+    private ActivityRecordService service = TransactionProxy.getInstance()
+            .getProxy(ActivityRecordServiceImpl.getInstance());
 
     private AddActivityRecordCommand() {}
 
@@ -29,8 +33,8 @@ public class AddActivityRecordCommand implements Command {
             return req.getParameter("sentFromPage");
         }
         try {
-            int numRowsAffected = ActivityRecordServiceImpl.getInstance().addActivityRecord(
-                    req.getParameter("date"), req.getParameter("duration"),
+            int numRowsAffected = service.addActivityRecord(req.getParameter("date"),
+                    req.getParameter("duration"),
                     (Long) req.getSession().getAttribute("userActivityId"));
             if (numRowsAffected == 0) {
                 req.setAttribute("errorMessage", "Record already exists");

@@ -52,12 +52,12 @@ create table user_activities (
 );
 
 create table activity_records (
-    activity_record_id serial,
+    activity_record_id serial, -- FIXME It is unnecessary, can be deleted here and from entity
     activity_date date not null,
     duration bigint unsigned not null,
     user_activity_id bigint unsigned not null,
 
-    primary key (activity_record_id),
+    primary key (activity_date, user_activity_id),
     foreign key fk_user_activity_id (user_activity_id)
     references user_activities (user_activity_id)
     on update restrict

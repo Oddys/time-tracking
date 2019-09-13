@@ -39,7 +39,7 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public List<ActivityRecord> findActivityRecords(long userActivityId, long currentPage, int recordsPerPage) throws DaoException {
+    public List<ActivityRecord> findAllByUserActivityId(long userActivityId, long currentPage, int recordsPerPage) throws DaoException {
         List<ActivityRecord> records = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
@@ -58,7 +58,23 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
         return records;
     }
 
-    public int addActivityRecord(Date date, Long duration, Long userActivityId) throws DaoException {
+    @Override
+    public boolean exists(Date date, Long userActivityId)
+            throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.activity.record.check"))) {
+            statement.setDate(1, date);
+            statement.setLong(2, userActivityId);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return rs.getInt("count") > 0;
+        } catch (SQLException e) {
+            throw new DaoException("Failed to check existence of ActivityRecord", e);
+        }
+    }
+
+    public int add(Date date, Long duration, Long userActivityId) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.add"))) {

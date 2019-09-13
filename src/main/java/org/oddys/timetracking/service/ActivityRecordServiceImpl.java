@@ -10,7 +10,6 @@ import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,8 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     @Override
     public List<ActivityRecordDto> findActivityRecords(long userActivityId, long currentPage, int recordsPerPage) throws ServiceException {
         try {
-            return dao.findActivityRecords(userActivityId, currentPage, recordsPerPage).stream()
+            return dao.findAllByUserActivityId(userActivityId, currentPage, recordsPerPage)
+                    .stream()
                     .map(ar -> ModelMapperWrapper.getMapper().map(ar, ActivityRecordDto.class))
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (DaoException e) {
@@ -56,9 +56,12 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     public int addActivityRecord(String dateString, String durationString,
             Long userActivityId) throws ServiceException {
         try {
-            LocalDate date = LocalDate.parse(dateString);
+            Date date = Date.valueOf(dateString);
             Long duration = Long.valueOf(durationString);
-            return dao.addActivityRecord(Date.valueOf(date), duration, userActivityId);
+            if (dao.exists(date, userActivityId)) {
+                return 0;
+            }
+            return dao.add(date, duration, userActivityId);
         } catch (DateTimeParseException | NumberFormatException e) {
             throw new ServiceException("ActivityRecordService failed to parse parameters", e);
         } catch (DaoException e) {
