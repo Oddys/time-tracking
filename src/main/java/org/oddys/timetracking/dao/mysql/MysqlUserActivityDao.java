@@ -2,9 +2,9 @@ package org.oddys.timetracking.dao.mysql;
 
 import org.oddys.timetracking.connection.ConnectionWrapper;
 import org.oddys.timetracking.dao.UserActivityDao;
-import org.oddys.timetracking.entity.Activity;
-import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.entity.UserActivity;
+import org.oddys.timetracking.util.ConfigManager;
+import org.oddys.timetracking.util.EntityMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +14,6 @@ import java.util.List;
 
 public class MysqlUserActivityDao implements UserActivityDao {
     private static final MysqlUserActivityDao INSTANCE = new MysqlUserActivityDao();
-    private static final String FIND_ALL_BY_USER_ID = "SELECT ua.*, a.activity_id, "
-            + "a.activity_name, a.approved, "
-            + "u.first_name, u.last_name FROM user_activities ua "
-            + "JOIN users u ON ua.user_id = u.user_id "
-            + "JOIN activities a ON ua.activity_id = a.activity_id WHERE ua.user_id = ?";
 
     private MysqlUserActivityDao() {}
 
@@ -30,22 +25,12 @@ public class MysqlUserActivityDao implements UserActivityDao {
     public List<UserActivity> findAllByUserId(Long userId) throws DaoException {
         List<UserActivity> activities = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             PreparedStatement preparedStatement = connectionWrapper.prepareStatement(FIND_ALL_BY_USER_ID)) {
-            preparedStatement.setLong(1, userId);
-            ResultSet rs = preparedStatement.executeQuery();
+             PreparedStatement statement = connectionWrapper.prepareStatement(ConfigManager.getInstance()
+                     .getProperty("sql.user.activity.find.all.by.user.id"))) {
+            statement.setLong(1, userId);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                UserActivity userActivity = new UserActivity();
-                userActivity.setId(rs.getLong("user_activity_id"));
-                userActivity.setAssigned(rs.getBoolean("assigned"));
-                userActivity.setActivity(new Activity(rs.getLong("activity_id"),
-                        rs.getString("activity_name"),
-                        rs.getBoolean("approved")));
-                User user = new User();  // FIXME
-                user.setId(userId);
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                userActivity.setUser(user);
-                activities.add(userActivity);
+                activities.add(EntityMapper.getInstance().mapUserActivity(rs));
             }
         } catch (SQLException e) {
             throw new DaoException("Failed to find all by User's ID", e);

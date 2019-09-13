@@ -2,15 +2,18 @@ package org.oddys.timetracking.entity;
 
 public class UserActivity extends Entity {
     private Boolean assigned;
+    private Boolean statusChangeRequested;
     private User user;
     private Activity activity;
 
     public UserActivity() {
     }
 
-    public UserActivity(Long id, Boolean assigned, User user, Activity activity) {
+    public UserActivity(Long id, Boolean assigned, Boolean statusChangeRequested,
+            User user, Activity activity) {
         super(id);
         this.assigned = assigned;
+        this.statusChangeRequested = statusChangeRequested;
         this.user = user;
         this.activity = activity;
     }
@@ -21,6 +24,14 @@ public class UserActivity extends Entity {
 
     public void setAssigned(Boolean assigned) {
         this.assigned = assigned;
+    }
+
+    public Boolean getStatusChangeRequested() {
+        return statusChangeRequested;
+    }
+
+    public void setStatusChangeRequested(Boolean statusChangeRequested) {
+        this.statusChangeRequested = statusChangeRequested;
     }
 
     public User getUser() {

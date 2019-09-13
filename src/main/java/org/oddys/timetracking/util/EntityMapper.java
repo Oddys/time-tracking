@@ -20,39 +20,36 @@ public class EntityMapper {
 
     public ActivityRecord mapActivityRecord(ResultSet rs) throws SQLException {
         UserActivity userActivity = mapUserActivity(rs);
-        return new ActivityRecord(
-                rs.getLong("activity_record_id"),
-                rs.getDate("activity_date").toLocalDate(),
-                rs.getLong("duration"),
-                userActivity
-        );
+        return new ActivityRecord(rs.getLong("activity_record_id"),
+                                  rs.getDate("activity_date").toLocalDate(),
+                                  rs.getLong("duration"),
+                                  userActivity);
     }
 
     public UserActivity mapUserActivity(ResultSet rs) throws SQLException {
         User user = mapUser(rs);
         Activity activity = mapActivity(rs);
         return new UserActivity(rs.getLong("user_activity_id"),
-                rs.getBoolean("assigned"), user, activity);
+                                rs.getBoolean("assigned"),
+                                rs.getBoolean("status_change_requested"),
+                                user,
+                                activity);
     }
 
     public User mapUser(ResultSet rs) throws SQLException {
         Role role = mapRole(rs);
-        return new User(
-                rs.getLong("user_id"),
-                rs.getString("login"),
-                rs.getString("password").toCharArray(),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
-                role
-        );
+        return new User(rs.getLong("user_id"),
+                        rs.getString("login"),
+                        rs.getString("password").toCharArray(),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        role);
     }
 
     public Activity mapActivity(ResultSet rs) throws SQLException {
-        return new Activity(
-                rs.getLong("activity_id"),
-                rs.getString("activity_name"),
-                rs.getBoolean("approved")
-        );
+        return new Activity(rs.getLong("activity_id"),
+                            rs.getString("activity_name"),
+                            rs.getBoolean("approved"));
     }
 
     public Role mapRole(ResultSet rs) throws SQLException {

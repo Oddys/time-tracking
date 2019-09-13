@@ -11,10 +11,5 @@
             <jsp:forward page="/WEB-INF/pages/cabinet.jsp"/>
         </c:otherwise>
     </c:choose>
-
-    ${pageContext.request.requestURI}<br/>
-    ${pageContext.request.requestURL}<br/>
-    ${pageContext.request.contextPath}<br/>
-    ${pageContext.request.servletPath}<br/>
 </body>
 </html>

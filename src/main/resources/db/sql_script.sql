@@ -37,6 +37,7 @@ create table activities (
 create table user_activities (
     user_activity_id serial,
     assigned boolean not null,
+    status_change_requested boolean not null,
     user_id bigint unsigned not null,
     activity_id bigint unsigned not null,
 
@@ -82,9 +83,9 @@ values ('Написання статті', true),
       ('Редагування', false)
 ;
 
-insert into user_activities (assigned, user_id, activity_id)
-values (true, 2, 1),
-       (false, 2, 2)
+insert into user_activities (assigned, status_change_requested, user_id, activity_id)
+values (true, false, 2, 1),
+       (false, true, 2, 2)
 ;
 
 insert into activity_records (activity_date, duration, user_activity_id)
