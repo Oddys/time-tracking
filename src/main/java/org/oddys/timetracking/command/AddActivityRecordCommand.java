@@ -15,10 +15,6 @@ public class AddActivityRecordCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        if ("GET".equals(req.getMethod())) {
-            req.getSession().setAttribute("userActivityId", req.getParameter("userActivityId"));
-            return ConfigManager.getInstance().getProperty("path.activity.add");
-        }
         return null;
     }
 }

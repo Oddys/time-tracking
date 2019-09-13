@@ -58,8 +58,8 @@
             </c:if>
             <c:if test="${user.roleName eq 'USER'}">
                 <form action="controller">
-                    <input type="hidden" name="command" value="add_activity_record"/>
-                    <input type="hidden" name="userActivityId" value="${userActivityId}"/>
+                    <input type="hidden" name="command" value="forward"/>
+                    <input type="hidden" name="targetPage" value="/WEB-INF/pages/add-activity.jsp"/>
                     <input type="submit" value="Add Record"/>
                 </form>
             </c:if>

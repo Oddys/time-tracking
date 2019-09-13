@@ -41,6 +41,12 @@ public enum Commands {
         {
             command = AddActivityRecordCommand.getInstance();
         }
+    },
+
+    FORWARD {
+        {
+            command = ForwardCommand.getInstance();
+        }
     };
 
     Command command;
