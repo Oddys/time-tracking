@@ -6,6 +6,7 @@ import org.oddys.timetracking.entity.ActivityRecord;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.EntityMapper;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,5 +56,18 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
             throw new DaoException("Failed to retrieve a page of records", e);
         }
         return records;
+    }
+
+    public int addActivityRecord(Date date, Long duration, Long userActivityId) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.activity.record.add"))) {
+            statement.setDate(1, date);
+            statement.setLong(2, duration);
+            statement.setLong(3, userActivityId);
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Failed to add ActivityRecord", e);
+        }
     }
 }

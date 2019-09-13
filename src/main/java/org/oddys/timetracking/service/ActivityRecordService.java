@@ -9,4 +9,6 @@ public interface ActivityRecordService {
 
     List<ActivityRecordDto> findActivityRecords(long userActivityId, long currentPage,
             int recordPerPage) throws ServiceException;
+
+    int addActivityRecord(String dateString, String durationString, Long userActivityId) throws ServiceException;
 }

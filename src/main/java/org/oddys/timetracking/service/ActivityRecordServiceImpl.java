@@ -9,6 +9,9 @@ import org.oddys.timetracking.dto.ActivityRecordDto;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +49,20 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (DaoException e) {
             throw new ServiceException("Failed to find ActivityRecords", e);
+        }
+    }
+
+    @Override
+    public int addActivityRecord(String dateString, String durationString,
+            Long userActivityId) throws ServiceException {
+        try {
+            LocalDate date = LocalDate.parse(dateString);
+            Long duration = Long.valueOf(durationString);
+            return dao.addActivityRecord(Date.valueOf(date), duration, userActivityId);
+        } catch (DateTimeParseException | NumberFormatException e) {
+            throw new ServiceException("ActivityRecordService failed to parse parameters", e);
+        } catch (DaoException e) {
+            throw new ServiceException("ActivityRecordService failed to add ActivityRecord", e);
         }
     }
 }
