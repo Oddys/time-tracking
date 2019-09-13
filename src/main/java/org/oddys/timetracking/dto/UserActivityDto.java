@@ -6,6 +6,7 @@ public class UserActivityDto {
     private Long activityId;
     private String activityName;
     private Boolean activityApproved;
+    private Boolean statusChangeRequested;
     private Long userId;
     private String userFirstName;
     private String userLastName;
@@ -74,5 +75,13 @@ public class UserActivityDto {
 
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
+    }
+
+    public Boolean getStatusChangeRequested() {
+        return statusChangeRequested;
+    }
+
+    public void setStatusChangeRequested(Boolean statusChangeRequested) {
+        this.statusChangeRequested = statusChangeRequested;
     }
 }

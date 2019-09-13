@@ -15,4 +15,9 @@ public class ForwardCommand implements Command {
     public String execute(HttpServletRequest req) {
         return req.getParameter("targetPage");
     }
+
+    @Override
+    public String toString() {
+        return "ForwardCommand";
+    }
 }

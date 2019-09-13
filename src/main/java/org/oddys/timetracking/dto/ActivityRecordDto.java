@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class ActivityRecordDto {
     private Long id;
     private String activityName;
+    private Boolean userActivityStatusChangeRequested;
     private LocalDate activityDate;
     private Long duration;
     private Long userId;
@@ -28,6 +29,14 @@ public class ActivityRecordDto {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
+    }
+
+    public Boolean getUserActivityStatusChangeRequested() {
+        return userActivityStatusChangeRequested;
+    }
+
+    public void setUserActivityStatusChangeRequested(Boolean userActivityStatusChangeRequested) {
+        this.userActivityStatusChangeRequested = userActivityStatusChangeRequested;
     }
 
     public LocalDate getActivityDate() {

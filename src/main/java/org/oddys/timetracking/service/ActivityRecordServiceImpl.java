@@ -6,6 +6,7 @@ import org.oddys.timetracking.dao.ActivityRecordDao;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.dto.ActivityRecordDto;
+import org.oddys.timetracking.entity.ActivityRecord;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 

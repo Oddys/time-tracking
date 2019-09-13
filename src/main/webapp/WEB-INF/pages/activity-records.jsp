@@ -4,6 +4,7 @@
 <%--@elvariable id="rowsPerPage" type="java.util.Integer"--%>
 <%--@elvariable id="userActivityId" type="java.util.Long"--%>
 <%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
+<%--@elvariable id="userActivityAssigned" type="java.lang.Boolean"--%>
 <html>
 <head>
     <title><fmt:message key="title.activity.records"/></title>
@@ -18,7 +19,7 @@
             </fmt:message>
         </c:if>
     </h2>
-    <c:if test="${user.roleName eq 'USER'}">
+    <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
         <%--                <form action="controller">--%>
         <%--                    <input type="hidden" name="command" value="forward"/>--%>
         <%--                    <input type="hidden" name="targetPage" value="/WEB-INF/pages/add-activity-record.jspf"/>--%>
@@ -30,7 +31,8 @@
         <tr>
             <th><fmt:message key="date"/></th>
             <th><fmt:message key="duration"/></th>
-            <c:if test="${user.roleName eq 'USER'}">
+<%--            <th><fmt:message key="status"/></th>--%>
+            <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
                 <th></th>
                 <th></th>
             </c:if>
@@ -39,7 +41,8 @@
             <tr>
                 <td>${record.activityDate}</td>
                 <td>${record.duration}</td>
-                <c:if test="${user.roleName eq 'USER'}">
+<%--                <td>${record.userActivityStatusChangeRequested}</td>--%>
+                <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
                     <td>Edit</td>  <!-- TODO Implement -->
                     <td>Delete</td>  <!-- TODO Implement -->
                 </c:if>
@@ -50,7 +53,7 @@
         <ul>
             <c:if test="${currentPage != 1}">
                 <li>
-                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
                         <fmt:message key="nav.previous"/>
                     </a>
                 </li>
@@ -61,13 +64,13 @@
                         <li>${i}</li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <c:if test="${currentPage lt numPages}">
                 <li>
-                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
                         <fmt:message key="nav.next"/>
                     </a>
                 </li>

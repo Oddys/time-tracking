@@ -2,12 +2,14 @@ package org.oddys.timetracking.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.dto.ActivityRecordDto;
 import org.oddys.timetracking.service.ActivityRecordService;
 import org.oddys.timetracking.service.ActivityRecordServiceImpl;
 import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class ShowActivityRecordsCommand implements Command {
     private static final Logger log = LogManager.getLogger();
@@ -24,13 +26,15 @@ public class ShowActivityRecordsCommand implements Command {
     public String execute(HttpServletRequest req) {
         long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
         long currentPage = Long.parseLong(req.getParameter("currentPage")); // TODO Check for exceptions
+        Boolean userActivityAssigned = Boolean.valueOf(req.getParameter("userActivityAssigned"));
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
-            req.getSession().setAttribute("activityRecords",
-                    service.findActivityRecords(userActivityId, currentPage, rowsPerPage));
+            List<ActivityRecordDto> records = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
+            req.getSession().setAttribute("activityRecords", records);
             req.getSession().setAttribute("numPages",
                     service.getNumberOfPages(userActivityId, rowsPerPage));
             req.getSession().setAttribute("userActivityId", userActivityId);
+            req.getSession().setAttribute("userActivityAssigned", userActivityAssigned);
             req.getSession().setAttribute("currentPage", currentPage);
             req.getSession().setAttribute("rowsPerPage", rowsPerPage);
             return ConfigManager.getInstance().getProperty("path.activity.records");
