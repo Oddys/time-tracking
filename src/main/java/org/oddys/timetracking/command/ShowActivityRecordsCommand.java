@@ -29,7 +29,7 @@ public class ShowActivityRecordsCommand implements Command {
             req.getSession().setAttribute("activityRecords",
                     service.findActivityRecords(userActivityId, currentPage, rowsPerPage));
             req.getSession().setAttribute("numPages",
-                    service.getNumberOfPages(rowsPerPage));
+                    service.getNumberOfPages(userActivityId, rowsPerPage));
             req.getSession().setAttribute("userActivityId", userActivityId);
             req.getSession().setAttribute("currentPage", currentPage);
             req.getSession().setAttribute("rowsPerPage", rowsPerPage);

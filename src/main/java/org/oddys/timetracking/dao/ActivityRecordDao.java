@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 public interface ActivityRecordDao {
-    long getNumberOfRows() throws DaoException;
+    long getNumberOfRows(Long userActivityId) throws DaoException;
 
     List<ActivityRecord> findAllByUserActivityId(long userActivityId, long currentPage,
             int RecordsPerPage) throws DaoException;

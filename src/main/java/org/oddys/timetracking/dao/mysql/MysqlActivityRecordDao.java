@@ -10,14 +10,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlActivityRecordDao implements ActivityRecordDao {
     private static final ActivityRecordDao INSTANCE = new MysqlActivityRecordDao();
-//    private static final String COUNT_ROWS = "SELECT count(*) num_rows FROM activity_records";
-//    private static final String FIND_ALL_FOR_PAGE = "SELECT * FROM activity_records LIMIT ?, ?";
 
     private MysqlActivityRecordDao() {}
 
@@ -26,11 +23,12 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public long getNumberOfRows() throws DaoException {
+    public long getNumberOfRows(Long userActivityId) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             Statement statement = connectionWrapper.createStatement()) {
-            ResultSet rs = statement.executeQuery(
-                    ConfigManager.getInstance().getProperty("sql.activity.record.count.rows"));
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.activity.record.count.rows"))) {
+            statement.setLong(1, userActivityId);
+            ResultSet rs = statement.executeQuery();
             rs.next();
             return rs.getLong("num_rows");
         } catch (SQLException e) {

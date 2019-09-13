@@ -30,9 +30,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     }
 
     @Override
-    public long getNumberOfPages(int rowsPerPage) throws ServiceException {
+    public long getNumberOfPages(Long userActivityId, int rowsPerPage) throws ServiceException {
         try {
-            long numRows = dao.getNumberOfRows();
+            long numRows = dao.getNumberOfRows(userActivityId);
             long numPages = numRows / rowsPerPage;
             return numRows % rowsPerPage == 0 ? numPages : ++numPages;
         } catch (DaoException e) {
