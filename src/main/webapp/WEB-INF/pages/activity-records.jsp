@@ -18,6 +18,14 @@
             </fmt:message>
         </c:if>
     </h2>
+    <c:if test="${user.roleName eq 'USER'}">
+        <%--                <form action="controller">--%>
+        <%--                    <input type="hidden" name="command" value="forward"/>--%>
+        <%--                    <input type="hidden" name="targetPage" value="/WEB-INF/pages/add-activity-record.jspf"/>--%>
+        <%--                    <input type="submit" value="Add Record"/>--%>
+        <%--                </form>--%>
+        <%@ include file="/WEB-INF/jspf/add-activity-record.jspf"%>
+    </c:if>
     <table>
         <tr>
             <th><fmt:message key="date"/></th>
@@ -55,13 +63,6 @@
                         <fmt:message key="nav.next"/>
                     </a>
                 </li>
-            </c:if>
-            <c:if test="${user.roleName eq 'USER'}">
-                <form action="controller">
-                    <input type="hidden" name="command" value="forward"/>
-                    <input type="hidden" name="targetPage" value="/WEB-INF/pages/add-activity.jsp"/>
-                    <input type="submit" value="Add Record"/>
-                </form>
             </c:if>
         </ul>
     </c:if>

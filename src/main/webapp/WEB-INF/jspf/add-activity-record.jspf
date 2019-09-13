@@ -1,13 +1,10 @@
 <html>
 <head>
-    <title>Add Activity</title>
 </head>
 <body>
-    <h2>Activity Adding</h2>
+    <h2>Add Record</h2>
     <form action="controller" method="post">
         <input type="hidden" name="command" value="add_activity_record"/>
-        <%--    FIXME--%>
-        ${userActivityId}<br/>
         <label for="date">Date</label>
         <input type="date" name="activityDate" id="date" min="2019-01-01" onchange="checkDate(this)" required/>
         <label for="duration">Duration (in minutes)</label>

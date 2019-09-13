@@ -1,3 +1,4 @@
+<%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
 <html>
 <head>
     <title><fmt:message key="title.main"/> - <fmt:message key="title.cabinet"/></title>
@@ -10,7 +11,6 @@
             <fmt:param value="${sessionScope.user.lastName}"/>
         </fmt:message>
     </p>
-<%--    <form action="${pageContext.request.contextPath}/controller" method="post">--%>
     <form action="controller" method="post">
         <input type="hidden" name="command" value="logout"/>
         <input type="submit" value="<fmt:message key="button.logout"/>">
@@ -24,10 +24,5 @@
             <%@ include file="/WEB-INF/jspf/cabinet-user.jspf"%>
         </c:otherwise>
     </c:choose>
-
-    ${pageContext.request.requestURI}<br/>
-    ${pageContext.request.requestURL}<br/>
-    ${pageContext.request.contextPath}<br/>
-    ${pageContext.request.servletPath}<br/>
 </body>
 </html>
