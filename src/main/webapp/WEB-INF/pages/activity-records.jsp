@@ -30,11 +30,19 @@
         <tr>
             <th><fmt:message key="date"/></th>
             <th><fmt:message key="duration"/></th>
+            <c:if test="${user.roleName eq 'USER'}">
+                <th></th>
+                <th></th>
+            </c:if>
         </tr>
         <c:forEach items="${activityRecords}" var="record">
             <tr>
                 <td>${record.activityDate}</td>
                 <td>${record.duration}</td>
+                <c:if test="${user.roleName eq 'USER'}">
+                    <td>Edit</td>  <!-- TODO Implement -->
+                    <td>Delete</td>  <!-- TODO Implement -->
+                </c:if>
             </tr>
         </c:forEach>
     </table>
@@ -66,5 +74,10 @@
             </c:if>
         </ul>
     </c:if>
+    <form action="controller">
+        <input type="hidden" name="command" value="forward"/>
+        <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-activities.jsp"/>
+        <input type="submit" value="Back to activities list"/>  <!-- FIXME -->
+    </form>
 </body>
 </html>
