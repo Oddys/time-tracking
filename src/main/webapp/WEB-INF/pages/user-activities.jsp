@@ -1,17 +1,15 @@
 <%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
 <%--@elvariable id="userActivities" type="java.util.List"--%>
+<%--@elvariable id="errorMessageKey" type="java.lang.String"--%>
 <html>
 <head>
     <title><fmt:message key="title.activities.user"/></title>
 </head>
 <body>
     <h2>
-        <%-- FIXME What if no user found? --%>
         <fmt:message key="title.activities.user">
-<%--            <fmt:param value="${user.firstName}"/>--%>
-<%--            <fmt:param value="${user.lastName}"/>--%>
-            <fmt:param value="${userActivities[0].userFirstName}"/>
-            <fmt:param value="${userActivities[0].userLastName}"/>
+            <fmt:param value="${userFirstName}"/>
+            <fmt:param value="${userLastName}"/>
         </fmt:message>
     </h2>
     <table>

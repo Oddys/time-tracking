@@ -33,8 +33,8 @@ public class AddActivityRecordCommand implements Command {
             return req.getParameter("sentFromPage");
         }
         try {
-            int numRowsAffected = service.addActivityRecord(req.getParameter(
-                    "table.column.date"),
+            int numRowsAffected = service.addActivityRecord(
+                    req.getParameter("table.column.date"),
                     req.getParameter("table.column.duration"),
                     (Long) req.getSession().getAttribute("userActivityId"));
             if (numRowsAffected == 0) {

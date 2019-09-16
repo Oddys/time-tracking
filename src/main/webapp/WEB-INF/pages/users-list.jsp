@@ -23,6 +23,8 @@
                 <form action="controller">
                     <input type="hidden" name="command" value="show_user_activities"/>
                     <input type="hidden" name="userId" value="${currentUser.userId}"/>
+                    <input type="hidden" name="userFirstName" value="${currentUser.firstName}"/>
+                    <input type="hidden" name="userLastName" value="${currentUser.lastName}"/>
                     <input type="submit" value="<fmt:message key="button.show"/>"/>
                 </form>
             </td>

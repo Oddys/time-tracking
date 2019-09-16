@@ -80,7 +80,7 @@
     <form action="controller">
         <input type="hidden" name="command" value="forward"/>
         <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-activities.jsp"/>
-        <input type="submit" value="Back to activities list"/>  <!-- FIXME -->
+        <input type="submit" value=""/>
     </form>
 </body>
 </html>

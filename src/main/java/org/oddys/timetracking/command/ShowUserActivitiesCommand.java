@@ -3,7 +3,6 @@ package org.oddys.timetracking.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.UserActivityDto;
-import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.SearchUserActivitiesService;
 import org.oddys.timetracking.service.SearchUserActivitiesServiceImpl;
 import org.oddys.timetracking.service.ServiceException;
@@ -25,10 +24,6 @@ public class ShowUserActivitiesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-//        UserDto userDto = ((UserDto) req.getSession().getAttribute("user"));
-//        if (userDto == null) {
-//            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
-//        }
         String userIdString = req.getParameter("userId");
         if (userIdString == null) {
             return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
@@ -36,12 +31,13 @@ public class ShowUserActivitiesCommand implements Command {
         Long userId = Long.valueOf(userIdString);
         List<UserActivityDto> userActivityDTOs = null;
         try {
-//            userActivityDTOs = searchService.searchUserActivitiesByUserId(userDto.getUserId());
             userActivityDTOs = searchService.searchUserActivitiesByUserId(userId);
         } catch (ServiceException e) {
             log.error("SearchUserActivitiesService failed", e);
             return null;
         }
+        req.getSession().setAttribute("userFirstName", req.getParameter("userFirstName"));
+        req.getSession().setAttribute("userLastName", req.getParameter("userLastName"));
         req.getSession().setAttribute("userActivities", userActivityDTOs);
         return ConfigManager.getInstance().getProperty("path.user.activities");
     }
