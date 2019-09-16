@@ -37,7 +37,7 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
             long numPages = numRows / rowsPerPage;
             return numRows % rowsPerPage == 0 ? numPages : ++numPages;
         } catch (DaoException e) {
-            throw new ServiceException("Failed to obtain number of rows", e);
+            throw new ServiceException("Failed to get the number of pages", e);
         }
     }
 

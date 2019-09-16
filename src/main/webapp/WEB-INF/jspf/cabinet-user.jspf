@@ -11,8 +11,9 @@
         </form>
         <h3><fmt:message key="activity.all"/></h3>
         <form action="controller">
-            <input type="hidden" name="command" value="show_all_activities"/>
-            <input type="hidden" name="userId" value="user.userId"/>
+            <input type="hidden" name="command" value="show_activities"/>
+            <input type="hidden" name="currentPage" value="1"/>
+            <input type="hidden" name="rowsPerPage" value="5"/>
             <input type="submit" value="<fmt:message key="button.show"/>"/>
         </form>
         <h3><fmt:message key="activity.my"/></h3>

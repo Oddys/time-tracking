@@ -32,7 +32,7 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
             rs.next();
             return rs.getLong("num_rows");
         } catch (SQLException e) {
-            throw new DaoException("Failed to get the number of rows", e);
+            throw new DaoException("Failed to get the number of ActivityRecords", e);
         }
     }
 

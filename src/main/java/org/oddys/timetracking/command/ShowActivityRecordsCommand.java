@@ -39,7 +39,7 @@ public class ShowActivityRecordsCommand implements Command {
             req.getSession().setAttribute("rowsPerPage", rowsPerPage);
             return ConfigManager.getInstance().getProperty("path.activity.records");
         } catch (ServiceException e) {
-            log.error("ActivityRecordService failed to obtain the number of rows", e);  // FIXME
+            log.error("ActivityRecordService failed", e);
             return null;
         }
     }
