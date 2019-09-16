@@ -18,8 +18,8 @@
         <tr>
             <th><fmt:message key="title.activity"/></th>
             <th><fmt:message key="activity.user.assigned"/></th>
-            <th><fmt:message key="status"/></th>
-            <th><fmt:message key="action"/></th>
+            <th><fmt:message key="table.column.status"/></th>
+            <th><fmt:message key="table.column.action"/></th>
         </tr>
         <c:forEach var="currentUserActivity" items="${userActivities}">
             <tr>

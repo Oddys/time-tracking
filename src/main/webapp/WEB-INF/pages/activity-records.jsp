@@ -29,8 +29,8 @@
     </c:if>
     <table>
         <tr>
-            <th><fmt:message key="date"/></th>
-            <th><fmt:message key="duration"/></th>
+            <th><fmt:message key="table.column.date"/></th>
+            <th><fmt:message key="table.column.duration"/></th>
 <%--            <th><fmt:message key="status"/></th>--%>
             <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
                 <th></th>

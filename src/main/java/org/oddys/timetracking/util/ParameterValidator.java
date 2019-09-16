@@ -14,11 +14,11 @@ public class ParameterValidator {
     }
 
     public boolean isValidAddActivityRecord(HttpServletRequest request) {
-        if (StringUtils.isBlank(request.getParameter("date"))) {
+        if (StringUtils.isBlank(request.getParameter("table.column.date"))) {
             request.setAttribute("errorMessage", "Please, enter the date");
             return false;
         }
-        if (StringUtils.isBlank(request.getParameter("duration"))) {
+        if (StringUtils.isBlank(request.getParameter("table.column.duration"))) {
             request.setAttribute("errorMessage", "Please, enter the duration");
             return false;
         }

@@ -33,8 +33,9 @@ public class AddActivityRecordCommand implements Command {
             return req.getParameter("sentFromPage");
         }
         try {
-            int numRowsAffected = service.addActivityRecord(req.getParameter("date"),
-                    req.getParameter("duration"),
+            int numRowsAffected = service.addActivityRecord(req.getParameter(
+                    "table.column.date"),
+                    req.getParameter("table.column.duration"),
                     (Long) req.getSession().getAttribute("userActivityId"));
             if (numRowsAffected == 0) {
                 req.setAttribute("errorMessage", "Record already exists");

@@ -5,23 +5,22 @@
 <%--@elvariable id="numPages" type="long"--%>
 <html>
 <head>
-    <!-- FIXME -->
-    <title>Activities</title>
+    <title><fmt:message key="title.activities.all"/></title>
 </head>
 <body>
-    <h2>Activities</h2>
+    <h2><fmt:message key="title.activities.all"/></h2>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Approved</th>
-            <th>Action</th>
+            <th><fmt:message key="table.column.name"/> </th>
+            <th><fmt:message key="table.column.approved"/></th>
+            <th><fmt:message key="table.column.action"/></th>
         </tr>
         <c:forEach items="${activities}" var="activity">
             <tr>
                 <td>${activity.name}</td>
                 <td>${activity.approved}</td>
                 <c:if test="${user.roleName eq 'USER' and activity.approved}">
-                    <td>Request for assignment</td>  <!-- TODO Implement -->
+                    <td><fmt:message key="table.column.add.to.my.activities"/> </td>  <!-- TODO Implement -->
                 </c:if>
             </tr>
         </c:forEach>
@@ -54,5 +53,8 @@
             </c:if>
         </ul>
     </c:if>
+    <form action="${pageContext.request.contextPath}">
+        <input type="submit" value="<fmt:message key="button.main"/>"/>
+    </form>
 </body>
 </html>
