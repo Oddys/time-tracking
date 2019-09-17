@@ -71,6 +71,12 @@ public enum Commands {
         {
             command = ShowUserActivityRequestsCommand.getInstance();
         }
+    },
+
+    PROCESS_ACTIVITY_REQUEST {
+        {
+            command = ProcessActivityRequestCommand.getInstance();
+        }
     };
 
     Command command;

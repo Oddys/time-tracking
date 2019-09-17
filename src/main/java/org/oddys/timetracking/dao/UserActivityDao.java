@@ -17,4 +17,6 @@ public interface UserActivityDao extends Dao<Long, UserActivity> {
     List<UserActivity> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws DaoException;
 
     long getNumberOfStatusChangeRequested() throws DaoException;
+
+    int updateAssignedAndStatusChangeRequested(Long userActivityId, boolean currentAssigned) throws DaoException;
 }

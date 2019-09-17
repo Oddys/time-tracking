@@ -7,6 +7,9 @@
     <title>User Activity Requests</title>
 </head>
 <body>
+    <c:if test="${not empty messageKey}">
+        ${messageKey}
+    </c:if>
     <table>
         <tr>
             <th>User ID</th>
@@ -24,7 +27,8 @@
                 <td>
                     <form action="controller" method="post">
                         <input type="hidden" name="command" value="process_activity_request"/>
-                        <input type="hidden" name="currentStatus" value="${userActivity.assigned}"/>
+                        <input type="hidden" name="userActivityId" value="${userActivity.id}"/>
+                        <input type="hidden" name="currentAssigned" value="${userActivity.assigned}"/>
                         <c:choose>
                             <c:when test="${userActivity.assigned}">
                                 <input type="submit" value="Stop activity"/>

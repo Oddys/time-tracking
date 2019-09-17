@@ -66,4 +66,12 @@ public class UserActivityServiceImpl implements UserActivityService {
             throw new ServiceException("Failed to find UserActivities", e);
         }
     }
+    @Override
+    public boolean processActivityRequest(Long userActivityId, boolean currentValue) throws ServiceException {
+        try {
+            return dao.updateAssignedAndStatusChangeRequested(userActivityId, !currentValue) > 0;
+        } catch (DaoException e) {
+            throw new ServiceException("UserActivityService failed to process an activity request", e);
+        }
+    }
 }

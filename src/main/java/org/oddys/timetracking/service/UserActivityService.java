@@ -12,4 +12,6 @@ public interface UserActivityService {
     long getNumberOfPagesStatusChangeRequested(int rowsPerPage) throws ServiceException;
 
     List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws ServiceException;
+
+    boolean processActivityRequest(Long userActivityId, boolean currentValue) throws ServiceException;
 }
