@@ -3,32 +3,46 @@
 <%--@elvariable id="currentPage" type="long"--%>
 <%--@elvariable id="rowsPerPage" type="int"--%>
 <%--@elvariable id="numPages" type="long"--%>
+<%--@elvariable id="messageKey" type="String"--%>
+<%--@elvariable id="activityName" type="String"--%>
 <html>
 <head>
     <title><fmt:message key="title.activities.all"/></title>
 </head>
 <body>
     <h2><fmt:message key="title.activities.all"/></h2>
+    <c:if test="${not empty messageKey}">
+        <fmt:message key="${messageKey}">
+            <fmt:param value="${activityName}"/>
+        </fmt:message>
+    </c:if>
     <table>
         <tr>
             <th><fmt:message key="table.column.name"/> </th>
-            <th><fmt:message key="table.column.approved"/></th>
+<%--            <th><fmt:message key="table.column.approved"/></th>--%>
             <th><fmt:message key="table.column.action"/></th>
         </tr>
         <c:forEach items="${activities}" var="activity">
             <tr>
                 <td>${activity.name}</td>
-                <td>${activity.approved}</td>
-                <c:if test="${user.roleName eq 'USER' and activity.approved}">
-                    <td>
-                        <form action="controller" method="post">
-                            <input type="hidden" name="command" value="activity_request"/>
-                            <input type="hidden" name="action" value="add"/>
-                            <input type="hidden" name="activityId" value="activity.id"/>
-                            <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
-                        </form>
-                    </td>
-                </c:if>
+<%--                <td>${activity.approved}</td>--%>
+                <td>
+                    <c:choose>
+                        <c:when test="${user.roleName eq 'USER' and activity.approved}">
+                            <form action="controller" method="post">
+                                <input type="hidden" name="command" value="activity_request"/>
+                                <input type="hidden" name="action" value="add"/>
+                                <input type="hidden" name="activityId" value="${activity.id}"/>
+                                <input type="hidden" name="activityName" value="${activity.name}"/>
+                                <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:message key="user.activity.notavailable"/>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+
             </tr>
         </c:forEach>
     </table>

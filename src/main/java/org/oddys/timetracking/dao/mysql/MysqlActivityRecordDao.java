@@ -66,7 +66,7 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
             statement.setLong(2, userActivityId);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            return rs.getInt("count") > 0;
+            return rs.getLong("count") > 0;
         } catch (SQLException e) {
             throw new DaoException("Failed to check existence of ActivityRecord", e);
         }

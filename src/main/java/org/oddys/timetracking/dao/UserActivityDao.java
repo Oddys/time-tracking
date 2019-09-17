@@ -8,5 +8,7 @@ import java.util.List;
 public interface UserActivityDao extends Dao<Long, UserActivity> {
     List<UserActivity> findAllByUserId(Long userId) throws DaoException;
 
-    boolean addUserActivity(UserActivity activity);
+    int add(Long userId, Long activityId, Boolean assigned, Boolean statusChangeRequested) throws DaoException;
+
+    boolean exists(Long userId, Long activityId) throws DaoException;
 }

@@ -35,13 +35,13 @@ create table activities (
 );
 
 create table user_activities (
-    user_activity_id serial,
+    user_activity_id serial,  -- FIXME It is unnecessary, can be deleted here and from entity
     assigned boolean not null,
     status_change_requested boolean not null,
     user_id bigint unsigned not null,
     activity_id bigint unsigned not null,
 
-    primary key (user_activity_id),
+    primary key (user_id, activity_id),
     foreign key fk_user_id (user_id)
     references users (user_id)
     on update restrict
@@ -80,7 +80,8 @@ values ('john', 'john', 'John', 'Doe', 1),
 insert into activities (activity_name, approved)
 values ('Написання статті', true),
       ('Проведення інтерв''ю', true),
-      ('Редагування', false)
+      ('Редагування', true),
+      ('Наповнення стрічки новин', false)
 ;
 
 insert into user_activities (assigned, status_change_requested, user_id, activity_id)
