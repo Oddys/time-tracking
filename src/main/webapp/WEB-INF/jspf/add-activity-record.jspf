@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-    <h2>Add Record</h2>
+    <h2><fmt:message key="activity.record.add"/> </h2>
     <c:choose>
         <c:when test="${not empty successMessage}">
             ${successMessage}
