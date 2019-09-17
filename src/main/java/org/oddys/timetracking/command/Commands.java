@@ -53,6 +53,12 @@ public enum Commands {
         {
             command = ShowActivitiesCommand.getInstance();
         }
+    },
+
+    ACTIVITY_REQUEST {
+        {
+            command = ActivityRequestCommand.getInstance();
+        }
     };
 
     Command command;

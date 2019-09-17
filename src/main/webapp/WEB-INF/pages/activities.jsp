@@ -20,7 +20,14 @@
                 <td>${activity.name}</td>
                 <td>${activity.approved}</td>
                 <c:if test="${user.roleName eq 'USER' and activity.approved}">
-                    <td><fmt:message key="table.column.add.to.my.activities"/> </td>  <!-- TODO Implement -->
+                    <td>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="command" value="activity_request"/>
+                            <input type="hidden" name="action" value="add"/>
+                            <input type="hidden" name="activityId" value="activity.id"/>
+                            <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
+                        </form>
+                    </td>
                 </c:if>
             </tr>
         </c:forEach>

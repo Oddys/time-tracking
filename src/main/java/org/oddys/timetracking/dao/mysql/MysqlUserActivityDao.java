@@ -39,6 +39,11 @@ public class MysqlUserActivityDao implements UserActivityDao {
     }
 
     @Override
+    public boolean addUserActivity(UserActivity activity) {
+        return false;
+    }
+
+    @Override
     public Long create(UserActivity entity) throws DaoException {
         return null;
     }
