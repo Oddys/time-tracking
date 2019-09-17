@@ -29,4 +29,13 @@ public class UserActivityServiceImpl implements UserActivityService {
             throw new ServiceException("UserActivityService failed to add UserActivity", e);
         }
     }
+
+    @Override
+    public boolean requestStatusChange(Long userActivityId) throws ServiceException {
+        try {
+            return dao.requestStatusChange(userActivityId) > 0;
+        } catch (DaoException e) {
+            throw new ServiceException("UserActivityService failed to request for status change", e);
+        }
+    }
 }

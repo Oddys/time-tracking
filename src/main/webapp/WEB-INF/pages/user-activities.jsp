@@ -17,6 +17,9 @@
             <fmt:param value="${userLastName}"/>
         </fmt:message>
     </h2>
+    <c:if test="${not empty messageKey}">
+        <fmt:message key="${messageKey}"/>
+    </c:if>
     <table>
         <tr>
             <th><fmt:message key="title.activity"/></th>

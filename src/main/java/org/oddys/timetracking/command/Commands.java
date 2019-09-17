@@ -59,6 +59,12 @@ public enum Commands {
         {
             command = ActivityRequestCommand.getInstance();
         }
+    },
+
+    STOP_ACTIVITY {
+        {
+            command = StopActivityCommand.getInstance();
+        }
     };
 
     Command command;

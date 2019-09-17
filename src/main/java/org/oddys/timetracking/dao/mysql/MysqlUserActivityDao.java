@@ -71,6 +71,18 @@ public class MysqlUserActivityDao implements UserActivityDao {
     }
 
     @Override
+    public int requestStatusChange(Long userActivityId) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.activity.request"))) {
+            statement.setLong(1, userActivityId);
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Failed to request status change", e);
+        }
+    }
+
+    @Override
     public Long create(UserActivity entity) throws DaoException {
         return null;
     }
