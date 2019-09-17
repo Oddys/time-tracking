@@ -22,14 +22,18 @@
                 <td>${userActivity.userLastName}</td>
                 <td>${userActivity.activityName}</td>
                 <td>
-                    <c:choose>
-                        <c:when test="${userActivity.assigned}">
-                            Stop activity
-                        </c:when>
-                        <c:otherwise>
-                            Assign activity
-                        </c:otherwise>
-                    </c:choose>
+                    <form action="controller" method="post">
+                        <input type="hidden" name="command" value="process_activity_request"/>
+                        <input type="hidden" name="currentStatus" value="${userActivity.assigned}"/>
+                        <c:choose>
+                            <c:when test="${userActivity.assigned}">
+                                <input type="submit" value="Stop activity"/>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="submit" value="Assign activity"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
