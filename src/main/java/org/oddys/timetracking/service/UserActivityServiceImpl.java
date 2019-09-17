@@ -3,7 +3,13 @@ package org.oddys.timetracking.service;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserActivityDao;
 import org.oddys.timetracking.dao.mysql.DaoException;
+import org.oddys.timetracking.dto.UserActivityDto;
 import org.oddys.timetracking.util.ConfigManager;
+import org.oddys.timetracking.util.ModelMapperWrapper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserActivityServiceImpl implements UserActivityService {
     private static final UserActivityService INSTANCE = new UserActivityServiceImpl();
@@ -36,6 +42,17 @@ public class UserActivityServiceImpl implements UserActivityService {
             return dao.requestStatusChange(userActivityId) > 0;
         } catch (DaoException e) {
             throw new ServiceException("UserActivityService failed to request for status change", e);
+        }
+    }
+
+    @Override
+    public List<UserActivityDto> findAllStatusChangeRequested() throws ServiceException {
+        try {
+            return dao.findAllStatusChangeRequested().stream()
+                    .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
+                    .collect(Collectors.toCollection(ArrayList::new));
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to find UserActivities", e);
         }
     }
 }

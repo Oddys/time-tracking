@@ -13,4 +13,6 @@ public interface UserActivityDao extends Dao<Long, UserActivity> {
     boolean exists(Long userId, Long activityId) throws DaoException;
 
     int requestStatusChange(Long userActivityId) throws DaoException;
+
+    List<UserActivity> findAllStatusChangeRequested() throws DaoException;
 }

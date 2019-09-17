@@ -9,6 +9,7 @@ import org.oddys.timetracking.util.EntityMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,22 @@ public class MysqlUserActivityDao implements UserActivityDao {
         } catch (SQLException e) {
             throw new DaoException("Failed to request status change", e);
         }
+    }
+
+    @Override
+    public List<UserActivity> findAllStatusChangeRequested() throws DaoException {
+        List<UserActivity> userActivities = new ArrayList<>();
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             Statement statement = connectionWrapper.createStatement()) {
+            ResultSet rs = statement.executeQuery(
+                    ConfigManager.getInstance().getProperty("sql.user.activity.find.all.requested"));
+            while (rs.next()) {
+                userActivities.add(EntityMapper.getInstance().mapUserActivity(rs));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find all with status change requested", e);
+        }
+        return userActivities;
     }
 
     @Override
