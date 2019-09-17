@@ -21,8 +21,14 @@ public class ShowUserActivityRequestsCommand implements Command {
     }
     @Override
     public String execute(HttpServletRequest req) {
+        long currentPage = Long.parseLong(req.getParameter("currentPage"));
+        int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
-            req.getSession().setAttribute("userActivities", service.findAllStatusChangeRequested());
+            req.getSession().setAttribute("currentPage", req.getParameter("currentPage"));
+            req.getSession().setAttribute("userActivities",
+                    service.findAllStatusChangeRequested(currentPage, rowsPerPage));
+            req.getSession().setAttribute("numPages",
+                    service.getNumberOfPagesStatusChangeRequested(rowsPerPage));
             return ConfigManager.getInstance().getProperty("path.user.activity.requests");
         } catch (ServiceException e) {
             LOGGER.error("UserActivityService failed", e);

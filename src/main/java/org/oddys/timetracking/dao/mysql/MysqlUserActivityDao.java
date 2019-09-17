@@ -84,12 +84,15 @@ public class MysqlUserActivityDao implements UserActivityDao {
     }
 
     @Override
-    public List<UserActivity> findAllStatusChangeRequested() throws DaoException {
+    public List<UserActivity> findAllStatusChangeRequested(long currentPage, int rowsPerPage)
+            throws DaoException {
         List<UserActivity> userActivities = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             Statement statement = connectionWrapper.createStatement()) {
-            ResultSet rs = statement.executeQuery(
-                    ConfigManager.getInstance().getProperty("sql.user.activity.find.all.requested"));
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.activity.find.all.requested"))) {
+            statement.setLong(1, (currentPage - 1) * rowsPerPage);
+            statement.setInt(2, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 userActivities.add(EntityMapper.getInstance().mapUserActivity(rs));
             }
@@ -97,6 +100,19 @@ public class MysqlUserActivityDao implements UserActivityDao {
             throw new DaoException("Failed to find all with status change requested", e);
         }
         return userActivities;
+    }
+
+    @Override
+    public long getNumberOfStatusChangeRequested() throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             Statement statement = connectionWrapper.createStatement()) {
+            ResultSet rs = statement.executeQuery(ConfigManager.getInstance()
+                    .getProperty("sql.user.activity.requested.count"));
+            rs.next();
+            return rs.getLong("count");
+        } catch (SQLException e) {
+            throw new DaoException("Failed to count UserActivities with status change requested", e);
+        }
     }
 
     @Override

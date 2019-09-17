@@ -9,5 +9,7 @@ public interface UserActivityService {
 
     boolean requestStatusChange(Long userActivityId) throws ServiceException;
 
-    List<UserActivityDto> findAllStatusChangeRequested() throws ServiceException;
+    long getNumberOfPagesStatusChangeRequested(int rowsPerPage) throws ServiceException;
+
+    List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws ServiceException;
 }

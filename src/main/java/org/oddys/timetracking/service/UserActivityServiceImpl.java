@@ -46,9 +46,20 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public List<UserActivityDto> findAllStatusChangeRequested() throws ServiceException {
+    public long getNumberOfPagesStatusChangeRequested(int rowsPerPage) throws ServiceException {
         try {
-            return dao.findAllStatusChangeRequested().stream()
+            long numRows = dao.getNumberOfStatusChangeRequested();
+            long numPages = numRows / rowsPerPage;
+            return numRows % rowsPerPage == 0 ? numPages : ++numPages;
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to get the number of pages", e);
+        }
+    }
+
+    @Override
+    public List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws ServiceException {
+        try {
+            return dao.findAllStatusChangeRequested(currentPage, rowsPerPage).stream()
                     .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (DaoException e) {
