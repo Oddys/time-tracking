@@ -2,6 +2,7 @@ package org.oddys.timetracking.dto;
 
 import org.oddys.timetracking.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 public class UserDto {

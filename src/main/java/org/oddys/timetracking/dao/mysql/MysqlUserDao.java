@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.connection.ConnectionWrapper;
+import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.EntityMapper;
 
 import java.sql.PreparedStatement;
@@ -30,11 +31,7 @@ public class MysqlUserDao implements UserDao {
              PreparedStatement statement = connectionWrapper.prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
-            User user = null;
-            if (rs.next()) {
-                user = EntityMapper.getInstance().mapUser(rs);
-            }
-            return user;
+            return (rs.next()) ? EntityMapper.getInstance().mapUser(rs) : null;
         } catch (SQLException e) {
             throw new DaoException("Failed to find User by login", e);
         }
@@ -55,5 +52,21 @@ public class MysqlUserDao implements UserDao {
             throw new DaoException("Failed to find User by last name", e);
         }
         return users;
+    }
+
+    @Override
+    public boolean add(User user) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.add"))) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, String.valueOf(user.getPassword()));
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
+            statement.setString(5, user.getRole().getName());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new DaoException("Failed to add User");
+        }
     }
 }

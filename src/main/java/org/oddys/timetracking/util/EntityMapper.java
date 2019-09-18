@@ -6,6 +6,7 @@ import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.entity.UserActivity;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -43,6 +44,16 @@ public class EntityMapper {
                         rs.getString("password").toCharArray(),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
+                        role);
+    }
+
+    public User mapUser(HttpServletRequest req) {
+        Role role = new Role(null, req.getParameter("role").toUpperCase());
+        return new User(null,
+                        req.getParameter("login"),
+                        req.getParameter("password").toCharArray(),
+                        req.getParameter("firstName"),
+                        req.getParameter("lastName"),
                         role);
     }
 

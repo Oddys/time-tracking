@@ -2,6 +2,12 @@
 <head>
 </head>
 <body>
+    <h3>Add user</h3>
+    <form action="controller">
+        <input type="hidden" name="command" value="forward"/>
+        <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-data.jsp"/>
+        <input type="submit" value="Add"/>
+    </form>
     <h3><fmt:message key="activity.suggestions"/></h3>
     <form action="controller">
         <input type="hidden" name="command" value="show_suggested_activities">

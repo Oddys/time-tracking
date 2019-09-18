@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.UserDto;
-import org.oddys.timetracking.service.FindUserService;
-import org.oddys.timetracking.service.FindUserServiceImpl;
+import org.oddys.timetracking.service.UserService;
+import org.oddys.timetracking.service.UserServiceImpl;
 import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.util.ConfigManager;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class FindUserCommand implements Command {
     private static final Logger log = LogManager.getLogger();
     private static final FindUserCommand INSTANCE = new FindUserCommand();
-    private FindUserService findUserService = FindUserServiceImpl.getInstance();
+    private UserService service = UserServiceImpl.getInstance();
 
     private FindUserCommand() {}
 
@@ -31,7 +31,7 @@ public class FindUserCommand implements Command {
         }
         List<UserDto> users = null;
         try {
-            users = findUserService.search(lastName);
+            users = service.search(lastName);
         } catch (ServiceException e) {
             log.error("Searching User by last name failed", e);
             return null;

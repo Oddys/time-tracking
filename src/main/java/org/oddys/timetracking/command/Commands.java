@@ -77,6 +77,12 @@ public enum Commands {
         {
             command = ChangeUserActivityStatusCommand.getInstance();
         }
+    },
+
+    ADD_USER {
+        {
+            command = AddUserCommand.getInstance();
+        }
     };
 
     Command command;

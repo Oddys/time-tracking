@@ -9,4 +9,6 @@ public interface UserDao {
     User findByLogin(String login) throws DaoException;
 
     List<User> findByLastName(String lastName) throws DaoException;
+
+    boolean add(User user) throws DaoException;
 }
