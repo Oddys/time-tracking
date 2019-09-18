@@ -26,12 +26,12 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public Long create(Activity entity) throws DaoException {
+    public Long create(Activity activity) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper
                      .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, entity.getName());
-            statement.setBoolean(2, entity.isApproved());
+            statement.setString(1, activity.getName());
+            statement.setBoolean(2, activity.isApproved());
             statement.executeUpdate();
             return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
@@ -93,19 +93,14 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public boolean update(Activity entity) throws DaoException {
+    public int update(Activity activity) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
-            statement.setBoolean(1, entity.isApproved());
-            statement.setString(2, entity.getName());
-            return statement.executeUpdate() > 0;
+            statement.setBoolean(1, activity.isApproved());
+            statement.setString(2, activity.getName());
+            return statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Failed to update Activity", e);
         }
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return false;
     }
 }

@@ -8,12 +8,12 @@ import org.oddys.timetracking.service.UserActivityServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ProcessActivityRequestCommand implements Command {
+public class ChangeUserActivityStatusCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Command INSTANCE = new ProcessActivityRequestCommand();
+    private static final Command INSTANCE = new ChangeUserActivityStatusCommand();
     private UserActivityService service = UserActivityServiceImpl.getInstance();
 
-    private ProcessActivityRequestCommand() {}
+    private ChangeUserActivityStatusCommand() {}
 
     public static Command getInstance() {
         return INSTANCE;
@@ -24,7 +24,7 @@ public class ProcessActivityRequestCommand implements Command {
         long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
         boolean currentAssigned = Boolean.parseBoolean(req.getParameter("currentAssigned"));
         try {
-            service.processActivityRequest(userActivityId, currentAssigned);  // TODO Add status check on DAO level
+            service.changeUserActivityStatus(userActivityId, currentAssigned);  // TODO Add status check on DAO level
             req.setAttribute("messageKey", "Status of User Activity successfully changed");
             return "/controller?command=show_activity_requests&currentPage=1&rowsPerPage=5";
         } catch (ServiceException e) {

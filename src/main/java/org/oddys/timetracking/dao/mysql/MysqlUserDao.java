@@ -56,29 +56,4 @@ public class MysqlUserDao implements UserDao {
         }
         return users;
     }
-
-    @Override
-    public Long create(User entity) {
-        return null;
-    }
-
-    @Override
-    public User findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<User> findAll() {
-        return null;
-    }
-
-    @Override
-    public boolean update(User entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return false;
-    }
 }

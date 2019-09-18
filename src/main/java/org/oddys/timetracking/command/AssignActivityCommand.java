@@ -2,7 +2,6 @@ package org.oddys.timetracking.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.service.UserActivityService;
 import org.oddys.timetracking.service.UserActivityServiceImpl;
@@ -11,13 +10,13 @@ import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ActivityRequestCommand implements Command {
+public class AssignActivityCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Command INSTANCE = new ActivityRequestCommand();
+    private static final Command INSTANCE = new AssignActivityCommand();
     private UserActivityService service = TransactionProxy.getInstance().getProxy(
             UserActivityServiceImpl.getInstance());
 
-    private ActivityRequestCommand() {}
+    private AssignActivityCommand() {}
 
     public static Command getInstance() {
         return INSTANCE;
@@ -25,10 +24,11 @@ public class ActivityRequestCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        Long userId = ((UserDto) req.getSession().getAttribute("user")).getUserId();
+//        Long userId = ((UserDto) req.getSession().getAttribute("user")).getUserId();
+        Long userId = Long.valueOf(req.getParameter("userId"));
         Long activityId = Long.valueOf(req.getParameter("activityId"));
         try {
-            if (service.addUserActivity(userId, activityId)) {
+            if (service.assignActivity(userId, activityId)) {
                 req.setAttribute("messageKey", "user.activities.assigned.success");
             } else {
                 req.setAttribute("messageKey", "user.activities.assigned.fail");

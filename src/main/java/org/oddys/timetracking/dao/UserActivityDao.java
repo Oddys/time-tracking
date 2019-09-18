@@ -5,7 +5,7 @@ import org.oddys.timetracking.entity.UserActivity;
 
 import java.util.List;
 
-public interface UserActivityDao extends Dao<Long, UserActivity> {
+public interface UserActivityDao {
     List<UserActivity> findAllByUserId(Long userId) throws DaoException;
 
     int add(Long userId, Long activityId, Boolean assigned, Boolean statusChangeRequested) throws DaoException;
@@ -19,4 +19,8 @@ public interface UserActivityDao extends Dao<Long, UserActivity> {
     long getNumberOfStatusChangeRequested() throws DaoException;
 
     int updateAssignedAndStatusChangeRequested(Long userActivityId, boolean currentAssigned) throws DaoException;
+
+    UserActivity find(Long userId, Long activityId) throws DaoException;
+
+    int update(UserActivity userActivity) throws DaoException;
 }

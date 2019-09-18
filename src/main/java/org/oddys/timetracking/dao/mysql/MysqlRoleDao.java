@@ -26,11 +26,11 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public Long create(Role entity) throws DaoException {
+    public Long create(Role role) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper
                      .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, entity.getName());
+            statement.setString(1, role.getName());
             statement.executeUpdate();
             return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
@@ -70,12 +70,12 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public boolean update(Role entity) throws DaoException {
+    public int update(Role role) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
-            statement.setLong(1, entity.getId());
-            statement.setString(2, entity.getName());
-            return statement.executeUpdate() > 0;
+            statement.setLong(1, role.getId());
+            statement.setString(2, role.getName());
+            return statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Failed to update Role", e);
         }

@@ -9,6 +9,6 @@ public interface Dao<K, T extends Entity> {
     K create(T entity) throws DaoException;
     T findById(K id) throws DaoException;
     List<T> findAll() throws DaoException;
-    boolean update(T entity) throws DaoException;
+    int update(T entity) throws DaoException;
     boolean delete(K id) throws DaoException;
 }

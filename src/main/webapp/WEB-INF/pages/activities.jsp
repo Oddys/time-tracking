@@ -30,9 +30,10 @@
                     <c:choose>
                         <c:when test="${user.roleName eq 'USER' and activity.approved}">
                             <form action="controller" method="post">
-                                <input type="hidden" name="command" value="activity_request"/>
-                                <input type="hidden" name="action" value="add"/>
+                                <input type="hidden" name="command" value="assign_activity"/>
+<%--                                <input type="hidden" name="action" value="add"/>--%>
                                 <input type="hidden" name="activityId" value="${activity.id}"/>
+                                <input type="hidden" name="userId" value="${user.userId}"/>
                                 <input type="hidden" name="activityName" value="${activity.name}"/>
                                 <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
                             </form>

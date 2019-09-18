@@ -5,7 +5,7 @@ import org.oddys.timetracking.entity.User;
 
 import java.util.List;
 
-public interface UserDao extends Dao<Long, User> {
+public interface UserDao {
     User findByLogin(String login) throws DaoException;
 
     List<User> findByLastName(String lastName) throws DaoException;

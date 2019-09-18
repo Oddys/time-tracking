@@ -4,6 +4,7 @@ import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserActivityDao;
 import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.dto.UserActivityDto;
+import org.oddys.timetracking.entity.UserActivity;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
@@ -25,16 +26,30 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public boolean addUserActivity(Long userId, Long activityId) throws ServiceException {
+    public boolean assignActivity(Long userId, Long activityId)
+            throws ServiceException {
         try {
-            if (dao.exists(userId, activityId)) {
-                return false;
+            UserActivity userActivity = dao.find(userId, activityId);
+            if (userActivity == null) {
+                return dao.add(userId, activityId, false, true) > 0;
+            } else if (!userActivity.getStatusChangeRequested() && !userActivity.getAssigned()) {
+                userActivity.setStatusChangeRequested(true);
+                return dao.update(userActivity) > 0;
             }
-            return dao.add(userId, activityId, false, true) > 0;
+            return false;
         } catch (DaoException e) {
-            throw new ServiceException("UserActivityService failed to add UserActivity", e);
+            throw new ServiceException("Failed to process a request for UserActivity", e);
         }
     }
+
+//    @Override
+//    public boolean addUserActivity(Long userId, Long activityId) throws ServiceException {
+//        try {
+//            return dao.add(userId, activityId, false, true) > 0;
+//        } catch (DaoException e) {
+//            throw new ServiceException("UserActivityService failed to add UserActivity", e);
+//        }
+//    }
 
     @Override
     public boolean requestStatusChange(Long userActivityId) throws ServiceException {
@@ -66,8 +81,9 @@ public class UserActivityServiceImpl implements UserActivityService {
             throw new ServiceException("Failed to find UserActivities", e);
         }
     }
+
     @Override
-    public boolean processActivityRequest(Long userActivityId, boolean currentValue) throws ServiceException {
+    public boolean changeUserActivityStatus(Long userActivityId, boolean currentValue) throws ServiceException {
         try {
             return dao.updateAssignedAndStatusChangeRequested(userActivityId, !currentValue) > 0;
         } catch (DaoException e) {

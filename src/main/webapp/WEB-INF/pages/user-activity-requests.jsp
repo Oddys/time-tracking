@@ -26,7 +26,7 @@
                 <td>${userActivity.activityName}</td>
                 <td>
                     <form action="controller" method="post">
-                        <input type="hidden" name="command" value="process_activity_request"/>
+                        <input type="hidden" name="command" value="change_activity_status"/>
                         <input type="hidden" name="userActivityId" value="${userActivity.id}"/>
                         <input type="hidden" name="currentAssigned" value="${userActivity.assigned}"/>
                         <c:choose>

@@ -5,8 +5,16 @@ import org.oddys.timetracking.entity.Activity;
 
 import java.util.List;
 
-public interface ActivityDao extends Dao<Long, Activity> {
+public interface ActivityDao {
+    Long create(Activity entity) throws DaoException;
+
+    Activity findById(Long id);
+
     long getNumberOfRows() throws DaoException;
 
+    List<Activity> findAll() throws DaoException;
+
     List<Activity> findAll(long currentPage, int rowsPerPage) throws DaoException;
+
+    int update(Activity entity) throws DaoException;
 }

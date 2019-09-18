@@ -55,9 +55,9 @@ public enum Commands {
         }
     },
 
-    ACTIVITY_REQUEST {
+    ASSIGN_ACTIVITY {
         {
-            command = ActivityRequestCommand.getInstance();
+            command = AssignActivityCommand.getInstance();
         }
     },
 
@@ -73,9 +73,9 @@ public enum Commands {
         }
     },
 
-    PROCESS_ACTIVITY_REQUEST {
+    CHANGE_ACTIVITY_STATUS {
         {
-            command = ProcessActivityRequestCommand.getInstance();
+            command = ChangeUserActivityStatusCommand.getInstance();
         }
     };
 

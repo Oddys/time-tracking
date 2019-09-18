@@ -130,27 +130,31 @@ public class MysqlUserActivityDao implements UserActivityDao {
     }
 
     @Override
-    public Long create(UserActivity entity) throws DaoException {
-        return null;
+    public UserActivity find(Long userId, Long activityId) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.activity.find"))) {
+            statement.setLong(1, userId);
+            statement.setLong(2, activityId);
+            ResultSet rs = statement.executeQuery();
+            return (rs.next()) ? EntityMapper.getInstance().mapUserActivity(rs) : null;
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find UserActivity", e);
+        }
     }
 
     @Override
-    public UserActivity findById(Long id) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<UserActivity> findAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public boolean update(UserActivity entity) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long id) throws DaoException {
-        return false;
+    public int update(UserActivity userActivity) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.activity.update"))) {
+            statement.setBoolean(1, userActivity.getAssigned());
+            statement.setBoolean(2, userActivity.getStatusChangeRequested());
+            statement.setLong(3, userActivity.getUser().getId());
+            statement.setLong(4, userActivity.getActivity().getId());
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find UserActivity", e);
+        }
     }
 }
