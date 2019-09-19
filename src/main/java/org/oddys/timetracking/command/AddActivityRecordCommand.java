@@ -31,7 +31,6 @@ public class AddActivityRecordCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         if (!ParameterValidator.getInstance().isValidAddActivityRecord(req)) {
-//            return req.getParameter("sentFromPage");
             return ConfigManager.getInstance().getProperty("path.activity.records");
         }
         try {
@@ -44,8 +43,11 @@ public class AddActivityRecordCommand implements Command {
             } else {
                 req.setAttribute("messageKey", "activity.record.add.success");
             }
-//            return req.getParameter("sentFromPage");
-            return ConfigManager.getInstance().getProperty("path.activity.records");
+//            return ConfigManager.getInstance().getProperty("path.activity.records") +
+            return String.format(ConfigManager.getInstance().getProperty("path.control.activity.records.format"),
+                    (Long) req.getSession().getAttribute("userActivityId"),
+                    (Boolean) req.getSession().getAttribute("userActivityAssigned"),
+                    (Integer) req.getSession().getAttribute("rowsPerPage"));
         } catch (ServiceException e) {
             LOGGER.error("Failed to add ActivityRecord", e);
             return null;
