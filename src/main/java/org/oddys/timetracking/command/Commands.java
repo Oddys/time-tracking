@@ -83,6 +83,12 @@ public enum Commands {
         {
             command = AddUserCommand.getInstance();
         }
+    },
+
+    ADD_ACTIVITY {
+        {
+            command = AddActivityCommand.getInstance();
+        }
     };
 
     Command command;
