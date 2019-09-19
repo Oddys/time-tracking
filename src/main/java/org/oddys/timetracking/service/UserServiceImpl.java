@@ -1,6 +1,5 @@
 package org.oddys.timetracking.service;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.dao.mysql.DaoException;
@@ -8,11 +7,10 @@ import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
+import org.oddys.timetracking.util.PasswordManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -53,23 +51,13 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = null;
         try {
             User user = dao.findByLogin(login);
-            if (checkCredentials(login, password, user)) {
+            if (PasswordManager.getInstance().checkCredentials(login, password, user)) {
                 userDto = ModelMapperWrapper.getMapper().map(user, UserDto.class);
             }
-            Arrays.fill(password, Character.MIN_VALUE);
+            PasswordManager.getInstance().invalidate(password);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return userDto;
-    }
-
-    private boolean checkCredentials(String login, char[] password, User user) {
-        if (user == null) {
-            return false;
-        }
-        return Objects.equals(login, user.getLogin())
-                && DigestUtils.sha256Hex(String.valueOf(password)).equals(String.valueOf(user.getPassword())); // TODO Check if it's adequate
-//                && Arrays.equals(password, user.getPassword());
-
     }
 }

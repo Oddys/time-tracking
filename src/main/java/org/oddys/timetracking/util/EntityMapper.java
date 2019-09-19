@@ -41,7 +41,7 @@ public class EntityMapper {
         Role role = mapRole(rs);
         return new User(rs.getLong("user_id"),
                         rs.getString("login"),
-                        rs.getString("password").toCharArray(),
+                        rs.getString("password"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         role);
@@ -51,7 +51,8 @@ public class EntityMapper {
         Role role = new Role(null, req.getParameter("role").toUpperCase());
         return new User(null,
                         req.getParameter("login"),
-                        req.getParameter("password").toCharArray(),
+                        PasswordManager.getInstance().hashPassword(
+                                req.getParameter("password")),
                         req.getParameter("firstName"),
                         req.getParameter("lastName"),
                         role);
@@ -60,7 +61,6 @@ public class EntityMapper {
     public Activity mapActivity(ResultSet rs) throws SQLException {
         return new Activity(rs.getLong("activity_id"),
                             rs.getString("activity_name"));
-//                            rs.getBoolean("approved"));
     }
 
     public Role mapRole(ResultSet rs) throws SQLException {

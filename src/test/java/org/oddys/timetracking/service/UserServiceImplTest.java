@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceImplTest {
     private final String LOGIN = "login";
     private final char[] CORRECT_PASSWORD = "password".toCharArray();
-    private final User USER = new User(7L, LOGIN, DigestUtils.sha256Hex(String.valueOf(CORRECT_PASSWORD)).toCharArray(),  // FIXME
+    private final User USER = new User(7L, LOGIN, DigestUtils.sha256Hex(String.valueOf(CORRECT_PASSWORD)),
             "first name", "last name", 7L, "role");
 
     @Mock
