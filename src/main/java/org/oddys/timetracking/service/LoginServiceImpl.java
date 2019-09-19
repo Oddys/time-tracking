@@ -1,5 +1,6 @@
 package org.oddys.timetracking.service;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.dao.mysql.DaoException;
@@ -43,6 +44,8 @@ public class LoginServiceImpl implements LoginService {
             return false;
         }
         return Objects.equals(login, user.getLogin())
-                && Arrays.equals(password, user.getPassword());
+                && DigestUtils.sha256Hex(String.valueOf(password)).equals(String.valueOf(user.getPassword())); // TODO Check if it's adequate
+//                && Arrays.equals(password, user.getPassword());
+
     }
 }

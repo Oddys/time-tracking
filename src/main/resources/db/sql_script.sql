@@ -14,7 +14,7 @@ create table roles (
 create table users (
     user_id serial,
     login varchar(45) unique not null,
-    password varchar(45) not null,
+    password varchar(64) not null,
     first_name varchar(90) not null,
     last_name varchar(90) not null,
     role_id bigint unsigned not null,
@@ -73,8 +73,9 @@ values ('ADMIN'),
 ;
 
 insert into users (login, password, first_name, last_name, role_id)
-values ('john', 'john', 'John', 'Doe', 1),
-    ('ivan', 'ivan', 'Іван', 'Іваненко', 2)
+values ('john', '96d9632f363564cc3032521409cf22a852f2032eec099ed5967c0d000cec607a', 'John', 'Doe', 1),
+    ('ivan', 'cd0b9452fc376fc4c35a60087b366f70d883fc901524daf1f122fbd319384f6a', 'Іван', 'Іваненко', 2)
+--     ('mark', '6201eb4dccc956cc4fa3a78dca0c2888177ec52efd48f125df214f046eb43138', 'Марк', 'Марченко', 1)
 ;
 
 -- insert into activities (activity_name, approved)

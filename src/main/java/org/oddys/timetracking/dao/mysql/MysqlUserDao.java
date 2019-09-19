@@ -1,5 +1,6 @@
 package org.oddys.timetracking.dao.mysql;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.UserDao;
@@ -60,7 +61,8 @@ public class MysqlUserDao implements UserDao {
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.user.add"))) {
             statement.setString(1, user.getLogin());
-            statement.setString(2, String.valueOf(user.getPassword()));
+//            statement.setString(2, String.valueOf(user.getPassword()));
+            statement.setString(2, DigestUtils.sha256Hex(String.valueOf(user.getPassword())));
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getLastName());
             statement.setString(5, user.getRole().getName());
