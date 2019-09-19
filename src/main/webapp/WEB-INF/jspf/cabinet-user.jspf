@@ -3,12 +3,12 @@
 <head>
 </head>
     <body>
-        <h3><fmt:message key="activity.suggest"/></h3>
-        <form action="controller" method="post">
-            <input type="hidden" name="command" value="suggest_activity">
-            <input type="text" placeholder="<fmt:message key="activity.enter"/>"/>
-            <input type="submit" value="<fmt:message key="button.send"/>"/>
-        </form>
+<%--        <h3><fmt:message key="activity.suggest"/></h3>--%>
+<%--        <form action="controller" method="post">--%>
+<%--            <input type="hidden" name="command" value="suggest_activity">--%>
+<%--            <input type="text" placeholder="<fmt:message key="activity.enter"/>"/>--%>
+<%--            <input type="submit" value="<fmt:message key="button.send"/>"/>--%>
+<%--        </form>--%>
         <h3><fmt:message key="activity.all"/></h3>
         <form action="controller">
             <input type="hidden" name="command" value="show_activities"/>

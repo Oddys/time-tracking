@@ -8,9 +8,16 @@
         <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-data.jsp"/>
         <input type="submit" value="Add"/>
     </form>
-    <h3><fmt:message key="activity.suggestions"/></h3>
+<%--    <h3><fmt:message key="activity.suggestions"/></h3>--%>
+<%--    <form action="controller">--%>
+<%--        <input type="hidden" name="command" value="show_suggested_activities">--%>
+<%--        <input type="submit" value="<fmt:message key="button.show"/>"/>--%>
+<%--    </form>--%>
+    <h3><fmt:message key="activity.all"/></h3>
     <form action="controller">
-        <input type="hidden" name="command" value="show_suggested_activities">
+        <input type="hidden" name="command" value="show_activities"/>
+        <input type="hidden" name="currentPage" value="1"/>
+        <input type="hidden" name="rowsPerPage" value="5"/>
         <input type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
     <h3><fmt:message key="activity.requests"/></h3>

@@ -16,34 +16,61 @@
             <fmt:param value="${activityName}"/>
         </fmt:message>
     </c:if>
+    <c:if test="${user.roleName eq 'ADMIN'}">
+        <h3>Add activity</h3>
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="add_activity">
+            <label for="activityName"></label>
+            <input type="text" name="activityName" id="activityName" placeholder="<fmt:message key="activity.enter"/>" required/>
+            <input type="submit" value="<fmt:message key="button.send"/>"/>
+        </form>
+    </c:if>
     <table>
         <tr>
             <th><fmt:message key="table.column.name"/> </th>
-<%--            <th><fmt:message key="table.column.approved"/></th>--%>
-            <th><fmt:message key="table.column.action"/></th>
+            <c:if test="${user.roleName eq 'USER'}">
+                <th><fmt:message key="table.column.action"/></th>
+            </c:if>
         </tr>
         <c:forEach items="${activities}" var="activity">
             <tr>
                 <td>${activity.name}</td>
-<%--                <td>${activity.approved}</td>--%>
-                <td>
-                    <c:choose>
-                        <c:when test="${user.roleName eq 'USER' and activity.approved}">
-                            <form action="controller" method="post">
-                                <input type="hidden" name="command" value="assign_activity"/>
-<%--                                <input type="hidden" name="action" value="add"/>--%>
-                                <input type="hidden" name="activityId" value="${activity.id}"/>
-                                <input type="hidden" name="userId" value="${user.userId}"/>
-                                <input type="hidden" name="activityName" value="${activity.name}"/>
-                                <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
-                            </form>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:message key="user.activity.notavailable"/>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-
+                <c:if test="${user.roleName eq 'USER'}">
+                    <td>
+                        <c:choose>
+                            <c:when test="${activity.approved}">
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="command" value="assign_activity"/>
+                                        <%--                                <input type="hidden" name="action" value="add"/>--%>
+                                    <input type="hidden" name="activityId" value="${activity.id}"/>
+                                    <input type="hidden" name="userId" value="${user.userId}"/>
+                                    <input type="hidden" name="activityName" value="${activity.name}"/>
+                                    <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
+                                </form>
+                            </c:when>
+                            <c:otherwise>
+                                <fmt:message key="user.activity.notavailable"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </c:if>
+<%--                <td>--%>
+<%--                    <c:choose>--%>
+<%--                        <c:when test="${user.roleName eq 'USER' and activity.approved}">--%>
+<%--                            <form action="controller" method="post">--%>
+<%--                                <input type="hidden" name="command" value="assign_activity"/>--%>
+<%--&lt;%&ndash;                                <input type="hidden" name="action" value="add"/>&ndash;%&gt;--%>
+<%--                                <input type="hidden" name="activityId" value="${activity.id}"/>--%>
+<%--                                <input type="hidden" name="userId" value="${user.userId}"/>--%>
+<%--                                <input type="hidden" name="activityName" value="${activity.name}"/>--%>
+<%--                                <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>--%>
+<%--                            </form>--%>
+<%--                        </c:when>--%>
+<%--&lt;%&ndash;                        <c:otherwise>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <fmt:message key="user.activity.notavailable"/>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </c:otherwise>&ndash;%&gt;--%>
+<%--                    </c:choose>--%>
+<%--                </td>--%>
             </tr>
         </c:forEach>
     </table>
