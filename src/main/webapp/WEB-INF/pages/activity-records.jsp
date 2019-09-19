@@ -32,20 +32,20 @@
             <th><fmt:message key="table.column.date"/></th>
             <th><fmt:message key="table.column.duration"/></th>
 <%--            <th><fmt:message key="status"/></th>--%>
-            <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
-                <th></th>
-                <th></th>
-            </c:if>
+<%--            <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">--%>
+<%--                <th></th>--%>
+<%--                <th></th>--%>
+<%--            </c:if>--%>
         </tr>
         <c:forEach items="${activityRecords}" var="record">
             <tr>
                 <td>${record.activityDate}</td>
                 <td>${record.duration}</td>
 <%--                <td>${record.userActivityStatusChangeRequested}</td>--%>
-                <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
-                    <td>Edit</td>  <!-- TODO Implement -->
-                    <td>Delete</td>  <!-- TODO Implement -->
-                </c:if>
+<%--                <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">--%>
+<%--                    <td>Edit</td>  <!-- TODO Implement -->--%>
+<%--                    <td>Delete</td>  <!-- TODO Implement -->--%>
+<%--                </c:if>--%>
             </tr>
         </c:forEach>
     </table>

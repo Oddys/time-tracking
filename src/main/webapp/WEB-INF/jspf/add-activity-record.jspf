@@ -1,22 +1,26 @@
+<%--@elvariable id="messageKey" type="java.lang.String"--%>
 <html>
 <head>
 </head>
 <body>
     <h2><fmt:message key="activity.record.add"/> </h2>
-    <c:choose>
-        <c:when test="${not empty successMessage}">
-            ${successMessage}
-        </c:when>
-        <c:otherwise>
-            ${errorMessage}
-        </c:otherwise>
-    </c:choose>
+    <c:if test="${not empty messageKey}">
+        <fmt:message key="${messageKey}"/>
+    </c:if>
+<%--    <c:choose>--%>
+<%--        <c:when test="${not empty successMessage}">--%>
+<%--            ${successMessage}--%>
+<%--        </c:when>--%>
+<%--        <c:otherwise>--%>
+<%--            ${errorMessage}--%>
+<%--        </c:otherwise>--%>
+<%--    </c:choose>--%>
     <form action="controller" method="post">
         <input type="hidden" name="command" value="add_activity_record"/>
-        <input type="hidden" name="sentFromPage" value="${pageContext.request.servletPath}"/>
-        <label for="date">Date</label>
+<%--        <input type="hidden" name="sentFromPage" value="${pageContext.request.servletPath}"/>--%>
+        <label for="date"><fmt:message key="label.date"/></label>
         <input type="date" name="date" id="date" min="2019-01-01" onchange="checkDate(this)" required/>
-        <label for="duration">Duration (in minutes)</label>
+        <label for="duration"><fmt:message key="label.duration"/></label>
         <input type="number" name="duration" id="duration" min="10" max="1440" step="10" required/>
         <input type="submit" value="<fmt:message key="button.save"/>"/>
     </form>

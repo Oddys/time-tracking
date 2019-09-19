@@ -6,6 +6,7 @@ import org.oddys.timetracking.service.ActivityRecordService;
 import org.oddys.timetracking.service.ActivityRecordServiceImpl;
 import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.transaction.TransactionProxy;
+import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,19 +31,21 @@ public class AddActivityRecordCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         if (!ParameterValidator.getInstance().isValidAddActivityRecord(req)) {
-            return req.getParameter("sentFromPage");
+//            return req.getParameter("sentFromPage");
+            return ConfigManager.getInstance().getProperty("path.activity.records");
         }
         try {
-            int numRowsAffected = service.addActivityRecord(
-                    req.getParameter("table.column.date"),
-                    req.getParameter("table.column.duration"),
+            int numRowsAffected = service.addActivityRecord(  // FIXME Make it return boolean
+                    req.getParameter("date"),
+                    req.getParameter("duration"),
                     (Long) req.getSession().getAttribute("userActivityId"));
             if (numRowsAffected == 0) {
-                req.setAttribute("errorMessage", "Record already exists");
+                req.setAttribute("messageKey", "activity.record.add.fail");
             } else {
-                req.setAttribute("successMessage", "Record added successfully");
+                req.setAttribute("messageKey", "activity.record.add.success");
             }
-            return req.getParameter("sentFromPage");
+//            return req.getParameter("sentFromPage");
+            return ConfigManager.getInstance().getProperty("path.activity.records");
         } catch (ServiceException e) {
             LOGGER.error("Failed to add ActivityRecord", e);
             return null;

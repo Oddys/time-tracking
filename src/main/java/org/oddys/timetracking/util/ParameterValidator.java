@@ -14,12 +14,12 @@ public class ParameterValidator {
     }
 
     public boolean isValidAddActivityRecord(HttpServletRequest request) {
-        if (StringUtils.isBlank(request.getParameter("table.column.date"))) {
-            request.setAttribute("errorMessage", "Please, enter the date");  // FIXME Change to use message instead of errorMessage
+        if (StringUtils.isBlank(request.getParameter("date"))) {
+            request.setAttribute("messageKey", "param.empty.date");
             return false;
         }
-        if (StringUtils.isBlank(request.getParameter("table.column.duration"))) {
-            request.setAttribute("errorMessage", "Please, enter the duration");
+        if (StringUtils.isBlank(request.getParameter("duration"))) {
+            request.setAttribute("messageKey", "param.empty.duration");
             return false;
         }
         return true;
