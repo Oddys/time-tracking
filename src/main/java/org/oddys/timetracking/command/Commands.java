@@ -7,9 +7,9 @@ public enum Commands {
         }
     },
 
-    LOGOUT {
+    SIGNOUT {
         {
-            command = LogoutCommand.getInstance();
+            command = SignOutCommand.getInstance();
         }
     },
 

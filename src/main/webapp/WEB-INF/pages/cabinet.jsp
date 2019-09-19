@@ -12,8 +12,8 @@
         </fmt:message>
     </p>
     <form action="controller" method="post">
-        <input type="hidden" name="command" value="logout"/>
-        <input type="submit" value="<fmt:message key="button.logout"/>">
+        <input type="hidden" name="command" value="signout"/>
+        <input type="submit" value="<fmt:message key="button.signout"/>">
     </form>
 
     <c:choose>

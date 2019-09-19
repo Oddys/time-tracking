@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-public class LogoutCommand implements Command {
-    private static final LogoutCommand INSTANCE = new LogoutCommand();
+public class SignOutCommand implements Command {
     private static final Logger log = LogManager.getLogger();
+    private static final Command INSTANCE = new SignOutCommand();
 
-    private LogoutCommand() {}
+    private SignOutCommand() {}
 
-    public static LogoutCommand getInstance() {
+    public static Command getInstance() {
         return INSTANCE;
     }
 
@@ -28,10 +28,5 @@ public class LogoutCommand implements Command {
         session.invalidate();
         log.info(login + " signed out");
         return ConfigManager.getInstance().getProperty("path.home");
-    }
-
-    @Override
-    public String toString() {
-        return "LogoutCommand";
     }
 }
