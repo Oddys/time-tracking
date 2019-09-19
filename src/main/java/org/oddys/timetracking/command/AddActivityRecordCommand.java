@@ -44,7 +44,8 @@ public class AddActivityRecordCommand implements Command {
                 req.setAttribute("messageKey", "activity.record.add.success");
             }
 //            return ConfigManager.getInstance().getProperty("path.activity.records") +
-            return String.format(ConfigManager.getInstance().getProperty("path.control.activity.records.format"),
+            return String.format(ConfigManager.getInstance().getProperty(
+                    "path.controller.activity.records.format"),  // FIXME Consider to move to a helper class
                     (Long) req.getSession().getAttribute("userActivityId"),
                     (Boolean) req.getSession().getAttribute("userActivityAssigned"),
                     (Integer) req.getSession().getAttribute("rowsPerPage"));

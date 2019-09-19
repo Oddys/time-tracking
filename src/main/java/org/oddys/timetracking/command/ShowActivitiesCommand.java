@@ -28,7 +28,7 @@ public class ShowActivitiesCommand implements Command {
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
             List<ActivityDto> activities = service.findActivities(currentPage, rowsPerPage);
-            req.getSession().setAttribute("activities", activities);
+            req.getSession().setAttribute("activities", activities);  // TODO Move to a helper class
             req.getSession().setAttribute("currentPage", currentPage);
             req.getSession().setAttribute("rowsPerPage", rowsPerPage);
             req.getSession().setAttribute("numPages", service.getNumberOfPages(rowsPerPage));

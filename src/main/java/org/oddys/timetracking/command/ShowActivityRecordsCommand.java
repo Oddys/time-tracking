@@ -30,7 +30,7 @@ public class ShowActivityRecordsCommand implements Command {
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         try {
             List<ActivityRecordDto> records = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
-            req.getSession().setAttribute("activityRecords", records);
+            req.getSession().setAttribute("activityRecords", records);  // TODO Move to a helper class
             req.getSession().setAttribute("numPages",
                     service.getNumberOfPages(userActivityId, rowsPerPage));
             req.getSession().setAttribute("userActivityId", userActivityId);

@@ -36,7 +36,10 @@ public class AddActivityCommand implements Command {
                 req.setAttribute("messageKey", "activity.add.fail");
             }
             req.setAttribute("activityName", activityName);
-            return ConfigManager.getInstance().getProperty("path.activities");
+//            return ConfigManager.getInstance().getProperty("path.activities");
+            return String.format(ConfigManager.getInstance().getProperty(
+                    "path.controller.activities.format"),
+                    req.getSession().getAttribute("rowsPerPage"));
         } catch (ServiceException e) {
             LOGGER.error("ActivityService failed to add Activity", e);
             return null;
