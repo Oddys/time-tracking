@@ -1,9 +1,9 @@
 package org.oddys.timetracking.command;
 
 public enum Commands {
-    LOGIN {
+    SIGNIN {
         {
-            command = LoginCommand.getInstance();
+            command = SignInCommand.getInstance();
         }
     },
 

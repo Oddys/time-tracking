@@ -1,5 +1,6 @@
 package org.oddys.timetracking.service;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,36 +16,36 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginServiceImplTest {
+public class UserServiceImplTest {
     private final String LOGIN = "login";
     private final char[] CORRECT_PASSWORD = "password".toCharArray();
-    private final User USER = new User(7L, LOGIN, CORRECT_PASSWORD,
+    private final User USER = new User(7L, LOGIN, DigestUtils.sha256Hex(String.valueOf(CORRECT_PASSWORD)).toCharArray(),  // FIXME
             "first name", "last name", 7L, "role");
 
     @Mock
     private UserDao userDao;
 
     @InjectMocks
-    private final LoginService service = LoginServiceImpl.getInstance();
+    private final UserService service = UserServiceImpl.getInstance();
 
     @Test
     public void returnUserDtoIfValidCredentials() throws DaoException, ServiceException {
         UserDto userDto = new UserDto(USER);
         when(userDao.findByLogin(LOGIN)).thenReturn(USER);
-        assertEquals(userDto, service.logIn(LOGIN, CORRECT_PASSWORD));
+        assertEquals(userDto, service.signIn(LOGIN, CORRECT_PASSWORD));
     }
 
     @Test
     public void returnNullIfNonValidCredentials() throws DaoException, ServiceException {
         char[] incorrectPassword = "not a password".toCharArray();
         when(userDao.findByLogin(LOGIN)).thenReturn(USER);
-        assertNull(service.logIn(LOGIN, incorrectPassword));
+        assertNull(service.signIn(LOGIN, incorrectPassword));
     }
 
     @Test
     public void returnNullIfNonExistingLogin() throws DaoException, ServiceException {
         String misspelledLogin = "oglin";
         when(userDao.findByLogin(misspelledLogin)).thenReturn(null);
-        assertNull(service.logIn(misspelledLogin, CORRECT_PASSWORD));
+        assertNull(service.signIn(misspelledLogin, CORRECT_PASSWORD));
     }
 }

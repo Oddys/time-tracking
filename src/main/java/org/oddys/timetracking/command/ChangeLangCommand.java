@@ -25,7 +25,7 @@ public class ChangeLangCommand implements Command {
             log.info("Session language is set to " + langParam);
             return page;
         } else {
-            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+            return ConfigManager.getInstance().getProperty("path.home");
         }
     }
 

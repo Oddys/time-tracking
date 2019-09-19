@@ -26,7 +26,7 @@ public class ShowUserActivitiesCommand implements Command {
     public String execute(HttpServletRequest req) {
         String userIdString = req.getParameter("userId");
         if (userIdString == null) {
-            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+            return ConfigManager.getInstance().getProperty("path.home");
         }
         Long userId = Long.valueOf(userIdString);
         List<UserActivityDto> userActivityDTOs = null;

@@ -9,4 +9,6 @@ public interface UserService {
     List<UserDto> search(String lastName) throws ServiceException;
 
     boolean addUser(User user) throws ServiceException;
+
+    UserDto signIn(String login, char[] password) throws ServiceException;
 }

@@ -27,7 +27,7 @@ public class FindUserCommand implements Command {
     public String execute(HttpServletRequest req) {
         String lastName = req.getParameter("lastName");
         if (StringUtils.isBlank(lastName)) {
-            return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+            return ConfigManager.getInstance().getProperty("path.home");
         }
         List<UserDto> users = null;
         try {

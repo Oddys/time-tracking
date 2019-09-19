@@ -15,7 +15,7 @@ public class EmptyCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        return ConfigManager.getInstance().getProperty(ConfigManager.HOME_PATH);
+        return ConfigManager.getInstance().getProperty("path.home");
     }
 
     @Override

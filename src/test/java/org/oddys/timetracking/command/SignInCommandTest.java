@@ -7,8 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.oddys.timetracking.dto.UserDto;
-import org.oddys.timetracking.service.LoginService;
 import org.oddys.timetracking.service.ServiceException;
+import org.oddys.timetracking.service.UserService;
 import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginCommandTest {
+public class SignInCommandTest {
     private final String CABINET_PAGE_URL = ConfigManager.getInstance()
-            .getProperty(ConfigManager.CABINET_PATH);
+            .getProperty("path.cabinet");
     private final String HOME_PAGE_URL = ConfigManager.getInstance()
-            .getProperty(ConfigManager.HOME_PATH);
+            .getProperty("path.home");
 
     @Mock
-    private LoginService loginService;
+    private UserService service;
 
     @Mock
     private UserDto userDto;
@@ -39,7 +39,7 @@ public class LoginCommandTest {
     private HttpSession session;
 
     @InjectMocks
-    private final LoginCommand loginCommand = LoginCommand.getInstance();
+    private final Command signInCommand = SignInCommand.getInstance();
 
     @Before
     public void setUp() {
@@ -50,16 +50,16 @@ public class LoginCommandTest {
 
     @Test
     public void setUserAttrInSessionAndReturnCabinetPageIfValidCredentials() throws ServiceException {
-        when(loginService.logIn(any(String.class), any(char[].class))).thenReturn(userDto);
-        String page = loginCommand.execute(request);
+        when(service.signIn(any(String.class), any(char[].class))).thenReturn(userDto);
+        String page = signInCommand.execute(request);
         verify(session).setAttribute("user", userDto);
         assertEquals(CABINET_PAGE_URL, page);
     }
 
     @Test
     public void setErrorMessageKeyAttrInSessionAndReturnHomePageIfNonValidCredentials() throws ServiceException {
-        when(loginService.logIn(any(String.class), any(char[].class))).thenReturn(null);
-        String page = loginCommand.execute(request);
+        when(service.signIn(any(String.class), any(char[].class))).thenReturn(null);
+        String page = signInCommand.execute(request);
         verify(request).setAttribute("errorMessageKey", "auth.error.notfound");
         assertEquals(HOME_PAGE_URL, page);
     }
