@@ -29,7 +29,7 @@ create table users (
 create table activities (
     activity_id serial,
     activity_name varchar(180) unique not null,
-    approved boolean not null,
+--     approved boolean not null,
 
     primary key (activity_id)
 );
@@ -77,11 +77,17 @@ values ('john', 'john', 'John', 'Doe', 1),
     ('ivan', 'ivan', 'Іван', 'Іваненко', 2)
 ;
 
-insert into activities (activity_name, approved)
-values ('Написання статті', true),
-      ('Проведення інтерв''ю', true),
-      ('Редагування', true),
-      ('Наповнення стрічки новин', false)
+-- insert into activities (activity_name, approved)
+-- values ('Написання статті', true),
+--       ('Проведення інтерв''ю', true),
+--       ('Редагування', true),
+--       ('Наповнення стрічки новин', false)
+-- ;
+insert into activities (activity_name)
+values ('Написання статті'),
+      ('Проведення інтерв''ю'),
+      ('Редагування'),
+      ('Наповнення стрічки новин')
 ;
 
 insert into user_activities (assigned, status_change_requested, user_id, activity_id)

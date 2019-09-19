@@ -15,9 +15,9 @@ import java.util.List;
 
 public class MysqlActivityDao implements ActivityDao {
     private static final MysqlActivityDao INSTANCE = new MysqlActivityDao();
-    private static final String CREATE = "INSERT INTO activities (name, approved) VALUES (?, ?)";
-    private static final String FIND_ALL = "SELECT * FROM activities";
-    private static final String UPDATE = "UPDATE activities SET approved = ? WHERE name = ?";
+//    private static final String CREATE = "INSERT INTO activities (name, approved) VALUES (?, ?)";
+//    private static final String FIND_ALL = "SELECT * FROM activities";
+//    private static final String UPDATE = "UPDATE activities SET approved = ? WHERE name = ?";
 
     private MysqlActivityDao() {}
 
@@ -26,51 +26,16 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public Long create(Activity activity) throws DaoException {
+    public boolean create(String activityName) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             PreparedStatement statement = connectionWrapper
-                     .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, activity.getName());
-            statement.setBoolean(2, activity.isApproved());
-            statement.executeUpdate();
-            return statement.getGeneratedKeys().getLong(1);
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.activity.add"))) {
+            statement.setString(1, activityName);
+//            statement.setBoolean(2, activity.isApproved());
+            return statement.executeUpdate() > 0;
+//            return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
             throw new DaoException("Failed to create Activity", e);
-        }
-    }
-
-    @Override
-    public Activity findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public long getNumberOfRows() throws DaoException {
-        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             Statement statement = connectionWrapper.createStatement()) {
-            ResultSet rs = statement.executeQuery(ConfigManager.getInstance()
-                    .getProperty("sql.activity.count.rows"));
-            rs.next();
-            return rs.getLong("num_activities");
-        } catch (SQLException e) {
-            throw new DaoException("Failed to get the number of Activities");
-        }
-    }
-
-    @Override
-    public List<Activity> findAll() throws DaoException {
-        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             Statement statement = connectionWrapper.createStatement()) {
-            ResultSet rs = statement.executeQuery(FIND_ALL);
-            List<Activity> activities = new ArrayList<>();
-            while (rs.next()) {
-                Activity activity = new Activity(rs.getLong(1), rs.getString(2),
-                        rs.getBoolean(3));
-                activities.add(activity);
-            }
-            return activities;
-        } catch (SQLException e) {
-            throw new DaoException("Failed to retrieve Activities", e);
         }
     }
 
@@ -93,14 +58,50 @@ public class MysqlActivityDao implements ActivityDao {
     }
 
     @Override
-    public int update(Activity activity) throws DaoException {
+    public long getNumberOfRows() throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
-             PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
-            statement.setBoolean(1, activity.isApproved());
-            statement.setString(2, activity.getName());
-            return statement.executeUpdate();
+             Statement statement = connectionWrapper.createStatement()) {
+            ResultSet rs = statement.executeQuery(ConfigManager.getInstance()
+                    .getProperty("sql.activity.count.rows"));
+            rs.next();
+            return rs.getLong("num_activities");
         } catch (SQLException e) {
-            throw new DaoException("Failed to update Activity", e);
+            throw new DaoException("Failed to get the number of Activities");
         }
     }
+
+    //    @Override
+//    public Activity findById(Long id) {
+//        return null;
+//    }
+
+//    @Override
+//    public List<Activity> findAll() throws DaoException {
+//        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+//             Statement statement = connectionWrapper.createStatement()) {
+//            ResultSet rs = statement.executeQuery(FIND_ALL);
+//            List<Activity> activities = new ArrayList<>();
+//            while (rs.next()) {
+//                Activity activity = new Activity(rs.getLong(1), rs.getString(2));
+////                        rs.getBoolean(3));
+//                activities.add(activity);
+//            }
+//            return activities;
+//        } catch (SQLException e) {
+//            throw new DaoException("Failed to retrieve Activities", e);
+//        }
+
+//    }
+
+//    @Override
+//    public int update(Activity activity) throws DaoException {
+//        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+//             PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
+//            statement.setBoolean(1, activity.isApproved());
+//            statement.setString(1, activity.getName());
+//            return statement.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new DaoException("Failed to update Activity", e);
+//        }
+//    }
 }

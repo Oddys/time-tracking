@@ -3,15 +3,15 @@ package org.oddys.timetracking.dto;
 public class ActivityDto {
     private Long id;
     private String name;
-    private Boolean approved;
+//    private Boolean approved;
 
     public ActivityDto() {
     }
 
-    public ActivityDto(Long id, String name, Boolean approved) {
+    public ActivityDto(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.approved = approved;
+//        this.approved = approved;
     }
 
     public Long getId() {
@@ -30,11 +30,11 @@ public class ActivityDto {
         this.name = name;
     }
 
-    public Boolean getApproved() {
-        return approved;
-    }
-
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
-    }
+//    public Boolean getApproved() {
+//        return approved;
+//    }
+//
+//    public void setApproved(Boolean approved) {
+//        this.approved = approved;
+//    }
 }

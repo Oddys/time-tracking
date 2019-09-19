@@ -59,8 +59,8 @@ public class EntityMapper {
 
     public Activity mapActivity(ResultSet rs) throws SQLException {
         return new Activity(rs.getLong("activity_id"),
-                            rs.getString("activity_name"),
-                            rs.getBoolean("approved"));
+                            rs.getString("activity_name"));
+//                            rs.getBoolean("approved"));
     }
 
     public Role mapRole(ResultSet rs) throws SQLException {

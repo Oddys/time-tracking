@@ -6,15 +6,15 @@ import org.oddys.timetracking.entity.Activity;
 import java.util.List;
 
 public interface ActivityDao {
-    Long create(Activity entity) throws DaoException;
+    boolean create(String activityName) throws DaoException;
 
-    Activity findById(Long id);
+//    Activity findById(Long id);
 
     long getNumberOfRows() throws DaoException;
 
-    List<Activity> findAll() throws DaoException;
-
     List<Activity> findAll(long currentPage, int rowsPerPage) throws DaoException;
 
-    int update(Activity entity) throws DaoException;
+//    List<Activity> findAll() throws DaoException;
+
+//    int update(Activity entity) throws DaoException;
 }

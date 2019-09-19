@@ -37,21 +37,29 @@
                 <td>${activity.name}</td>
                 <c:if test="${user.roleName eq 'USER'}">
                     <td>
-                        <c:choose>
-                            <c:when test="${activity.approved}">
-                                <form action="controller" method="post">
-                                    <input type="hidden" name="command" value="assign_activity"/>
-                                        <%--                                <input type="hidden" name="action" value="add"/>--%>
-                                    <input type="hidden" name="activityId" value="${activity.id}"/>
-                                    <input type="hidden" name="userId" value="${user.userId}"/>
-                                    <input type="hidden" name="activityName" value="${activity.name}"/>
-                                    <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <fmt:message key="user.activity.notavailable"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="command" value="assign_activity"/>
+                                <%--                                <input type="hidden" name="action" value="add"/>--%>
+                            <input type="hidden" name="activityId" value="${activity.id}"/>
+                            <input type="hidden" name="userId" value="${user.userId}"/>
+                            <input type="hidden" name="activityName" value="${activity.name}"/>
+                            <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
+                        </form>
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${activity.approved}">--%>
+<%--                                <form action="controller" method="post">--%>
+<%--                                    <input type="hidden" name="command" value="assign_activity"/>--%>
+<%--                                        &lt;%&ndash;                                <input type="hidden" name="action" value="add"/>&ndash;%&gt;--%>
+<%--                                    <input type="hidden" name="activityId" value="${activity.id}"/>--%>
+<%--                                    <input type="hidden" name="userId" value="${user.userId}"/>--%>
+<%--                                    <input type="hidden" name="activityName" value="${activity.name}"/>--%>
+<%--                                    <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>--%>
+<%--                                </form>--%>
+<%--                            </c:when>--%>
+<%--                            <c:otherwise>--%>
+<%--                                <fmt:message key="user.activity.notavailable"/>--%>
+<%--                            </c:otherwise>--%>
+<%--                        </c:choose>--%>
                     </td>
                 </c:if>
 <%--                <td>--%>

@@ -2,15 +2,15 @@ package org.oddys.timetracking.entity;
 
 public class Activity extends Entity {
     private String name;
-    private Boolean approved;
+//    private Boolean approved;
 
     public Activity() {
     }
 
-    public Activity(Long id, String name, Boolean approved) {
+    public Activity(Long id, String name) {
         super(id);
         this.name = name;
-        this.approved = approved;
+//        this.approved = approved;
     }
 
     public String getName() {
@@ -21,11 +21,11 @@ public class Activity extends Entity {
         this.name = name;
     }
 
-    public Boolean isApproved() {
-        return approved;
-    }
+//    public Boolean isApproved() {
+//        return approved;
+//    }
 
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
-    }
+//    public void setApproved(Boolean approved) {
+//        this.approved = approved;
+//    }
 }
