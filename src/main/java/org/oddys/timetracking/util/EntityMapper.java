@@ -9,6 +9,7 @@ import org.oddys.timetracking.entity.UserActivity;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class EntityMapper {
     public static final EntityMapper INSTANCE = new EntityMapper();
@@ -22,7 +23,8 @@ public class EntityMapper {
     public ActivityRecord mapActivityRecord(ResultSet rs) throws SQLException {
         UserActivity userActivity = mapUserActivity(rs);
         return new ActivityRecord(rs.getLong("activity_record_id"),
-                                  rs.getDate("activity_date").toLocalDate(),
+//                                  rs.getDate("activity_date").toLocalDate(),
+                                  rs.getObject("activity_date", LocalDate.class),
                                   rs.getLong("duration"),
                                   userActivity);
     }

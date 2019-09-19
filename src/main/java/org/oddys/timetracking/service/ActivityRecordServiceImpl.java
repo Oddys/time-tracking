@@ -11,6 +11,7 @@ import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,8 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     public int addActivityRecord(String dateString, String durationString,
             Long userActivityId) throws ServiceException {
         try {
-            Date date = Date.valueOf(dateString);
+//            Date date = Date.valueOf(dateString);
+            LocalDate date = LocalDate.parse(dateString);
             Long duration = Long.valueOf(durationString);
             if (dao.exists(date, userActivityId)) {
                 return 0;

@@ -6,10 +6,10 @@ import org.oddys.timetracking.entity.ActivityRecord;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.EntityMapper;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,12 +57,13 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public boolean exists(Date date, Long userActivityId)
+    public boolean exists(LocalDate date, Long userActivityId)
             throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.check"))) {
-            statement.setDate(1, date);
+//            statement.setDate(1, date);
+            statement.setObject(1, date);
             statement.setLong(2, userActivityId);
             ResultSet rs = statement.executeQuery();
             rs.next();
@@ -72,11 +73,13 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
         }
     }
 
-    public int add(Date date, Long duration, Long userActivityId) throws DaoException {
+    @Override
+    public int add(LocalDate date, Long duration, Long userActivityId) throws DaoException {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.add"))) {
-            statement.setDate(1, date);
+//            statement.setDate(1, date);
+            statement.setObject(1, date);
             statement.setLong(2, duration);
             statement.setLong(3, userActivityId);
             return statement.executeUpdate();
