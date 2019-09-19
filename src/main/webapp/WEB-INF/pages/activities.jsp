@@ -7,17 +7,17 @@
 <%--@elvariable id="activityName" type="String"--%>
 <html>
 <head>
-    <title><fmt:message key="title.activities.all"/></title>
+    <title><fmt:message key="title.activities"/></title>
 </head>
 <body>
-    <h2><fmt:message key="title.activities.all"/></h2>
+    <h2><fmt:message key="title.activities"/></h2>
     <c:if test="${not empty messageKey}">
         <fmt:message key="${messageKey}">
             <fmt:param value="${activityName}"/>
         </fmt:message>
     </c:if>
     <c:if test="${user.roleName eq 'ADMIN'}">
-        <h3>Add activity</h3>
+        <h3><fmt:message key="title.activity.add"/> </h3>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="add_activity">
             <label for="activityName"></label>
@@ -45,21 +45,6 @@
                             <input type="hidden" name="activityName" value="${activity.name}"/>
                             <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
                         </form>
-<%--                        <c:choose>--%>
-<%--                            <c:when test="${activity.approved}">--%>
-<%--                                <form action="controller" method="post">--%>
-<%--                                    <input type="hidden" name="command" value="assign_activity"/>--%>
-<%--                                        &lt;%&ndash;                                <input type="hidden" name="action" value="add"/>&ndash;%&gt;--%>
-<%--                                    <input type="hidden" name="activityId" value="${activity.id}"/>--%>
-<%--                                    <input type="hidden" name="userId" value="${user.userId}"/>--%>
-<%--                                    <input type="hidden" name="activityName" value="${activity.name}"/>--%>
-<%--                                    <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>--%>
-<%--                                </form>--%>
-<%--                            </c:when>--%>
-<%--                            <c:otherwise>--%>
-<%--                                <fmt:message key="user.activity.notavailable"/>--%>
-<%--                            </c:otherwise>--%>
-<%--                        </c:choose>--%>
                     </td>
                 </c:if>
 <%--                <td>--%>

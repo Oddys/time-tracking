@@ -70,6 +70,19 @@ public class MysqlActivityDao implements ActivityDao {
         }
     }
 
+    @Override
+    public Activity findByName(String activityName) throws DaoException {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.activity.find.by.name"))) {
+            statement.setString(1, activityName);
+            ResultSet rs = statement.executeQuery();
+            return rs.next() ? EntityMapper.getInstance().mapActivity(rs) : null;
+        } catch (SQLException e) {
+            throw new DaoException("Failed to find Activity by name", e);
+        }
+    }
+
     //    @Override
 //    public Activity findById(Long id) {
 //        return null;

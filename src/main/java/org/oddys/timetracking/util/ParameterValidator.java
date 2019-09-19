@@ -44,4 +44,12 @@ public class ParameterValidator {
         }
         return true;
     }
+
+    public boolean isValidAddActivity(HttpServletRequest request) {
+        if (StringUtils.isBlank(request.getParameter("activityName"))) {
+            request.setAttribute("messageKey", "param.activity.name");
+            return false;
+        }
+        return true;
+    }
 }

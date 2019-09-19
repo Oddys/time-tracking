@@ -8,6 +8,8 @@ import java.util.List;
 public interface ActivityDao {
     boolean create(String activityName) throws DaoException;
 
+    Activity findByName(String activityName) throws DaoException;
+
 //    Activity findById(Long id);
 
     long getNumberOfRows() throws DaoException;

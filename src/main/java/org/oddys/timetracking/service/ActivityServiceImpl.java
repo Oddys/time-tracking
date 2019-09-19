@@ -45,4 +45,16 @@ public class ActivityServiceImpl implements ActivityService {
             throw new ServiceException("Failed to find Activities");
         }
     }
+
+    @Override
+    public boolean addActivity(String name) throws ServiceException {
+        try {
+            if (dao.findByName(name) != null) {
+                return false;
+            }
+            return dao.create(name);
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to add Activity", e);
+        }
+    }
 }
