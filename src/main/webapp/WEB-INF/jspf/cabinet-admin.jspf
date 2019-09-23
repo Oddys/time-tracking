@@ -2,11 +2,11 @@
 <head>
 </head>
 <body>
-    <h3>Add user</h3>
+    <h3><fmt:message key="title.user.add"/> </h3>
     <form action="controller">
         <input type="hidden" name="command" value="forward"/>
         <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-data.jsp"/>
-        <input type="submit" value="Add"/>
+        <input type="submit" value="<fmt:message key="button.add"/>"/>
     </form>
 <%--    <h3><fmt:message key="activity.suggestions"/></h3>--%>
 <%--    <form action="controller">--%>

@@ -12,11 +12,11 @@
     </c:if>
     <table>
         <tr>
-            <th>User ID</th>
-            <th>User name</th>
-            <th>User Last name</th>
-            <th>Activity</th>
-            <th>Action</th>
+            <th><fmt:message key="table.column.user.id"/></th>
+            <th><fmt:message key="table.column.user.firstname"/></th>
+            <th><fmt:message key="table.column.user.lastname"/></th>
+            <th><fmt:message key="table.column.activity"/></th>
+            <th><fmt:message key="table.column.action"/> </th>
         </tr>
         <c:forEach items="${userActivities}" var="userActivity">
             <tr>
@@ -34,7 +34,7 @@
                                 <input type="submit" value="Stop activity"/>
                             </c:when>
                             <c:otherwise>
-                                <input type="submit" value="Assign activity"/>
+                                <input type="submit" value="<fmt:message key="button.user.activity.assign"/> "/>
                             </c:otherwise>
                         </c:choose>
                     </form>

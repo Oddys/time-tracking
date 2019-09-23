@@ -69,7 +69,7 @@
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="stop_activity"/>
                                 <input type="hidden" name="userActivityId" value="${currentUserActivity.id}"/>
-                                <input type="submit" value="Stop activity"/>
+                                <input type="submit" value="<fmt:message key="button.activity.stop"/>"/>
                             </form>
                         </c:if>
                     </td>
