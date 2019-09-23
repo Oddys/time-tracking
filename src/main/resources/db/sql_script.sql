@@ -35,13 +35,13 @@ create table activities (
 );
 
 create table user_activities (
-    user_activity_id serial,  -- FIXME It is unnecessary, can be deleted here and from entity
+    user_activity_id serial,
     assigned boolean not null,
     status_change_requested boolean not null,
     user_id bigint unsigned not null,
     activity_id bigint unsigned not null,
 
-    primary key (user_id, activity_id),
+    primary key (user_activity_id),
     foreign key fk_user_id (user_id)
     references users (user_id)
     on update restrict
@@ -53,12 +53,12 @@ create table user_activities (
 );
 
 create table activity_records (
-    activity_record_id serial, -- FIXME It is unnecessary, can be deleted here and from entity
+    activity_record_id serial,
     activity_date date not null,
     duration bigint unsigned not null,
     user_activity_id bigint unsigned not null,
 
-    primary key (activity_date, user_activity_id),
+    primary key (activity_record_id),
     foreign key fk_user_activity_id (user_activity_id)
     references user_activities (user_activity_id)
     on update restrict
@@ -78,12 +78,6 @@ values ('john', '96d9632f363564cc3032521409cf22a852f2032eec099ed5967c0d000cec607
 --     ('mark', '6201eb4dccc956cc4fa3a78dca0c2888177ec52efd48f125df214f046eb43138', 'Марк', 'Марченко', 1)
 ;
 
--- insert into activities (activity_name, approved)
--- values ('Написання статті', true),
---       ('Проведення інтерв''ю', true),
---       ('Редагування', true),
---       ('Наповнення стрічки новин', false)
--- ;
 insert into activities (activity_name)
 values ('Написання статті'),
       ('Проведення інтерв''ю'),
