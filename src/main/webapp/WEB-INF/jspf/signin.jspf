@@ -3,9 +3,8 @@
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/controller" method="post">
-        <div id="error-message"></div>
-        <c:if test="${not empty requestScope.errorMessageKey}">
-            <fmt:message key="${requestScope.errorMessageKey}"/>
+        <c:if test="${not empty messageKey}">
+            <fmt:message key="${messageKey}"/>
         </c:if><br/>
         <input type="hidden" name="command" value="signin"/>
         <fmt:message key="auth.login"/><br/>

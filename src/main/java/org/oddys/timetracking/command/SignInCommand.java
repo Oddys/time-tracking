@@ -7,6 +7,7 @@ import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.service.UserService;
 import org.oddys.timetracking.service.UserServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
+import org.oddys.timetracking.util.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,9 @@ public class SignInCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        if (!ParameterValidator.getInstance().isValidAddActivity(req)) {
+            return ConfigManager.getInstance().getProperty("path.home");
+        }
         UserDto user = null;
         try {
             user = service.signIn(req.getParameter("login"),

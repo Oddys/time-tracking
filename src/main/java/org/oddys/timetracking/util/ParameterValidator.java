@@ -52,4 +52,16 @@ public class ParameterValidator {
         }
         return true;
     }
+
+    public boolean isValidSignIn(HttpServletRequest request) {
+        if (StringUtils.isBlank(request.getParameter("login"))) {
+            request.setAttribute("messageKey", "auth.error.nologin");
+            return false;
+        }
+        if (StringUtils.isBlank(request.getParameter("password"))) {
+            request.setAttribute("messageKey", "auth.error.nopassword");
+            return false;
+        }
+        return true;
+    }
 }
