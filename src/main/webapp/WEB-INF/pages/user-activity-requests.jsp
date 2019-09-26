@@ -43,7 +43,7 @@
         </c:forEach>
     </table>
     <c:if test="${not empty userActivities}">
-        <ul>
+        <ul class="pagination">
             <c:if test="${currentPage != 1}">
                 <li>
                     <a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">

@@ -20,7 +20,7 @@
     <c:if test="${not empty messageKey}">
         <fmt:message key="${messageKey}"/>
     </c:if>
-    <table>
+    <table class="table table-hover borderless">
         <tr>
             <th><fmt:message key="title.activity"/></th>
 <%--            <th><fmt:message key="activity.user.assigned"/></th>--%>

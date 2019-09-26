@@ -24,7 +24,7 @@ public class SignInCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        if (!ParameterValidator.getInstance().isValidAddActivity(req)) {
+        if (!ParameterValidator.getInstance().isValidSignIn(req)) {
             return ConfigManager.getInstance().getProperty("path.home");
         }
         UserDto user = null;
