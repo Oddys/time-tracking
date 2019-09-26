@@ -40,7 +40,7 @@ public class SignInCommand implements Command {
             log.info(user.getLogin() + " signed in");
             return ConfigManager.getInstance().getProperty("path.cabinet");
         } else {
-            req.setAttribute("errorMessageKey", "auth.error.notfound");
+            req.setAttribute("messageKey", "auth.error.notfound");
             return ConfigManager.getInstance().getProperty("path.home");
         }
     }
