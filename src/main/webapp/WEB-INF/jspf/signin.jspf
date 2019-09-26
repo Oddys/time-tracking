@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/controller" method="post" class="form-horizontal">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
         <c:if test="${not empty messageKey}">
             <fmt:message key="${messageKey}"/>
         </c:if><br/>

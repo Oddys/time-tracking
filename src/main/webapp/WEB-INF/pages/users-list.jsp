@@ -11,7 +11,7 @@
         <fmt:param value="${param.lastName}"/>
     </fmt:message>
 </c:if>
-<table>
+<table class="table table-hover table-striped table-bordered">
     <tr>
         <th><fmt:message key="user.user"/></th>
         <th><fmt:message key="table.column.action"/></th>

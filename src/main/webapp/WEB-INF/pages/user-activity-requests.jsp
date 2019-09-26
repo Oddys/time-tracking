@@ -10,7 +10,7 @@
     <c:if test="${not empty messageKey}">
         ${messageKey}
     </c:if>
-    <table>
+    <table class="table table-hover table-striped table-bordered">
         <tr>
             <th><fmt:message key="table.column.user.id"/></th>
             <th><fmt:message key="table.column.user.firstname"/></th>
@@ -42,33 +42,43 @@
             </tr>
         </c:forEach>
     </table>
+
+
     <c:if test="${not empty userActivities}">
-        <ul class="pagination">
-            <c:if test="${currentPage != 1}">
-                <li>
-                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
-                        <fmt:message key="nav.previous"/>
-                    </a>
-                </li>
-            </c:if>
-            <c:forEach begin="1" end="${numPages}" var="i">
-                <c:choose>
-                    <c:when test="${currentPage eq i}">
-                        <li>${i}</li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <c:if test="${currentPage lt numPages}">
-                <li>
-                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
-                        <fmt:message key="nav.next"/>
-                    </a>
-                </li>
-            </c:if>
-        </ul>
+        <nav>
+            <ul class="pagination pagination-lg px-1 py-1">
+                <c:if test="${currentPage != 1}">
+                    <li class="page-item">
+                        <span class="border px-2 py-1">
+                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                                <fmt:message key="nav.previous"/>
+                            </a>
+                        </span>
+                    </li>
+                </c:if>
+                <c:forEach begin="1" end="${numPages}" var="i">
+                    <span class="border px-2 py-1">
+                        <c:choose>
+                            <c:when test="${currentPage eq i}">
+                                <li class="page-item">${i}</li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item"><a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
+                </c:forEach>
+                <c:if test="${currentPage lt numPages}">
+                    <li class="page-item">
+                        <span class="border px-2 py-1">
+                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_requests&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                                <fmt:message key="nav.next"/>
+                            </a>
+                        </span>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
     </c:if>
     <form action="${pageContext.request.contextPath}">
         <input type="submit" value="<fmt:message key="button.main"/>"/>

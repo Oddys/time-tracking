@@ -20,13 +20,10 @@
     <c:if test="${not empty messageKey}">
         <fmt:message key="${messageKey}"/>
     </c:if>
-    <table class="table table-hover borderless">
+    <table class="table table-hover table-striped table-bordered">
         <tr>
             <th><fmt:message key="title.activity"/></th>
-<%--            <th><fmt:message key="activity.user.assigned"/></th>--%>
-<%--            <th><fmt:message key="table.column.status"/></th>--%>
             <th><fmt:message key="table.header.status"/> </th>
-<%--            <th><fmt:message key="table.column.action"/></th>--%>
             <th></th>
             <c:if test="${user.roleName eq 'USER'}">
                 <th></th>
@@ -35,8 +32,6 @@
         <c:forEach var="currentUserActivity" items="${userActivities}">
             <tr>
                 <td><c:out value="${currentUserActivity.activityName}"/></td>
-<%--                <td>${currentUserActivity.assigned}</td>--%>
-<%--                <td>${currentUserActivity.statusChangeRequested}</td>--%>
                 <td>
                     <c:choose>
                         <c:when test="${currentUserActivity.assigned and not currentUserActivity.statusChangeRequested}">

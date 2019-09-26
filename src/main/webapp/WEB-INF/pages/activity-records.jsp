@@ -22,7 +22,7 @@
     <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
         <%@ include file="/WEB-INF/jspf/add-activity-record.jspf"%>
     </c:if>
-    <table class="table table-hover table-striped table-borderless">
+    <table class="table table-hover table-striped table-bordered">
         <tr>
             <th><fmt:message key="table.column.date"/></th>
             <th><fmt:message key="table.column.duration"/></th>
@@ -38,32 +38,38 @@
         <nav>
             <ul class="pagination pagination-lg px-1 py-1">
                 <c:if test="${currentPage != 1}">
-                    <span class="border"><li class="page-item px-2 py-1">
-                        <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
-                            <fmt:message key="nav.previous"/>
-                        </a>
-                    </li></span>
+                   <li class="page-item">
+                        <span class="border px-2 py-1">
+                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                                <fmt:message key="nav.previous"/>
+                            </a>
+                        </span>
+                    </li>
                 </c:if>
                 <c:forEach begin="1" end="${numPages}" var="i">
-                    <span class="border"><li class="page-item px-2 py-1">
-                        <c:choose>
-                            <c:when test="${currentPage eq i}">
-                                ${i}
-                            </c:when>
-                            <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </li></span>
+
+                    <li class="page-item">
+                        <span class="border px-2 py-1">
+                            <c:choose>
+                                <c:when test="${currentPage eq i}">
+                                    ${i}
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                    </li>
 
                 </c:forEach>
                 <c:if test="${currentPage lt numPages}">
-                    <span class="border"><li class="page-item px-2 py-1">
-                        <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
-                            <fmt:message key="nav.next"/>
-                        </a>
-                    </li></span>
-
+                    <li class="page-item">
+                        <span class="border px-2 py-1">
+                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                                <fmt:message key="nav.next"/>
+                            </a>
+                        </span>
+                    </li>
                 </c:if>
             </ul>
         </nav>
