@@ -7,7 +7,7 @@ import org.oddys.timetracking.connection.ConnectionWrapper;
 import java.sql.SQLException;
 
 public class TransactionManager {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final TransactionManager INSTANCE = new TransactionManager();
     private ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
 
@@ -17,28 +17,31 @@ public class TransactionManager {
         return INSTANCE;
     }
 
-    public void beginTransaction() throws TransactionException {
+    public void beginTransaction() {
         connectionWrapper.setTransaction(true);
         try {
             connectionWrapper.getConnection().setAutoCommit(false);
         } catch (SQLException e) {
-            throw new TransactionException("Failed to begin a transaction", e);
+            LOGGER.error("Failed to begin a transaction", e);
+            throw new TransactionException(e);
         }
     }
 
-    public void commit() throws TransactionException {
+    public void commit() {
         try {
             connectionWrapper.getConnection().commit();
         } catch (SQLException e) {
-            throw new TransactionException("Failed to commit a transaction", e);
+            LOGGER.error("Failed to commit a transaction", e);
+            throw new TransactionException(e);
         }
     }
 
-    public void rollback() throws TransactionException {
+    public void rollback() {
         try {
             connectionWrapper.getConnection().rollback();
         } catch (SQLException e) {
-            throw new TransactionException("Failed to rollback a transaction", e);
+            LOGGER.error("Failed to rollback a transaction", e);
+            throw new TransactionException(e);
         }
     }
 
@@ -47,8 +50,10 @@ public class TransactionManager {
         try {
             connectionWrapper.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-            log.error("Transaction manager failed to set autocommit to true", e);
+            LOGGER.error("Transaction manager failed to set autocommit to true", e);
+            throw new TransactionException(e);
+        } finally {
+            ConnectionWrapper.getInstance().close();
         }
-        ConnectionWrapper.getInstance().close();
     }
 }

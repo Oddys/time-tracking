@@ -1,6 +1,6 @@
 package org.oddys.timetracking.transaction;
 
-public class ProxyException extends Exception {
+public class ProxyException extends RuntimeException {
     public ProxyException() {
         super();
     }

@@ -9,14 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConnectionWrapper implements AutoCloseable {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static ConnectionWrapper INSTANCE = new ConnectionWrapper();
     private ThreadLocal<Connection> connectionThreadLocal = ThreadLocal
             .withInitial(() -> ConnectionPool.getInstance().getConnection());
-    private ThreadLocal<Boolean> isTransactionThreadLocal = ThreadLocal.withInitial(() -> false);
+    private ThreadLocal<Boolean> transactionThreadLocal = ThreadLocal.withInitial(() -> false);
 
-    private ConnectionWrapper() { ;
-    }
+    private ConnectionWrapper() {}
 
     public static ConnectionWrapper getInstance() {
         return INSTANCE;
@@ -27,7 +26,7 @@ public class ConnectionWrapper implements AutoCloseable {
     }
 
     public void setTransaction(boolean isTransaction) {
-        isTransactionThreadLocal.set(isTransaction);
+        transactionThreadLocal.set(isTransaction);
     }
 
     public PreparedStatement prepareStatement(String query) throws SQLException {
@@ -45,13 +44,15 @@ public class ConnectionWrapper implements AutoCloseable {
 
     @Override
     public void close() {
-        if (!isTransactionThreadLocal.get()) {
+        if (!transactionThreadLocal.get()) {
             try {
                 connectionThreadLocal.get().close();
             } catch (SQLException e) {
-                log.error("Connection wrapper failed to close a connection", e);
+                LOGGER.error("ConnectionWrapper failed to close a connection", e);
+                throw new ConnectionPoolException(e);
+            } finally {
+                connectionThreadLocal.remove();
             }
-            connectionThreadLocal.remove();
         }
     }
 }

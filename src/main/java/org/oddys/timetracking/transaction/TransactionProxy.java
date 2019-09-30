@@ -6,10 +6,9 @@ import org.apache.logging.log4j.Logger;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
-import java.sql.SQLException;
 
 public class TransactionProxy {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static TransactionProxy INSTANCE = new TransactionProxy();
     private TransactionManager transactionManager = TransactionManager.getInstance();
 
@@ -30,23 +29,22 @@ public class TransactionProxy {
 
     private InvocationHandler getInvocationHandler(Object target) {
         return (proxy, method, args) -> {
-            Object result = null;
             try {
+                Object result = null;
                 transactionManager.beginTransaction();
                 try {
                     result = method.invoke(target, args);
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     transactionManager.rollback();
-                    throw new ProxyException("Transaction proxy failed to invoke a target method",
+                    LOGGER.error("TransactionProxy failed to invoke a target method",
                             e.getCause());
+                    throw new ProxyException(e.getCause());
                 }
                 transactionManager.commit();
-            } catch (TransactionException | ProxyException e) {
-                log.error("Transaction proxy failed to perform a transaction", e);
+                return result;
             } finally {
                 transactionManager.endTransaction();
             }
-            return result;
         };
     }
 }
