@@ -2,7 +2,7 @@ package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserActivityDao;
-import org.oddys.timetracking.dao.mysql.DaoException;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.UserActivityDto;
 import org.oddys.timetracking.entity.UserActivity;
 import org.oddys.timetracking.util.ConfigManager;
@@ -26,42 +26,24 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public boolean assignActivity(Long userId, Long activityId)
-            throws ServiceException {
-        try {
-            UserActivity userActivity = dao.find(userId, activityId);
-            if (userActivity == null) {
-                return dao.add(userId, activityId, false, true) > 0;
-            } else if (!userActivity.getStatusChangeRequested() && !userActivity.getAssigned()) {
-                userActivity.setStatusChangeRequested(true);
-                return dao.update(userActivity) > 0;
-            }
-            return false;
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to process a request for UserActivity", e);
+    public boolean assignActivity(Long userId, Long activityId) {
+        UserActivity userActivity = dao.findByUserIdAndActivityId(userId, activityId);
+        if (userActivity == null) {
+            return dao.add(userId, activityId, false, true) > 0;
+        } else if (!userActivity.getStatusChangeRequested() && !userActivity.getAssigned()) {
+            userActivity.setStatusChangeRequested(true);
+            return dao.update(userActivity) > 0;
         }
-    }
-
-//    @Override
-//    public boolean addUserActivity(Long userId, Long activityId) throws ServiceException {
-//        try {
-//            return dao.add(userId, activityId, false, true) > 0;
-//        } catch (DaoException e) {
-//            throw new ServiceException("UserActivityService failed to add UserActivity", e);
-//        }
-//    }
-
-    @Override
-    public boolean requestStatusChange(Long userActivityId) throws ServiceException {
-        try {
-            return dao.requestStatusChange(userActivityId) > 0;
-        } catch (DaoException e) {
-            throw new ServiceException("UserActivityService failed to request for status change", e);
-        }
+        return false;
     }
 
     @Override
-    public long getNumberOfPagesStatusChangeRequested(int rowsPerPage) throws ServiceException {
+    public boolean requestStatusChange(Long userActivityId) {
+        return dao.requestStatusChange(userActivityId) > 0;
+    }
+
+    @Override
+    public long getNumberOfPagesStatusChangeRequested(int rowsPerPage) {
         try {
             long numRows = dao.getNumberOfStatusChangeRequested();
             long numPages = numRows / rowsPerPage;
@@ -72,22 +54,14 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws ServiceException {
-        try {
-            return dao.findAllStatusChangeRequested(currentPage, rowsPerPage).stream()
-                    .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
-                    .collect(Collectors.toCollection(ArrayList::new));
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to find UserActivities", e);
-        }
+    public List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) {
+        return dao.findAllStatusChangeRequested(currentPage, rowsPerPage).stream()
+                .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
-    public boolean changeUserActivityStatus(Long userActivityId, boolean currentValue) throws ServiceException {
-        try {
-            return dao.updateAssignedAndStatusChangeRequested(userActivityId, !currentValue) > 0;
-        } catch (DaoException e) {
-            throw new ServiceException("UserActivityService failed to process an activity request", e);
-        }
+    public boolean changeUserActivityStatus(Long userActivityId, boolean currentValue) {
+        return dao.updateAssignedAndStatusChangeRequested(userActivityId, !currentValue) > 0;
     }
 }

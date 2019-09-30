@@ -1,18 +1,17 @@
 package org.oddys.timetracking.dao;
 
-import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.entity.Role;
 
 import java.util.List;
 
 public interface RoleDao {
-    Long create(Role entity) throws DaoException;
+    Long add(Role entity);
 
-    Role findById(Long id) throws DaoException;
+    Role findById(Long id);
 
-    List<Role> findAll() throws DaoException;
+    List<Role> findAll();
 
-    int update(Role entity) throws DaoException;
+    int update(Role entity);
 
-    boolean delete(Long id) throws DaoException;
+    boolean delete(Long id);
 }

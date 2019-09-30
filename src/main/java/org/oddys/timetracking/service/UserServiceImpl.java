@@ -2,7 +2,6 @@ package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserDao;
-import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigManager;
@@ -27,37 +26,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> search(String lastName) throws ServiceException {
-        try {
-            return dao.findByLastName(lastName).stream()
-                    .map(u -> ModelMapperWrapper.getMapper().map(u, UserDto.class))
-                    .collect(Collectors.toCollection(ArrayList::new));
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
+    public List<UserDto> search(String lastName) {
+        return dao.findByLastName(lastName).stream()
+                .map(u -> ModelMapperWrapper.getMapper().map(u, UserDto.class))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
-    public boolean addUser(User user) throws ServiceException {
-        try {
-            return dao.findByLogin(user.getLogin()) == null && dao.add(user);
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to add User", e);
-        }
+    public boolean addUser(User user) {
+        return dao.findByLogin(user.getLogin()) == null && dao.add(user);
     }
 
     @Override
-    public UserDto signIn(String login, char[] password) throws ServiceException {
+    public UserDto signIn(String login, char[] password) {
         UserDto userDto = null;
-        try {
-            User user = dao.findByLogin(login);
-            if (PasswordManager.getInstance().checkCredentials(login, password, user)) {
-                userDto = ModelMapperWrapper.getMapper().map(user, UserDto.class);
-            }
-            PasswordManager.getInstance().invalidate(password);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
+        User user = dao.findByLogin(login);
+        if (PasswordManager.getInstance().checkCredentials(login, password, user)) {
+            userDto = ModelMapperWrapper.getMapper().map(user, UserDto.class);
         }
+        PasswordManager.getInstance().invalidate(password);
         return userDto;
     }
 }

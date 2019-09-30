@@ -2,7 +2,7 @@ package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dao.ActivityDao;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
-import org.oddys.timetracking.dao.mysql.DaoException;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.ActivityDto;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
@@ -25,36 +25,21 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public long getNumberOfPages(long rowsPerPage) throws ServiceException {
-        try {
-            long numRows = dao.getNumberOfRows();
-            long numPages = numRows / rowsPerPage;
-            return numRows % rowsPerPage == 0 ? numPages : ++numPages;
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to get the number of pages", e);
-        }
+    public long getNumberOfPages(long rowsPerPage) {
+        long numRows = dao.getNumberOfRows();
+        long numPages = numRows / rowsPerPage;
+        return numRows % rowsPerPage == 0 ? numPages : ++numPages;
     }
 
     @Override
-    public List<ActivityDto> findActivities(long currentPage, int rowsPerPage) throws ServiceException {
-        try {
-            return dao.findAll(currentPage, rowsPerPage).stream()
-                    .map(a -> ModelMapperWrapper.getMapper().map(a, ActivityDto.class))
-                    .collect(Collectors.toCollection(ArrayList::new));
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to find Activities");
-        }
+    public List<ActivityDto> findActivities(long currentPage, int rowsPerPage) {
+        return dao.findAll(currentPage, rowsPerPage).stream()
+                .map(a -> ModelMapperWrapper.getMapper().map(a, ActivityDto.class))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
-    public boolean addActivity(String name) throws ServiceException {
-        try {
-            if (dao.findByName(name) != null) {
-                return false;
-            }
-            return dao.create(name);
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to add Activity", e);
-        }
+    public boolean addActivity(String name) {
+        return (dao.findByName(name) == null) && dao.add(name);
     }
 }

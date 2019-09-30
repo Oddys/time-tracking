@@ -1,6 +1,6 @@
-package org.oddys.timetracking.dao.mysql;
+package org.oddys.timetracking.dao;
 
-public class DaoException extends Exception {
+public class DaoException extends RuntimeException {
     public DaoException() {
     }
 

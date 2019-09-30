@@ -1,26 +1,25 @@
 package org.oddys.timetracking.dao;
 
-import org.oddys.timetracking.dao.mysql.DaoException;
 import org.oddys.timetracking.entity.UserActivity;
 
 import java.util.List;
 
 public interface UserActivityDao {
-    List<UserActivity> findAllByUserId(Long userId) throws DaoException;
+    List<UserActivity> findAllByUserId(Long userId);
 
-    int add(Long userId, Long activityId, Boolean assigned, Boolean statusChangeRequested) throws DaoException;
+    int add(Long userId, Long activityId, Boolean assigned, Boolean statusChangeRequested);
 
-    boolean exists(Long userId, Long activityId) throws DaoException;
+    boolean exists(Long userId, Long activityId);
 
-    int requestStatusChange(Long userActivityId) throws DaoException;
+    int requestStatusChange(Long userActivityId);
 
-    List<UserActivity> findAllStatusChangeRequested(long currentPage, int rowsPerPage) throws DaoException;
+    List<UserActivity> findAllStatusChangeRequested(long currentPage, int rowsPerPage);
 
-    long getNumberOfStatusChangeRequested() throws DaoException;
+    long getNumberOfStatusChangeRequested();
 
-    int updateAssignedAndStatusChangeRequested(Long userActivityId, boolean currentAssigned) throws DaoException;
+    int updateAssignedAndStatusChangeRequested(Long userActivityId, boolean currentAssigned);
 
-    UserActivity find(Long userId, Long activityId) throws DaoException;
+    UserActivity findByUserIdAndActivityId(Long userId, Long activityId);
 
-    int update(UserActivity userActivity) throws DaoException;
+    int update(UserActivity userActivity);
 }

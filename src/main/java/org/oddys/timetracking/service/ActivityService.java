@@ -5,9 +5,9 @@ import org.oddys.timetracking.dto.ActivityDto;
 import java.util.List;
 
 public interface ActivityService {
-    long getNumberOfPages(long rowsPerPage) throws ServiceException;
+    long getNumberOfPages(long rowsPerPage);
 
-    List<ActivityDto> findActivities(long currentPage, int rowsPerPage) throws ServiceException;
+    List<ActivityDto> findActivities(long currentPage, int rowsPerPage);
 
-    boolean addActivity(String name) throws ServiceException;
+    boolean addActivity(String name);
 }

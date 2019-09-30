@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.oddys.timetracking.dao.UserDao;
-import org.oddys.timetracking.dao.mysql.DaoException;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.entity.User;
 

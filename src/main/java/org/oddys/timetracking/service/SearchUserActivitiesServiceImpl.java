@@ -2,7 +2,7 @@ package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserActivityDao;
-import org.oddys.timetracking.dao.mysql.DaoException;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.UserActivityDto;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
@@ -24,13 +24,9 @@ public class SearchUserActivitiesServiceImpl implements SearchUserActivitiesServ
         return INSTANCE;
     }
     @Override
-    public List<UserActivityDto> searchUserActivitiesByUserId(Long userId) throws ServiceException {
-        try {
-            return userActivityDao.findAllByUserId(userId).stream()
-                    .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
-                    .collect(Collectors.toCollection(ArrayList::new));
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to find UserActivities by User's ID", e);
-        }
+    public List<UserActivityDto> searchUserActivitiesByUserId(Long userId) {
+        return userActivityDao.findAllByUserId(userId).stream()
+                .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

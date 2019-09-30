@@ -23,16 +23,11 @@ public class StopActivityCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         Long userActivityId = Long.valueOf(req.getParameter("userActivityId"));
-        try {
-            if (service.requestStatusChange(userActivityId)) {
-                req.setAttribute("messageKey", "user.activity.request.success");
-            } else {
-                req.setAttribute("messageKey", "user.activity.request.fail");
-            }
-            return ConfigManager.getInstance().getProperty("path.user.activities");
-        } catch (ServiceException e) {
-            LOGGER.error("UserActivityService failed", e);
-            return null;
+        if (service.requestStatusChange(userActivityId)) {
+            req.setAttribute("messageKey", "user.activity.request.success");
+        } else {
+            req.setAttribute("messageKey", "user.activity.request.fail");
         }
+        return ConfigManager.getInstance().getProperty("path.user.activities");
     }
 }

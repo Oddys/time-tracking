@@ -2,6 +2,7 @@ package org.oddys.timetracking.dao.mysql;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dao.UserDao;
 import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.connection.ConnectionWrapper;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlUserDao implements UserDao {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final MysqlUserDao INSTANCE = new MysqlUserDao();
     private static final String FIND_BY_LOGIN = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.login = ?";
     private static final String FIND_BY_LAST_NAME = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.last_name = ?";
@@ -26,19 +27,20 @@ public class MysqlUserDao implements UserDao {
         return INSTANCE;
     }
 
-    public User findByLogin(String login) throws DaoException {
+    public User findByLogin(String login) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(FIND_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
             return (rs.next()) ? EntityMapper.getInstance().mapUser(rs) : null;
         } catch (SQLException e) {
-            throw new DaoException("Failed to find User by login", e);
+            LOGGER.error("Failed to find User by login", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public List<User> findByLastName(String lastName) throws DaoException {
+    public List<User> findByLastName(String lastName) {
         List<User> users = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper
@@ -49,13 +51,14 @@ public class MysqlUserDao implements UserDao {
                 users.add(EntityMapper.getInstance().mapUser(rs));
             }
         } catch (SQLException e) {
-            throw new DaoException("Failed to find User by last name", e);
+            LOGGER.error("Failed to find User by last name", e);
+            throw new DaoException(e);
         }
         return users;
     }
 
     @Override
-    public boolean add(User user) throws DaoException {
+    public boolean add(User user) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.user.add"))) {
@@ -66,7 +69,8 @@ public class MysqlUserDao implements UserDao {
             statement.setString(5, user.getRole().getName());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Failed to add User");
+            LOGGER.error("Failed to add User", e);
+            throw new DaoException(e);
         }
     }
 }

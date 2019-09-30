@@ -6,9 +6,9 @@ import org.oddys.timetracking.entity.User;
 import java.util.List;
 
 public interface UserService {
-    List<UserDto> search(String lastName) throws ServiceException;
+    List<UserDto> search(String lastName);
 
-    boolean addUser(User user) throws ServiceException;
+    boolean addUser(User user);
 
-    UserDto signIn(String login, char[] password) throws ServiceException;
+    UserDto signIn(String login, char[] password);
 }

@@ -1,7 +1,10 @@
 package org.oddys.timetracking.dao.mysql;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.connection.ConnectionWrapper;
 import org.oddys.timetracking.dao.ActivityRecordDao;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.entity.ActivityRecord;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.EntityMapper;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlActivityRecordDao implements ActivityRecordDao {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final ActivityRecordDao INSTANCE = new MysqlActivityRecordDao();
 
     private MysqlActivityRecordDao() {}
@@ -23,7 +27,7 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
     }
 
     @Override
-    public long getNumberOfRows(Long userActivityId) throws DaoException {
+    public long getNumberOfRows(Long userActivityId) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.count.rows"))) {
@@ -32,12 +36,14 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
             rs.next();
             return rs.getLong("num_rows");
         } catch (SQLException e) {
-            throw new DaoException("Failed to get the number of ActivityRecords", e);
+            LOGGER.error("Failed to get the total of ActivityRecords", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public List<ActivityRecord> findAllByUserActivityId(long userActivityId, long currentPage, int recordsPerPage) throws DaoException {
+    public List<ActivityRecord> findAllByUserActivityId(long userActivityId,
+            long currentPage, int recordsPerPage) {
         List<ActivityRecord> records = new ArrayList<>();
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
@@ -51,40 +57,40 @@ public class MysqlActivityRecordDao implements ActivityRecordDao {
                 records.add(EntityMapper.getInstance().mapActivityRecord(rs));
             }
         } catch (SQLException e) {
-            throw new DaoException("Failed to retrieve a page of records", e);
+            LOGGER.error("Failed to retrieve a page of ActivityRecords", e);
+            throw new DaoException(e);
         }
         return records;
     }
 
     @Override
-    public boolean exists(LocalDate date, Long userActivityId)
-            throws DaoException {
+    public boolean exists(LocalDate date, Long userActivityId) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.check"))) {
-//            statement.setDate(1, date);
             statement.setObject(1, date);
             statement.setLong(2, userActivityId);
             ResultSet rs = statement.executeQuery();
             rs.next();
             return rs.getLong("count") > 0;
         } catch (SQLException e) {
-            throw new DaoException("Failed to check existence of ActivityRecord", e);
+            LOGGER.error("Failed to check the existence of ActivityRecord", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public int add(LocalDate date, Long duration, Long userActivityId) throws DaoException {
+    public int add(LocalDate date, Long duration, Long userActivityId) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(
                      ConfigManager.getInstance().getProperty("sql.activity.record.add"))) {
-//            statement.setDate(1, date);
             statement.setObject(1, date);
             statement.setLong(2, duration);
             statement.setLong(3, userActivityId);
             return statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Failed to add ActivityRecord", e);
+            LOGGER.error("Failed to add ActivityRecord", e);
+            throw new DaoException(e);
         }
     }
 }

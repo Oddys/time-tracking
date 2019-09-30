@@ -1,5 +1,8 @@
 package org.oddys.timetracking.dao.mysql;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dao.RoleDao;
 import org.oddys.timetracking.entity.Role;
 import org.oddys.timetracking.connection.ConnectionWrapper;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MysqlRoleDao implements RoleDao {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final MysqlRoleDao INSTANCE = new MysqlRoleDao();
     private static final String CREATE = "INSERT INTO roles (name) VALUES (?)";
     private static final String FIND_BY_ID = "SELECT * FROM roles WHERE role_id = ?";
@@ -26,7 +30,7 @@ public class MysqlRoleDao implements RoleDao {
     }
 
     @Override
-    public Long create(Role role) throws DaoException {
+    public Long add(Role role) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper
                      .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
@@ -34,12 +38,13 @@ public class MysqlRoleDao implements RoleDao {
             statement.executeUpdate();
             return statement.getGeneratedKeys().getLong(1);
         } catch (SQLException e) {
-            throw new DaoException("Failed to create Role", e);
+            LOGGER.error("Failed to add Role", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public Role findById(Long id) throws DaoException {
+    public Role findById(Long id) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(FIND_BY_ID)) {
             statement.setLong(1, id);
@@ -50,12 +55,13 @@ public class MysqlRoleDao implements RoleDao {
             }
             return role;
         } catch (SQLException e) {
-            throw new DaoException("Failed to retrieve Role", e);
+            LOGGER.error("Failed to retrieve Role", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public List<Role> findAll() throws DaoException {
+    public List<Role> findAll() {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              Statement statement = connectionWrapper.createStatement()) {
             ResultSet rs = statement.executeQuery(FIND_ALL);
@@ -65,30 +71,33 @@ public class MysqlRoleDao implements RoleDao {
             }
             return roles;
         } catch (SQLException e) {
-            throw new DaoException("Failed to retrieve Roles");
+            LOGGER.error("Failed to retrieve Roles", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public int update(Role role) throws DaoException {
+    public int update(Role role) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(UPDATE)) {
             statement.setLong(1, role.getId());
             statement.setString(2, role.getName());
             return statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Failed to update Role", e);
+            LOGGER.error("Failed to update Role", e);
+            throw new DaoException(e);
         }
     }
 
     @Override
-    public boolean delete(Long id) throws DaoException {
+    public boolean delete(Long id) {
         try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
              PreparedStatement statement = connectionWrapper.prepareStatement(DELETE)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Failed to delete Role", e);
+            LOGGER.error("Failed to delete Role", e);
+            throw new DaoException(e);
         }
     }
 }
