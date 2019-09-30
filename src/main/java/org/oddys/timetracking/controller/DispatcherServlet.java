@@ -1,12 +1,10 @@
 package org.oddys.timetracking.controller;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.command.Command;
 import org.oddys.timetracking.command.CommandFactory;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

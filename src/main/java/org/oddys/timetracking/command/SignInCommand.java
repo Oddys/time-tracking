@@ -3,7 +3,6 @@ package org.oddys.timetracking.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.UserDto;
-import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.service.UserService;
 import org.oddys.timetracking.service.UserServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
@@ -12,7 +11,7 @@ import org.oddys.timetracking.util.ParameterValidator;
 import javax.servlet.http.HttpServletRequest;
 
 public class SignInCommand implements Command {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final Command INSTANCE = new SignInCommand();
     private UserService service = UserServiceImpl.getInstance();
 
@@ -27,17 +26,12 @@ public class SignInCommand implements Command {
         if (!ParameterValidator.getInstance().isValidSignIn(req)) {
             return ConfigManager.getInstance().getProperty("path.home");
         }
-        UserDto user = null;
-        try {
-            user = service.signIn(req.getParameter("login"),
-                    req.getParameter("password").toCharArray());
-        } catch (ServiceException e) {
-            log.error("UserService failed to sign in", e);
-            return null;
-        }
+        UserDto user = service.signIn(req.getParameter("login"),
+                req.getParameter("password").toCharArray());
         if (user != null){
             req.getSession().setAttribute("user", user);
-            log.info(user.getLogin() + " signed in");
+            LOGGER.info(String.format("%s %s (%s) signed in", user.getFirstName(),
+                    user.getLastName(), user.getLogin()));
             return ConfigManager.getInstance().getProperty("path.cabinet");
         } else {
             req.setAttribute("messageKey", "auth.error.notfound");

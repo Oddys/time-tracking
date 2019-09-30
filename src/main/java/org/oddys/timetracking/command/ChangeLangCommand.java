@@ -1,14 +1,11 @@
 package org.oddys.timetracking.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ChangeLangCommand implements Command {
     private static final ChangeLangCommand INSTANCE = new ChangeLangCommand();
-    private static final Logger log = LogManager.getLogger();
 
     private ChangeLangCommand() {}
 
@@ -22,15 +19,9 @@ public class ChangeLangCommand implements Command {
         String page = req.getParameter("sentFromPage");
         if (langParam != null && page != null) {
             req.getSession().setAttribute("lang", langParam);
-            log.info("Session language is set to " + langParam);
             return page;
         } else {
             return ConfigManager.getInstance().getProperty("path.home");
         }
-    }
-
-    @Override
-    public String toString() {
-        return "ChangeLangCommand";
     }
 }

@@ -1,7 +1,5 @@
 package org.oddys.timetracking.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dto.ActivityRecordDto;
 import org.oddys.timetracking.service.ActivityRecordService;
 import org.oddys.timetracking.service.ActivityRecordServiceImpl;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class ShowActivityRecordsCommand implements Command {
-    private static final Logger log = LogManager.getLogger();
     private static final Command INSTANCE = new ShowActivityRecordsCommand();
     private ActivityRecordService service = ActivityRecordServiceImpl.getInstance();
 
@@ -36,10 +33,5 @@ public class ShowActivityRecordsCommand implements Command {
         req.getSession().setAttribute("currentPage", currentPage);
         req.getSession().setAttribute("rowsPerPage", rowsPerPage);
         return ConfigManager.getInstance().getProperty("path.activity.records");
-    }
-
-    @Override
-    public String toString() {
-        return "ShowActivityRecordsCommand";
     }
 }

@@ -1,8 +1,5 @@
 package org.oddys.timetracking.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.oddys.timetracking.service.ServiceException;
 import org.oddys.timetracking.service.UserActivityService;
 import org.oddys.timetracking.service.UserActivityServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
@@ -10,7 +7,6 @@ import org.oddys.timetracking.util.ConfigManager;
 import javax.servlet.http.HttpServletRequest;
 
 public class StopActivityCommand implements Command {
-    private static final Logger LOGGER = LogManager.getLogger();
     private static final Command INSTANCE = new StopActivityCommand();
     private UserActivityService service = UserActivityServiceImpl.getInstance();
 

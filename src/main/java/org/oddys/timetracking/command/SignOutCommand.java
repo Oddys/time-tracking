@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class SignOutCommand implements Command {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final Command INSTANCE = new SignOutCommand();
 
     private SignOutCommand() {}
@@ -22,11 +22,12 @@ public class SignOutCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        String login = Optional.ofNullable((UserDto) session.getAttribute("user"))
-                .map(UserDto::getLogin)
-                .orElse("Unknown user");
+        String user = Optional.ofNullable((UserDto) session.getAttribute("user"))
+                .map(u -> String.format("%s %s (%s)", u.getFirstName(),
+                        u.getLastName(), u.getLogin()))
+                .orElse("User with the expired session");
         session.invalidate();
-        log.info(login + " signed out");
+        LOGGER.info(user + " signed out");
         return ConfigManager.getInstance().getProperty("path.home");
     }
 }

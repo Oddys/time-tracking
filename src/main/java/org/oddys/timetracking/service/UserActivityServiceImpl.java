@@ -44,13 +44,9 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public long getNumberOfPagesStatusChangeRequested(int rowsPerPage) {
-        try {
-            long numRows = dao.getNumberOfStatusChangeRequested();
-            long numPages = numRows / rowsPerPage;
-            return numRows % rowsPerPage == 0 ? numPages : ++numPages;
-        } catch (DaoException e) {
-            throw new ServiceException("Failed to get the number of pages", e);
-        }
+        long numRows = dao.getNumberOfStatusChangeRequested();
+        long numPages = numRows / rowsPerPage;
+        return numRows % rowsPerPage == 0 ? numPages : ++numPages;
     }
 
     @Override
