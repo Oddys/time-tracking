@@ -4,11 +4,13 @@
 <%--@elvariable id="numPages" type="long"--%>
 <html>
 <head>
-    <title>User Activity Requests</title>
+    <title><fmt:message key="title.user.activity.requests"/></title>
 </head>
 <body>
+    <h2><fmt:message key="title.user.activity.requests"/> </h2>
     <c:if test="${not empty messageKey}">
-        ${messageKey}
+        <fmt:message key="${messageKey}"/>
+        <c:remove var="messageKey" scope="session"/>
     </c:if>
     <table class="table table-hover table-striped table-bordered">
         <tr>

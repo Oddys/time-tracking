@@ -20,7 +20,7 @@ public class ChangeUserActivityStatusCommand implements Command {
         long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
         boolean currentAssigned = Boolean.parseBoolean(req.getParameter("currentAssigned"));
         service.changeUserActivityStatus(userActivityId, currentAssigned);  // TODO Add status check on DAO level
-        req.setAttribute("messageKey", "Status of User Activity successfully changed");
+        req.setAttribute("messageKey", "user.activity.status.changed");
         return "/controller?command=show_activity_requests&currentPage=1&rowsPerPage=5";
     }
 }
