@@ -20,9 +20,9 @@ public class StopActivityCommand implements Command {
     public String execute(HttpServletRequest req) {
         Long userActivityId = Long.valueOf(req.getParameter("userActivityId"));
         if (service.requestStatusChange(userActivityId)) {
-            req.setAttribute("messageKey", "user.activity.request.success");
+            req.setAttribute("messageKey", "user.activity.stop.success");
         } else {
-            req.setAttribute("messageKey", "user.activity.request.fail");
+            req.setAttribute("messageKey", "user.activity.stop.fail");
         }
         return ConfigManager.getInstance().getProperty("path.user.activities");
     }

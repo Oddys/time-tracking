@@ -23,9 +23,9 @@ public class AssignActivityCommand implements Command {
         Long userId = Long.valueOf(req.getParameter("userId"));
         Long activityId = Long.valueOf(req.getParameter("activityId"));
         if (service.assignActivity(userId, activityId)) {
-            req.setAttribute("messageKey", "user.activities.assigned.success");
+            req.setAttribute("messageKey", "user.activity.request.success");
         } else {
-            req.setAttribute("messageKey", "user.activities.assigned.fail");
+            req.setAttribute("messageKey", "user.activity.request.fail");
         }
         req.setAttribute("activityName", req.getParameter("activityName"));
         return ConfigManager.getInstance().getProperty("path.activities");

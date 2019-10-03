@@ -9,7 +9,7 @@
 <%--            <input type="text" placeholder="<fmt:message key="activity.enter"/>"/>--%>
 <%--            <input type="submit" value="<fmt:message key="button.send"/>"/>--%>
 <%--        </form>--%>
-        <h3><fmt:message key="activity.all"/></h3>
+        <h3><fmt:message key="title.activities"/></h3>
         <form action="controller">
             <input type="hidden" name="command" value="show_activities"/>
             <input type="hidden" name="currentPage" value="1"/>

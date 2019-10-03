@@ -33,7 +33,7 @@
                         <input type="hidden" name="currentAssigned" value="${userActivity.assigned}"/>
                         <c:choose>
                             <c:when test="${userActivity.assigned}">
-                                <input type="submit" value="Stop activity"/>
+                                <input type="submit" value="<fmt:message key="button.activity.stop"/>"/>
                             </c:when>
                             <c:otherwise>
                                 <input type="submit" value="<fmt:message key="button.user.activity.assign"/> "/>
