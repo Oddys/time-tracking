@@ -6,7 +6,7 @@
     <form action="controller">
         <input type="hidden" name="command" value="forward"/>
         <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-data.jsp"/>
-        <input type="submit" value="<fmt:message key="button.add"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
     </form>
 <%--    <h3><fmt:message key="activity.suggestions"/></h3>--%>
 <%--    <form action="controller">--%>
@@ -18,14 +18,14 @@
         <input type="hidden" name="command" value="show_activities"/>
         <input type="hidden" name="currentPage" value="1"/>
         <input type="hidden" name="rowsPerPage" value="5"/>
-        <input type="submit" value="<fmt:message key="button.show"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
     <h3><fmt:message key="title.user.activity.requests"/></h3>
     <form action="controller">
         <input type="hidden" name="command" value="show_activity_requests"/>
         <input type="hidden" name="currentPage" value="1"/>
         <input type="hidden" name="rowsPerPage" value="5"/>
-        <input type="submit" value="<fmt:message key="button.show"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
     <h3><fmt:message key="user.find"/></h3>
     <form action="controller">
@@ -34,7 +34,7 @@
         <input type="text" name="lastName" value="" required
                oninvalid="this.setCustomValidity('<fmt:message key="user.search.error.nolastname"/>')"
                oninput="setCustomValidity('')"/>
-        <input type="submit" value="<fmt:message key="button.search"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.search"/>"/>
     </form>
 </body>
 </html>

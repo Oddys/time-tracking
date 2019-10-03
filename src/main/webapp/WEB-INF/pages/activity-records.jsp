@@ -77,7 +77,7 @@
     <form action="controller">
         <input type="hidden" name="command" value="forward"/>
         <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-activities.jsp"/>
-        <input type="submit" value="<fmt:message key="button.back.to.activities"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.back.to.activities"/>"/>
     </form>
 </body>
 </html>

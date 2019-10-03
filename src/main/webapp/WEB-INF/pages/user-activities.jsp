@@ -55,7 +55,7 @@
                         <input type="hidden" name="userActivityAssigned" value="${currentUserActivity.assigned}"/>
                         <input type="hidden" name="currentPage" value="1"/>
                         <input type="hidden" name="rowsPerPage" value="5"/>
-                        <input type="submit" value="<fmt:message key="button.show"/>"/>
+                        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
                     </form>
                 </td>
                 <c:if test="${user.roleName eq 'USER'}">
@@ -64,7 +64,7 @@
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="stop_activity"/>
                                 <input type="hidden" name="userActivityId" value="${currentUserActivity.id}"/>
-                                <input type="submit" value="<fmt:message key="button.activity.stop"/>"/>
+                                <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.activity.stop"/>"/>
                             </form>
                         </c:if>
                     </td>
@@ -73,7 +73,7 @@
         </c:forEach>
     </table>
     <form action="${pageContext.request.contextPath}">
-        <input type="submit" value="<fmt:message key="button.main"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
     </form>
 </body>
 </html>

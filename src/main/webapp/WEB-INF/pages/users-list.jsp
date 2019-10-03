@@ -32,7 +32,7 @@
     </c:forEach>
 </table>
 <form action="${pageContext.request.contextPath}">
-    <input type="submit" value="<fmt:message key="button.main"/>"/>
+    <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
 </form>
 </body>
 </html>

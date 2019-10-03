@@ -27,19 +27,19 @@ public class ParameterValidator {
 
     public boolean isValidAddUser(HttpServletRequest request) {
         if (StringUtils.isBlank(request.getParameter("login"))) {
-            request.setAttribute("errorMessage", "Please, enter your login");
+            request.setAttribute("messageKey", "Please, enter your login");
             return false;
         }
         if (StringUtils.isBlank(request.getParameter("password"))) {
-            request.setAttribute("errorMessage", "Please, enter your password");
+            request.setAttribute("messageKey", "Please, enter your password");
             return false;
         }
         if (StringUtils.isBlank(request.getParameter("firstName"))) {
-            request.setAttribute("errorMessage", "Please, enter your first name");
+            request.setAttribute("messageKey", "Please, enter your first name");
             return false;
         }
         if (StringUtils.isBlank(request.getParameter("lastName"))) {
-            request.setAttribute("errorMessage", "Please, enter your last name");
+            request.setAttribute("messageKey", "Please, enter your last name");
             return false;
         }
         return true;

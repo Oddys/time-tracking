@@ -22,7 +22,7 @@
             <input type="hidden" name="command" value="add_activity">
             <label for="activityName"></label>
             <input type="text" name="activityName" id="activityName" placeholder="<fmt:message key="activity.enter"/>" required/>
-            <input type="submit" value="<fmt:message key="button.send"/>"/>
+            <input class="btn btn-primary" type="submit" value="<fmt:message key="button.send"/>"/>
         </form>
     </c:if>
     <table class="table table-hover table-striped table-bordered">
@@ -43,7 +43,7 @@
                             <input type="hidden" name="activityId" value="${activity.id}"/>
                             <input type="hidden" name="userId" value="${user.userId}"/>
                             <input type="hidden" name="activityName" value="${activity.name}"/>
-                            <input type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
+                            <input class="btn btn-secondary" type="submit" value="<fmt:message key="table.column.add.to.my.activities"/>"/>
                         </form>
                     </td>
                 </c:if>
@@ -106,7 +106,7 @@
         </nav>
     </c:if>
     <form action="${pageContext.request.contextPath}">
-        <input type="submit" value="<fmt:message key="button.main"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
     </form>
 </body>
 </html>

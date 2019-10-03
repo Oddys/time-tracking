@@ -24,13 +24,14 @@ public class AddUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        System.out.println("First name: " + req.getParameter("firstName"));
         if (!ParameterValidator.getInstance().isValidAddUser(req)) {
             return ConfigManager.getInstance().getProperty("path.user.data");
         }
         if (service.addUser(EntityMapper.getInstance().mapUser(req))) {
-            req.setAttribute("message", "User added successfully");
+            req.setAttribute("messageKey", "User added successfully");
         } else {
-            req.setAttribute("message", "User already exists");
+            req.setAttribute("messageKey", "User already exists");
         }
         return ConfigManager.getInstance().getProperty("path.user.data");
     }

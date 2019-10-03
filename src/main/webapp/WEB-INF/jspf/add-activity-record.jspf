@@ -22,7 +22,7 @@
         <input type="date" name="date" id="date" min="2019-01-01" onchange="checkDate(this)" required/>
         <label for="duration"><fmt:message key="label.duration"/></label>
         <input type="number" name="duration" id="duration" min="10" max="1440" step="10" required/>
-        <input type="submit" value="<fmt:message key="button.save"/>"/>
+        <input class="btn btn-primary" type="submit" value="<fmt:message key="button.save"/>"/>
     </form>
 </body>
 </html>

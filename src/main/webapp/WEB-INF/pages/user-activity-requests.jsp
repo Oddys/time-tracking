@@ -33,10 +33,10 @@
                         <input type="hidden" name="currentAssigned" value="${userActivity.assigned}"/>
                         <c:choose>
                             <c:when test="${userActivity.assigned}">
-                                <input type="submit" value="<fmt:message key="button.activity.stop"/>"/>
+                                <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.activity.stop"/>"/>
                             </c:when>
                             <c:otherwise>
-                                <input type="submit" value="<fmt:message key="button.user.activity.assign"/> "/>
+                                <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.user.activity.assign"/> "/>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -83,7 +83,7 @@
         </nav>
     </c:if>
     <form action="${pageContext.request.contextPath}">
-        <input type="submit" value="<fmt:message key="button.main"/>"/>
+        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
     </form>
 </body>
 </html>
