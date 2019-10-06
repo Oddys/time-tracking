@@ -23,6 +23,9 @@
         <c:when test="${requestScope['javax.servlet.error.status_code'] == 404}">
             <fmt:message key="error.404"/>
         </c:when>
+        <c:when test="${requestScope['javax.servlet.error.status_code'] == 405}">
+            <fmt:message key="error.405"/>
+        </c:when>
         <c:when test="${requestScope['javax.servlet.error.status_code'] == 500}">
             <fmt:message key="error.500"/>
         </c:when>
