@@ -9,7 +9,7 @@
         </div>
         <c:remove var="messageKey" scope="session"/>
     </c:if>
-   <form class="" action="${pageContext.request.contextPath}/controller" method="post">
+   <form class="" action="signin" method="post">
         <input type="hidden" name="command" value="signin"/>
         <div class="form-group">
             <label for="login" class="control-label col-sm-2"><fmt:message key="auth.login"/></label>

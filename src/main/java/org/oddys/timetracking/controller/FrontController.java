@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.oddys.timetracking.util.StringConstants.*;
-
-@WebServlet("/controller/*")
-public class DispatcherServlet extends HttpServlet {
+@WebServlet("/")
+public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
     private final String PREFIX = "/WEB-INF/pages";
     private final String SUFFIX = ".jsp";
@@ -31,26 +29,6 @@ public class DispatcherServlet extends HttpServlet {
             throws ServletException, IOException {
         process(req, resp);
     }
-
-//    private void process(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        String page = req.getServletPath().replace("/controller", "");
-//        LOGGER.debug("Trancated page: " + page);
-//        if (!page.isEmpty()) {
-//            page = PREFIX + page + SUFFIX;
-//            LOGGER.debug("Page with pref and suff: " + page);
-//            req.getRequestDispatcher(page).forward(req, resp);
-//        }
-//        Command command = CommandFactory.COMMAND_FACTORY
-//                .getCommand(req.getParameter(COMMAND));
-//        page = command.execute(req);
-//        LOGGER.debug(page);
-//        if (page.startsWith(REDIRECT)) {
-//            resp.sendRedirect(req.getContextPath() + page.replace(REDIRECT, EMPTY_STRING));
-//        } else {
-//            req.getRequestDispatcher(page).forward(req, resp);
-//        }
-//    }
 
     private void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
