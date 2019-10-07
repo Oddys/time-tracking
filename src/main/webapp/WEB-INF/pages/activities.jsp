@@ -73,7 +73,7 @@
                 <c:if test="${currentPage != 1}">
                     <li class="page-item">
                         <span class="border px-2 py-1">
-                            <a href="${pageContext.request.contextPath}/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                            <a href="${pageContext.request.contextPath}/cabinet/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
                                 <fmt:message key="nav.previous"/>
                             </a>
                         </span>
@@ -87,7 +87,7 @@
                         <c:otherwise>
                             <li class="page-item">
                                 <span class="border px-2 py-1">
-                                    <a href="${pageContext.request.contextPath}/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a>
+                                    <a href="${pageContext.request.contextPath}/cabinet/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a>
                                 </span>
                             </li>
                         </c:otherwise>
@@ -96,7 +96,7 @@
                 <c:if test="${currentPage lt numPages}">
                     <li class="page-item">
                         <span class="border px-2 py-1">
-                            <a href="${pageContext.request.contextPath}/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                            <a href="${pageContext.request.contextPath}/cabinet/activities?command=show_activities&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
                                 <fmt:message key="nav.next"/>
                             </a>
                         </span>

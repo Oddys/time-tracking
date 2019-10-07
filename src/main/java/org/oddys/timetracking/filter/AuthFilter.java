@@ -14,18 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(
-        urlPatterns = {
-                "/WEB-INF/pages/*",
-        }
-)
+@WebFilter("/cabinet/*")
 public class AuthFilter implements Filter {
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
+    public void init(FilterConfig filterConfig) {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -33,15 +27,13 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         if (req.getSession().getAttribute("user") == null) {
-            log.info("Access to " + req.getServletPath() + " by an unauthorized user is denied");
-            log.info("Redirecting to the home page");
+            LOGGER.info("Access to " + req.getServletPath() + " by an unauthorized user is denied");
             resp.sendRedirect(req.getContextPath());
+        } else {
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response);
     }
 
     @Override
-    public void destroy() {
-
-    }
+    public void destroy() {}
 }

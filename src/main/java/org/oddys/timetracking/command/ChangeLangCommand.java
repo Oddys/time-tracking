@@ -24,10 +24,10 @@ public class ChangeLangCommand implements Command {
         LOGGER.debug("Sent from page: " + page);
         if (langParam != null && page != null) {
             req.getSession().setAttribute("lang", langParam);
-            page = page.startsWith("/index.jsp")
+            page = page.startsWith("/index.jsp") || page.contains("/cabinet.jsp")
                     ? ""
                     : page.replace(PREFIX, "").replace(SUFFIX, "");
-            return "redirect:/time-tracking" + page;
+            return "redirect:/time-tracking/cabinet" + page;
         } else {
             return "redirect:" + req.getContextPath();
         }
