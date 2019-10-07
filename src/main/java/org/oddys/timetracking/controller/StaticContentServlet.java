@@ -13,11 +13,12 @@ import java.io.IOException;
 public class StaticContentServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher rd = getServletContext().getNamedDispatcher("default");
-        HttpServletRequest wrapped = new HttpServletRequestWrapper(req) {
-            public String getServletPath() {
-                return "/static/";
-            }
-        };
-        rd.forward(wrapped, resp);
+//        HttpServletRequest wrapped = new HttpServletRequestWrapper(req) {
+//            public String getServletPath() {
+//                return "/static/";
+//            }
+//        };
+//        rd.forward(wrapped, resp);
+        rd.forward(req, resp);
     }
 }
