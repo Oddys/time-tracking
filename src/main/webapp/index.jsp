@@ -3,6 +3,10 @@
     <title><fmt:message key="title.main"/></title>
 </head>
 <body>
+    Context: ${pageContext.request.contextPath}<br/>
+    Servlet: ${pageContext.request.servletPath}<br/>
+    URI: ${pageContext.request.requestURI}<br/>
+    URL: ${pageContext.request.requestURL}<br/>
     <c:choose>
         <c:when test="${empty sessionScope.user}">
             <%@ include file="/WEB-INF/jspf/signin.jspf" %>

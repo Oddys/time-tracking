@@ -1,11 +1,15 @@
+<%--@elvariable id="messageKey" type="java.lang.String"--%>
 <html>
 <head>
 </head>
 <body>
-    <form class="" action="${pageContext.request.contextPath}/controller" method="post">
-        <c:if test="${not empty messageKey}">
+    <c:if test="${not empty messageKey}">
+        <div class="text-warning">
             <fmt:message key="${messageKey}"/>
-        </c:if><br/>
+        </div>
+        <c:remove var="messageKey" scope="session"/>
+    </c:if>
+   <form class="" action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="signin"/>
         <div class="form-group">
             <label for="login" class="control-label col-sm-2"><fmt:message key="auth.login"/></label>

@@ -10,6 +10,8 @@ import org.oddys.timetracking.util.ParameterValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.oddys.timetracking.util.StringConstants.*;
+
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Command INSTANCE = new SignInCommand();
@@ -32,10 +34,11 @@ public class SignInCommand implements Command {
             req.getSession().setAttribute("user", user);
             LOGGER.info(String.format("%s %s (%s) signed in", user.getFirstName(),
                     user.getLastName(), user.getLogin()));
-            return ConfigManager.getInstance().getProperty("path.cabinet");
+//            return REDIRECT + ConfigManager.getInstance().getProperty("path.cabinet");
+            return "redirect:/time-tracking/controller/cabinet";
         } else {
-            req.setAttribute("messageKey", "auth.error.notfound");
-            return ConfigManager.getInstance().getProperty("path.home");
+            req.getSession().setAttribute("messageKey", "auth.error.notfound");
+            return "redirect:" + req.getContextPath();
         }
     }
 }
