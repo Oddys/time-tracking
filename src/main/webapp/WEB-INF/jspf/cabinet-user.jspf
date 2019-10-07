@@ -3,14 +3,8 @@
 <head>
 </head>
     <body>
-<%--        <h3><fmt:message key="activity.suggest"/></h3>--%>
-<%--        <form action="controller" method="post">--%>
-<%--            <input type="hidden" name="command" value="suggest_activity">--%>
-<%--            <input type="text" placeholder="<fmt:message key="activity.enter"/>"/>--%>
-<%--            <input type="submit" value="<fmt:message key="button.send"/>"/>--%>
-<%--        </form>--%>
         <h3><fmt:message key="title.activities"/></h3>
-        <form action="controller">
+        <form action="cabinet/activities">
             <input type="hidden" name="command" value="show_activities"/>
             <input type="hidden" name="currentPage" value="1"/>
             <input type="hidden" name="rowsPerPage" value="5"/>
