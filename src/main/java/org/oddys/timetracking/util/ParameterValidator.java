@@ -64,4 +64,14 @@ public class ParameterValidator {
         }
         return true;
     }
+
+    public boolean isValidPage(HttpServletRequest request) {
+        try {
+            long currentPage = Long.parseLong(request.getParameter("currentPage"));
+            int rowsPerPage = Integer.parseInt(request.getParameter("rowsPerPage"));
+            return currentPage > 0 && rowsPerPage > 0 && rowsPerPage < 50;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
