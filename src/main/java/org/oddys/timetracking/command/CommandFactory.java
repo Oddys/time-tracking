@@ -9,9 +9,12 @@ public enum CommandFactory {
 
     public Command getCommand(String name) {
         Command command = EmptyCommand.getInstance();
+        if (name == null) {
+            return command;
+        }
         try {
             command = Commands.valueOf(name.toUpperCase()).getCommand();
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.error("Failed to created a command with a given name. Using default one");
         }
         return command;

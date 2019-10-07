@@ -15,9 +15,9 @@
             <h1><a href="${pageContext.request.contextPath}"><fmt:message key="title.main"/></a></h1>
         </header>
     </div>
-    <form class="form-inline" action="controller">
+    <form class="form-inline" action="change-lang">
         <input type="hidden" name="command" value="change_lang"/>
-        <input type="hidden" name="sentFromPage" value="${pageContext.request.servletPath}"/>
+        <input type="hidden" name="sentFromPage" value="${pageContext.request.servletPath}?${pageContext.request.queryString}"/>
         <select class="cols-xs-1 custom-select" name="lang" onchange="submit()">
             <option value="en" ${lang == 'en' ? 'selected' : ''}><fmt:message key="lang.en"/></option>
             <option value="uk" ${lang == 'uk' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
