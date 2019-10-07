@@ -17,7 +17,7 @@ public class EmptyCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        LOGGER.debug("Empty command path: " + req.getServletPath().replace("/controller", ""));
+        LOGGER.debug("Empty command path: " + req.getServletPath());
         return req.getServletPath();
     }
 }

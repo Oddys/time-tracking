@@ -14,7 +14,7 @@
 <%--        <input type="submit" value="<fmt:message key="button.show"/>"/>--%>
 <%--    </form>--%>
     <h3><fmt:message key="title.activities"/></h3>
-    <form action="controller">
+    <form action="cabinet/activities">
         <input type="hidden" name="command" value="show_activities"/>
         <input type="hidden" name="currentPage" value="1"/>
         <input type="hidden" name="rowsPerPage" value="5"/>
@@ -28,13 +28,13 @@
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
     <h3><fmt:message key="user.find"/></h3>
-    <form action="controller">
-        <input type="hidden" name="command" value="find_user"/>
-        <fmt:message key="user.lastname"/>:
-        <input type="text" name="lastName" value="" required
-               oninvalid="this.setCustomValidity('<fmt:message key="user.search.error.nolastname"/>')"
-               oninput="setCustomValidity('')"/>
-        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.search"/>"/>
-    </form>
+<%--    <form action="controller">--%>
+<%--        <input type="hidden" name="command" value="find_user"/>--%>
+<%--        <fmt:message key="user.lastname"/>:--%>
+<%--        <input type="text" name="lastName" value="" required--%>
+<%--               oninvalid="this.setCustomValidity('<fmt:message key="user.search.error.nolastname"/>')"--%>
+<%--               oninput="setCustomValidity('')"/>--%>
+<%--        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.search"/>"/>--%>
+<%--    </form>--%>
 </body>
 </html>
