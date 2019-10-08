@@ -53,7 +53,6 @@
                     <form action="activity-records">
                         <input type="hidden" name="command" value="show_activity_records">
                         <input type="hidden" name="userActivityId" value="${currentUserActivity.id}"/>
-                        <input type="hidden" name="userActivityAssigned" value="${currentUserActivity.assigned}"/>
                         <input type="hidden" name="currentPage" value="1"/>
                         <input type="hidden" name="rowsPerPage" value="5"/>
                         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>

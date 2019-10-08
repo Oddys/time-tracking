@@ -8,9 +8,9 @@
     <h2>
         <c:if test="${not empty activityRecords.elements}">
             <fmt:message key='title.user.activity.records'>
-                <fmt:param value='${activityRecords.elements[0].userFirstName}'/>
-                <fmt:param value='${activityRecords.elements[0].userLastName}'/>
-                <fmt:param value='${activityRecords.elements[0].activityName}'/>
+                <fmt:param value='${activityRecords.userFirstName}'/>
+                <fmt:param value='${activityRecords.userLastName}'/>
+                <fmt:param value='${activityRecords.activityName}'/>
             </fmt:message>
         </c:if>
     </h2>
@@ -35,7 +35,7 @@
                 <c:if test="${activityRecords.currentPage != 1}">
                    <li class="page-item">
                         <span class="border px-2 py-1">
-                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
+                            <a href="${pageContext.request.contextPath}/cabinet/activity-records?command=show_activity_records&userActivityId=${activityRecords.userActivityId}&rowsPerPage=${activityRecords.rowsPerPage}&currentPage=${activityRecords.currentPage-1}">
                                 <fmt:message key="nav.previous"/>
                             </a>
                         </span>
@@ -49,7 +49,7 @@
                                     ${i}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${i}">${i}</a>
+                                    <a href="${pageContext.request.contextPath}/cabinet/activity-records?command=show_activity_records&userActivityId=${activityRecords.userActivityId}&rowsPerPage=${activityRecords.rowsPerPage}&currentPage=${i}">${i}</a>
                                 </c:otherwise>
                             </c:choose>
                         </span>
@@ -59,7 +59,7 @@
                 <c:if test="${activityRecords.currentPage lt activityRecords.numPages}">
                     <li class="page-item">
                         <span class="border px-2 py-1">
-                            <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">
+                            <a href="${pageContext.request.contextPath}/cabinet/activity-records?command=show_activity_records&userActivityId=${activityRecords.userActivityId}&rowsPerPage=${activityRecords.rowsPerPage}&currentPage=${activityRecords.currentPage+1}">
                                 <fmt:message key="nav.next"/>
                             </a>
                         </span>

@@ -169,4 +169,18 @@ public class MysqlUserActivityDao implements UserActivityDao {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public UserActivity findById(Long id) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(
+                     ConfigManager.getInstance().getProperty("sql.user.activity.find.by.id"))) {
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            return (rs.next()) ? EntityMapper.getInstance().mapUserActivity(rs) : null;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to find UserActivity by id", e);
+            throw new DaoException(e);
+        }
+    }
 }

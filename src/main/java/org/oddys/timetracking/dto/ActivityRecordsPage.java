@@ -1,19 +1,15 @@
 package org.oddys.timetracking.dto;
 
-import java.util.List;
+import org.oddys.timetracking.entity.UserActivity;
 
 public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
     private Long userActivityId;
     private Boolean assigned;
+    private String activityName;
+    private String userFirstName;
+    private String userLastName;
 
     public ActivityRecordsPage() {}
-
-    public ActivityRecordsPage(List<ActivityRecordDto> elements, long currentPage,
-            int rowsPerPage, long numPages, Long userActivityId, Boolean assigned) {
-        super(elements, currentPage, rowsPerPage, numPages);
-        this.userActivityId = userActivityId;
-        this.assigned = assigned;
-    }
 
     public Long getUserActivityId() {
         return userActivityId;
@@ -29,5 +25,41 @@ public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
 
     public void setAssigned(Boolean assigned) {
         this.assigned = assigned;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public void setUserActivityData(UserActivity activity) {
+        userActivityId = activity.getId();
+        activityName = activity.getActivity().getName();
+        assigned = activity.getAssigned();
+        userFirstName = activity.getUser().getFirstName();
+        userLastName = activity.getUser().getLastName();
+    }
+
+    public boolean isEmpty() {
+        return userActivityId == null;
     }
 }

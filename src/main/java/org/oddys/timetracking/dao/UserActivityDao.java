@@ -22,4 +22,6 @@ public interface UserActivityDao {
     UserActivity findByUserIdAndActivityId(Long userId, Long activityId);
 
     int update(UserActivity userActivity);
+
+    UserActivity findById(Long id);
 }
