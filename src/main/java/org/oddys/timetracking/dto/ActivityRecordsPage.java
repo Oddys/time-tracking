@@ -6,6 +6,7 @@ public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
     private Long userActivityId;
     private Boolean assigned;
     private String activityName;
+    private Long userId;
     private String userFirstName;
     private String userLastName;
 
@@ -51,10 +52,19 @@ public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
         this.userLastName = userLastName;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public void setUserActivityData(UserActivity activity) {
         userActivityId = activity.getId();
         activityName = activity.getActivity().getName();
         assigned = activity.getAssigned();
+        userId = activity.getUser().getId();
         userFirstName = activity.getUser().getFirstName();
         userLastName = activity.getUser().getLastName();
     }

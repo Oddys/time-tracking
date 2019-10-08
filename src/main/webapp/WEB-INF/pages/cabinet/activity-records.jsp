@@ -68,9 +68,9 @@
             </ul>
         </nav>
     </c:if>
-    <form action="controller">
-        <input type="hidden" name="command" value="forward"/>
-        <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-activities.jsp"/>
+    <form action="${pageContext.request.contextPath}/cabinet/user-activities">
+        <input type="hidden" name="command" value="show_user_activities"/>
+        <input type="hidden" name="userId" value="${activityRecords.userId}"/>
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.back.to.activities"/>"/>
     </form>
 </body>

@@ -43,12 +43,6 @@ public enum Commands {
         }
     },
 
-    FORWARD {
-        {
-            command = ForwardCommand.getInstance();
-        }
-    },
-
     SHOW_ACTIVITIES {
         {
             command = ShowActivitiesCommand.getInstance();

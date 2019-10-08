@@ -7,6 +7,8 @@
     Servlet: ${pageContext.request.servletPath}<br/>
     URI: ${pageContext.request.requestURI}<br/>
     URL: ${pageContext.request.requestURL}<br/>
+
+    Context: <c:url value="/"/>
     <c:choose>
         <c:when test="${empty sessionScope.user}">
             <%@ include file="/WEB-INF/jspf/signin.jspf" %>
