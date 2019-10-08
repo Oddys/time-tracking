@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.command.Command;
 import org.oddys.timetracking.command.CommandFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,11 @@ public class FrontController extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        if (req.getServletPath().startsWith("/static")) {
+            RequestDispatcher rd = getServletContext().getNamedDispatcher("default");
+            rd.forward(req, resp);
+            return;
+        }
         LOGGER.debug("Controller path: " + req.getRequestURI());
         Command command = CommandFactory.COMMAND_FACTORY.getCommand(
                 req.getParameter("command"));
