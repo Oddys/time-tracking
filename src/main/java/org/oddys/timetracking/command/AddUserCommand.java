@@ -37,11 +37,9 @@ public class AddUserCommand implements Command {
             req.getSession().setAttribute("errors", errors);
             return path;
         }
-        if (service.addUser(MAPPER.mapUser(req))) {
-            req.getSession().setAttribute("messageKey", "User added successfully");
-        } else {
-            req.getSession().setAttribute("messageKey", "User already exists");
-        }
+        String messageKey = service.addUser(MAPPER.mapUser(req)) ? "user.add.success"
+                                                                 : "user.add.fail";
+        req.getSession().setAttribute("messageKey", messageKey);
         return path;
     }
 }

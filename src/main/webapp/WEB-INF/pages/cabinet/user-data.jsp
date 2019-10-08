@@ -7,7 +7,7 @@
 </head>
 <body>
     <c:if test="${not empty messageKey}">
-        <div class="text-info">${messageKey}</div>
+        <div class="text-info"><fmt:message key="${messageKey}"/></div>
         <c:remove scope="session" var="messageKey"/>
     </c:if>
     <div class="container">
@@ -15,7 +15,7 @@
             <input type="hidden" name="command" value="add_user"/>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="login">Login</label>
+                    <label for="login"><fmt:message key="label.login"/></label>
                     <input type="text" class="form-control" id="login" name="login" required>
                     <c:if test="${errors.login}">
                         <div class="text-warning">
@@ -24,7 +24,7 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="password">Password</label>
+                    <label for="password"><fmt:message key="label.password"/></label>
                     <input type="password" class="form-control" id="password" name="password" required>
                     <c:if test="${errors.password}">
                         <div class="text-warning">
@@ -35,7 +35,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="firstName">First name</label>
+                    <label for="firstName"><fmt:message key="label.firstname"/></label>
                     <input type="text" class="form-control" id="firstName" name="firstName" value="" required>
                     <c:if test="${errors.firstName}">
                         <div class="text-warning">
@@ -44,7 +44,7 @@
                     </c:if>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="lastName">Last name</label>
+                    <label for="lastName"><fmt:message key="label.lastname"/></label>
                     <input type="text" class="form-control" id="lastName" name="lastName" required>
                     <c:if test="${errors.lastName}">
                         <div class="text-warning">
@@ -55,7 +55,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="role">Role</label>
+                    <label for="role"><fmt:message key="label.role"/></label>
                     <select class="custom-select form-inline" name="roleId" id="role">
                         <c:forEach var="role" items="${roles}">
                             <option value="${role.roleId}"><fmt:message key="${role.roleName}"/></option>
