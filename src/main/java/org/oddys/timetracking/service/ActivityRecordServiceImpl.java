@@ -54,15 +54,16 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     }
 
     @Override
-    public int addActivityRecord(String dateString, String durationString,
-            Long userActivityId) {
+    public boolean addActivityRecord(String dateString, String durationString,
+            String userActivityIdString) {
         try {
             LocalDate date = LocalDate.parse(dateString);
             Long duration = Long.valueOf(durationString);
+            Long userActivityId = Long.valueOf(userActivityIdString);
             if (activityRecordDao.exists(date, userActivityId)) {
-                return 0;
+                return false;
             }
-            return activityRecordDao.add(date, duration, userActivityId);
+            return activityRecordDao.add(date, duration, userActivityId) > 0;
         } catch (DateTimeParseException | NumberFormatException e) {
             throw new ServiceException("ActivityRecordService failed to parse parameters", e); // FIXME
         }

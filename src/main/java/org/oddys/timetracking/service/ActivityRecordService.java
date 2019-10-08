@@ -8,5 +8,5 @@ public interface ActivityRecordService {
     ActivityRecordsPage findActivityRecords(long userActivityId, long currentPage,
             int recordPerPage);
 
-    int addActivityRecord(String dateString, String durationString, Long userActivityId);
+    boolean addActivityRecord(String dateString, String durationString, String userActivityIdString);
 }

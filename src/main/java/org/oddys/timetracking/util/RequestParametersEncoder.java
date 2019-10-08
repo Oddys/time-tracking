@@ -5,15 +5,20 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RequestParametersEncoder {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final String ENCODING;
+    private  static final RequestParametersEncoder INSTANCE = new RequestParametersEncoder();
+    private final Charset ENCODING = StandardCharsets.UTF_8;
 
-    public RequestParametersEncoder(String encoding) {
-        ENCODING = encoding;
+    private RequestParametersEncoder() {}
+
+    public static RequestParametersEncoder getInstance() {
+        return INSTANCE;
     }
 
     public String encodeQueryParameters(String url, Map<String, String> parameters) {
@@ -23,11 +28,12 @@ public class RequestParametersEncoder {
     }
 
     private String encodeValue(String value) {
-        try {
-            return URLEncoder.encode(value, ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("Failed to encode a query parameter with a given encoding");
-            throw  new EncodingException(e);
-        }
+        return URLEncoder.encode(value, ENCODING);
+//        try {
+//            return URLEncoder.encode(value, ENCODING);
+//        } catch (UnsupportedEncodingException e) {
+//            LOGGER.error("Failed to encode a query parameter with a given encoding");
+//            throw  new EncodingException(e);
+//        }
     }
 }
