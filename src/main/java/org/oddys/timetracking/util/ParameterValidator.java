@@ -5,9 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ParameterValidator {
     private static final ParameterValidator INSTANCE = new ParameterValidator();
+    private static final Set<String> VALID_BOOL_STRINGS = Set.of("true", "false");
 
     private ParameterValidator() {}
 
@@ -42,24 +44,6 @@ public class ParameterValidator {
             errors.put("lastName", true);
         }
         return errors;
-
-//        if (StringUtils.isBlank(request.getParameter("login"))) {
-//            request.setAttribute("messageKey", "Please, enter your login");
-//            return false;
-//        }
-//        if (StringUtils.isBlank(request.getParameter("password"))) {
-//            request.setAttribute("messageKey", "Please, enter your password");
-//            return false;
-//        }
-//        if (StringUtils.isBlank(request.getParameter("firstName"))) {
-//            request.setAttribute("messageKey", "Please, enter your first name");
-//            return false;
-//        }
-//        if (StringUtils.isBlank(request.getParameter("lastName"))) {
-//            request.setAttribute("messageKey", "Please, enter your last name");
-//            return false;
-//        }
-//        return true;
     }
 
     public boolean isValidAddActivity(HttpServletRequest request) {
@@ -100,5 +84,14 @@ public class ParameterValidator {
             return false;
         }
         return true;
+    }
+
+    public boolean isValidChangeUserActivityStatus(HttpServletRequest request) {
+        try {
+            Long.parseLong(request.getParameter("userActivityId"));
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return VALID_BOOL_STRINGS.contains(request.getParameter("currentAssigned"));
     }
 }

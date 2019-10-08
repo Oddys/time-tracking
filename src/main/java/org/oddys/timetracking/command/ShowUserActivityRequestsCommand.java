@@ -19,7 +19,7 @@ public class ShowUserActivityRequestsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        long currentPage = Long.parseLong(req.getParameter("currentPage"));
+        long currentPage = Long.parseLong(req.getParameter("currentPage"));  // TODO Add validation
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         PageDto<UserActivityDto> page = service.findAllStatusChangeRequested(
                 currentPage, rowsPerPage);

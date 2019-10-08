@@ -25,10 +25,11 @@
                 <td>${userActivity.userLastName}</td>
                 <td>${userActivity.activityName}</td>
                 <td>
-                    <form action="controller" method="post">
+                    <form action="${pageContext.request.contextPath}/cabinet/change-activity-status" method="post">
                         <input type="hidden" name="command" value="change_activity_status"/>
                         <input type="hidden" name="userActivityId" value="${userActivity.id}"/>
                         <input type="hidden" name="currentAssigned" value="${userActivity.assigned}"/>
+                        <input type="hidden" name="rowsPerPage" value="${userActivities.rowsPerPage}"/>
                         <c:choose>
                             <c:when test="${userActivity.assigned}">
                                 <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.activity.stop"/>"/>

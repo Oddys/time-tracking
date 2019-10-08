@@ -66,6 +66,10 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Override
     public boolean changeUserActivityStatus(Long userActivityId, boolean currentValue) {
+        UserActivity userActivity = dao.findById(userActivityId);
+        if (userActivity == null || !userActivity.getStatusChangeRequested()) {
+            return false;
+        }
         return dao.updateAssignedAndStatusChangeRequested(userActivityId, !currentValue) > 0;
     }
 }
