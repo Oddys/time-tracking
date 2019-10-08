@@ -10,7 +10,6 @@
     <title><fmt:message key="title.activities"/></title>
 </head>
 <body>
-    <h2><fmt:message key="title.activities"/></h2>
     <c:if test="${not empty messageKey}">
         <div class="text-info">
             <fmt:message key="${messageKey}">
@@ -22,13 +21,14 @@
     </c:if>
     <c:if test="${user.roleName eq 'ADMIN'}">
         <h3><fmt:message key="title.activity.add"/> </h3>
-        <form action="controller" method="post">
+        <form action="${pageContext.request.contextPath}/cabinet/add-activity" method="post">
             <input type="hidden" name="command" value="add_activity">
-            <label for="activityName"></label>
             <input type="text" name="activityName" id="activityName" placeholder="<fmt:message key="activity.enter"/>" required/>
+            <input type="hidden" name="rowsPerPage" value="${rowsPerPage}"/>
             <input class="btn btn-primary" type="submit" value="<fmt:message key="button.send"/>"/>
         </form>
     </c:if>
+    <h3><fmt:message key="title.activities"/></h3>
     <table class="table table-hover table-striped table-bordered">
         <tr>
             <th><fmt:message key="table.column.name"/> </th>
