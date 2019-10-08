@@ -31,6 +31,6 @@ public class ShowUserActivitiesCommand implements Command {
             return "redirect:/time-tracking/cabinet";
         }
         req.setAttribute("userActivities", dto);
-        return "/user-activities";
+        return "/cabinet/user-activities";
     }
 }

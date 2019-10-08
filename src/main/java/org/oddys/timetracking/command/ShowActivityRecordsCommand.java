@@ -35,6 +35,6 @@ public class ShowActivityRecordsCommand implements Command {
             return SC_BAD_REQUEST;
         }
         req.setAttribute("activityRecords", page);
-        return "/activity-records";
+        return "/cabinet/activity-records";
     }
 }

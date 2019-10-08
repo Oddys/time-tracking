@@ -30,6 +30,6 @@ public class ShowActivitiesCommand implements Command {
         req.setAttribute("currentPage", currentPage);
         req.setAttribute("rowsPerPage", rowsPerPage);
         req.setAttribute("numPages", service.getNumberOfPages(rowsPerPage));
-        return "/activities";
+        return "/cabinet/activities";
     }
 }
