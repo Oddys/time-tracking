@@ -94,4 +94,15 @@ public class ParameterValidator {
         }
         return VALID_BOOL_STRINGS.contains(request.getParameter("currentAssigned"));
     }
+
+    public boolean isValidShowActivityRecords(HttpServletRequest request) {
+        try {
+            Long.parseLong(request.getParameter("userActivityId"));
+            Long.parseLong(request.getParameter("currentPage"));
+            Integer.parseInt(request.getParameter("rowsPerPage"));
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 }
