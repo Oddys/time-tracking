@@ -1,24 +1,25 @@
 <%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
-<%--@elvariable id="userActivities" type="java.util.List"--%>
-<%--@elvariable id="errorMessageKey" type="java.lang.String"--%>
+<%--@elvariable id="userActivities" type="org.oddys.timetracking.dto.UserActivitiesDto"--%>
+<%--@elvariable id="messageKey" type="java.lang.String"--%>
 <html>
 <head>
     <title>
         <fmt:message key="title.activities.user">
-            <fmt:param value="${userFirstName}"/>
-            <fmt:param value="${userLastName}"/>
+            <fmt:param value="${userActivities.firstName}"/>
+            <fmt:param value="${userActivities.lastName}"/>
         </fmt:message>
     </title>
 </head>
 <body>
     <h2>
         <fmt:message key="title.activities.user">
-            <fmt:param value="${userFirstName}"/>
-            <fmt:param value="${userLastName}"/>
+            <fmt:param value="${userActivities.firstName}"/>
+            <fmt:param value="${userActivities.lastName}"/>
         </fmt:message>
     </h2>
     <c:if test="${not empty messageKey}">
         <fmt:message key="${messageKey}"/>
+        <c:remove var="messageKey" scope="session"/>
     </c:if>
     <table class="table table-hover table-striped table-bordered">
         <tr>
@@ -29,7 +30,7 @@
                 <th></th>
             </c:if>
         </tr>
-        <c:forEach var="currentUserActivity" items="${userActivities}">
+        <c:forEach var="currentUserActivity" items="${userActivities.userActivities}">
             <tr>
                 <td><c:out value="${currentUserActivity.activityName}"/></td>
                 <td>

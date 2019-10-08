@@ -74,4 +74,14 @@ public class ParameterValidator {
             return false;
         }
     }
+
+    public boolean isValidShowUserActivities(HttpServletRequest request) {
+        try {
+            Long.parseLong(request.getParameter("userId"));
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("messageKey", "error.parameter.invalid");
+            return false;
+        }
+        return true;
+    }
 }

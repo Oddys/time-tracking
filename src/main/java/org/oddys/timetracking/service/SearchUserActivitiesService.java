@@ -1,9 +1,7 @@
 package org.oddys.timetracking.service;
 
-import org.oddys.timetracking.dto.UserActivityDto;
-
-import java.util.List;
+import org.oddys.timetracking.dto.UserActivitiesDto;
 
 public interface SearchUserActivitiesService {
-    List<UserActivityDto> searchUserActivitiesByUserId(Long userId);
+    UserActivitiesDto searchUserActivitiesByUserId(Long userId);
 }

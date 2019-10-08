@@ -1,8 +1,13 @@
 <%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
+<%--@elvariable id="messageKey" type="java.lang.String"--%>
 <html>
 <head>
 </head>
     <body>
+        <c:if test="${not empty messageKey}">
+            <div class="text-warning"><fmt:message key="${messageKey}"/></div>
+            <c:remove var="messageKey" scope="session"/>
+        </c:if>
         <h3><fmt:message key="title.activities"/></h3>
         <form action="cabinet/activities">
             <input type="hidden" name="command" value="show_activities"/>
@@ -14,8 +19,6 @@
         <form action="cabinet/user-activities">
             <input type="hidden" name="command" value="show_user_activities"/>
             <input type="hidden" name="userId" value="${user.userId}"/>
-            <input type="hidden" name="userFirstName" value="${user.firstName}"/>
-            <input type="hidden" name="userLastName" value="${user.lastName}"/>
             <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
         </form>
     </body>

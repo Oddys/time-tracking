@@ -20,6 +20,7 @@ public class MysqlUserDao implements UserDao {
     private static final MysqlUserDao INSTANCE = new MysqlUserDao();
     private static final String FIND_BY_LOGIN = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.login = ?";
     private static final String FIND_BY_LAST_NAME = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.last_name = ?";
+    private static final String FIND_BY_ID = "SELECT u.*, r.role_name FROM users u JOIN roles r on u.role_id = r.role_id WHERE u.user_id = ?";
 
     private MysqlUserDao() {}
 
@@ -70,6 +71,19 @@ public class MysqlUserDao implements UserDao {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error("Failed to add User", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public User findById(Long id) {
+        try (ConnectionWrapper connectionWrapper = ConnectionWrapper.getInstance();
+             PreparedStatement statement = connectionWrapper.prepareStatement(FIND_BY_ID)) {
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            return (rs.next()) ? EntityMapper.getInstance().mapUser(rs) : null;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to find User by id", e);
             throw new DaoException(e);
         }
     }

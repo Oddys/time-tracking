@@ -5,6 +5,8 @@ import org.oddys.timetracking.entity.User;
 import java.util.List;
 
 public interface UserDao {
+    User findById(Long id);
+
     User findByLogin(String login);
 
     List<User> findByLastName(String lastName);
