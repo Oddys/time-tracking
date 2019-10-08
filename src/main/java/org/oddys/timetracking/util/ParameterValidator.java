@@ -3,6 +3,8 @@ package org.oddys.timetracking.util;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParameterValidator {
     private static final ParameterValidator INSTANCE = new ParameterValidator();
@@ -25,24 +27,39 @@ public class ParameterValidator {
         return true;
     }
 
-    public boolean isValidAddUser(HttpServletRequest request) {
+    public Map<String, Boolean> validateAddUser(HttpServletRequest request) {
+        Map<String, Boolean> errors = new HashMap<>();
         if (StringUtils.isBlank(request.getParameter("login"))) {
-            request.setAttribute("messageKey", "Please, enter your login");
-            return false;
+            errors.put("login", true);
         }
         if (StringUtils.isBlank(request.getParameter("password"))) {
-            request.setAttribute("messageKey", "Please, enter your password");
-            return false;
+            errors.put("password", true);
         }
         if (StringUtils.isBlank(request.getParameter("firstName"))) {
-            request.setAttribute("messageKey", "Please, enter your first name");
-            return false;
+            errors.put("firstName", true);
         }
         if (StringUtils.isBlank(request.getParameter("lastName"))) {
-            request.setAttribute("messageKey", "Please, enter your last name");
-            return false;
+            errors.put("lastName", true);
         }
-        return true;
+        return errors;
+
+//        if (StringUtils.isBlank(request.getParameter("login"))) {
+//            request.setAttribute("messageKey", "Please, enter your login");
+//            return false;
+//        }
+//        if (StringUtils.isBlank(request.getParameter("password"))) {
+//            request.setAttribute("messageKey", "Please, enter your password");
+//            return false;
+//        }
+//        if (StringUtils.isBlank(request.getParameter("firstName"))) {
+//            request.setAttribute("messageKey", "Please, enter your first name");
+//            return false;
+//        }
+//        if (StringUtils.isBlank(request.getParameter("lastName"))) {
+//            request.setAttribute("messageKey", "Please, enter your last name");
+//            return false;
+//        }
+//        return true;
     }
 
     public boolean isValidAddActivity(HttpServletRequest request) {

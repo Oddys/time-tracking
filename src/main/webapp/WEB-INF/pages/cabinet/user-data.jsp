@@ -1,56 +1,62 @@
 <%--@elvariable id="messageKey" type="java.lang.String"--%>
 <%--@elvariable id="roles" type="java.util.List"--%>
+<%--@elvariable id="errors" type="java.util.Map"--%>
 <html>
 <head>
     <title>User data</title>
 </head>
 <body>
     <c:if test="${not empty messageKey}">
-        ${messageKey}
+        <div class="text-info">${messageKey}</div>
         <c:remove scope="session" var="messageKey"/>
     </c:if>
     <div class="container">
-        <form action="controller" class="needs-validation" novalidate method="post">
+        <form action="${pageContext.request.contextPath}/cabinet/add-user" class="needs-validation" novalidate method="post">
             <input type="hidden" name="command" value="add_user"/>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="login">Login</label>
                     <input type="text" class="form-control" id="login" name="login" required>
-                    <%--                <div class="invalid-feedback">--%>
-                    <%--                    Please, provide a valid input.--%>
-                    <%--                </div>--%>
+                    <c:if test="${errors.login}">
+                        <div class="text-warning">
+                            <fmt:message key="field.notblank"/>
+                        </div>
+                    </c:if>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
-                    <%--                <div class="invalid-feedback">--%>
-                    <%--                    Please, provide a valid input.--%>
-                    <%--                </div>--%>
+                    <c:if test="${errors.password}">
+                        <div class="text-warning">
+                            <fmt:message key="field.notblank"/>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="firstName">First name</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" value="" required>
-                    <%--                <div class="invalid-feedback">--%>
-                    <%--                    Please, provide a valid input.--%>
-                    <%--                </div>--%>
+                    <c:if test="${errors.firstName}">
+                        <div class="text-warning">
+                            <fmt:message key="field.notblank"/>
+                        </div>
+                    </c:if>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="lastName">Last name</label>
                     <input type="text" class="form-control" id="lastName" name="lastName" required>
-                    <%--                <div class="invalid-feedback">--%>
-                    <%--                    Please, provide a valid input.--%>
-                    <%--                </div>--%>
+                    <c:if test="${errors.lastName}">
+                        <div class="text-warning">
+                            <fmt:message key="field.notblank"/>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="role">Role</label>
-                    <!-- FIXME Display all roles from DB -->
                     <select class="custom-select form-inline" name="role" id="role">
-<%--                        <option value="User">User</option>--%>
-<%--                        <option value="Admin">Admin</option>--%>
                         <c:forEach var="role" items="${roles}">
                             <option value="role.id"><fmt:message key="${role.roleName}"/></option>
                         </c:forEach>
@@ -59,24 +65,8 @@
             </div>
             <button class="btn btn-primary" type="submit"><fmt:message key="button.save"/></button>
         </form>
+        <c:remove var="errors" scope="session"/>
     </div>
-<%--    <form action="controller" method="post">--%>
-<%--        <input type="hidden" name="command" value="add_user"/>--%>
-<%--        <label for="login">Login</label>--%>
-<%--        <input type="text" name="login" value="" id="login" required/>--%>
-<%--        <label for="password">Password</label>--%>
-<%--        <input type="password" name="password" value="" id="password" required/>--%>
-<%--        <label for="firstName">First name</label>--%>
-<%--        <input type="text" name="firstName" value="" id="firstName" required/>--%>
-<%--        <label for="lastName">Last name</label>--%>
-<%--        <input type="text" name="lastName" value="" id="lastName" required/>--%>
-<%--        <label for="role">Role</label>--%>
-<%--        <select name="role" id="role">--%>
-<%--            <option value="User">User</option>--%>
-<%--            <option value="Admin">Admin</option>--%>
-<%--        </select>--%>
-<%--        <input type="submit" value="<fmt:message key="button.save"/>"/>--%>
-<%--    </form>--%>
     <form action="${pageContext.request.contextPath}">
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
     </form>

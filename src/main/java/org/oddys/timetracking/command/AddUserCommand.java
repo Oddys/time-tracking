@@ -1,22 +1,26 @@
 package org.oddys.timetracking.command;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.service.UserService;
 import org.oddys.timetracking.service.UserServiceImpl;
 import org.oddys.timetracking.transaction.TransactionProxy;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.EntityMapper;
 import org.oddys.timetracking.util.ParameterValidator;
+import org.oddys.timetracking.util.RequestParametersEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public class AddUserCommand implements Command {
     private static final Command INSTANCE = new AddUserCommand();
+    private ParameterValidator validator = ParameterValidator.getInstance();
     private UserService service = TransactionProxy.getInstance().getProxy(
             UserServiceImpl.getInstance());
+    private final RequestParametersEncoder encoder;
 
-    private AddUserCommand() {}
+    private AddUserCommand() {
+        encoder = RequestParametersEncoder.getInstance();
+    }
 
     public static Command getInstance() {
         return INSTANCE;
@@ -24,15 +28,23 @@ public class AddUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        System.out.println("First name: " + req.getParameter("firstName"));
-        if (!ParameterValidator.getInstance().isValidAddUser(req)) {
-            return ConfigManager.getInstance().getProperty("path.user.data");
+//        if (!ParameterValidator.getInstance().validateAddUser(req)) {
+//            return ConfigManager.getInstance().getProperty("path.user.data");
+//        }
+        String path = encoder.encodeQueryParameters(
+                "redirect:/time-tracking/cabinet/activity-records",
+                Map.of("command", "prepare_user_form"));
+        Map<String, Boolean> errors = validator.validateAddUser(req);
+        if (!errors.isEmpty()) {
+            req.getSession().setAttribute("errors", errors);
+            return path;
         }
         if (service.addUser(EntityMapper.getInstance().mapUser(req))) {
-            req.setAttribute("messageKey", "User added successfully");
+            req.getSession().setAttribute("messageKey", "User added successfully");
         } else {
-            req.setAttribute("messageKey", "User already exists");
+            req.getSession().setAttribute("messageKey", "User already exists");
         }
-        return ConfigManager.getInstance().getProperty("path.user.data");
+//        return ConfigManager.getInstance().getProperty("path.user.data");
+        return path;
     }
 }
