@@ -1,15 +1,14 @@
 package org.oddys.timetracking.service;
 
+import org.oddys.timetracking.dto.PageDto;
 import org.oddys.timetracking.dto.UserActivityDto;
-
-import java.util.List;
 
 public interface UserActivityService {
     boolean requestStatusChange(Long userActivityId);
 
     long getNumberOfPagesStatusChangeRequested(int rowsPerPage);
 
-    List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage);
+    PageDto<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage);
 
     boolean assignActivity(Long userId, Long activityId);
 

@@ -1,20 +1,21 @@
 package org.oddys.timetracking.service;
 
+import org.modelmapper.ModelMapper;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
 import org.oddys.timetracking.dao.UserActivityDao;
-import org.oddys.timetracking.dao.DaoException;
+import org.oddys.timetracking.dto.PageDto;
 import org.oddys.timetracking.dto.UserActivityDto;
 import org.oddys.timetracking.entity.UserActivity;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserActivityServiceImpl implements UserActivityService {
     private static final UserActivityService INSTANCE = new UserActivityServiceImpl();
     private UserActivityDao dao;
+    private final ModelMapper modelMapper = ModelMapperWrapper.getMapper();
 
     private UserActivityServiceImpl() {
         String dbmsName = ConfigManager.getInstance().getProperty(ConfigManager.DBMS);
@@ -50,10 +51,17 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public List<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) {
-        return dao.findAllStatusChangeRequested(currentPage, rowsPerPage).stream()
-                .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
-                .collect(Collectors.toCollection(ArrayList::new));
+    public PageDto<UserActivityDto> findAllStatusChangeRequested(long currentPage, int rowsPerPage) {
+        PageDto<UserActivityDto> page = new PageDto<>();
+        page.setCurrentPage(currentPage);
+        page.setRowsPerPage(rowsPerPage);
+        List<UserActivityDto> userActivities = dao.findAllStatusChangeRequested(currentPage, rowsPerPage)
+                .stream()
+                .map(ua -> modelMapper.map(ua, UserActivityDto.class))
+                .collect(Collectors.toList());
+        page.setElements(userActivities);
+        page.setNumPages(getNumberOfPagesStatusChangeRequested(rowsPerPage));
+        return page;
     }
 
     @Override

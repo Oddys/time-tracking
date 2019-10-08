@@ -15,7 +15,7 @@
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
     <h3><fmt:message key="title.user.activity.requests"/></h3>
-    <form action="controller">
+    <form action="${pageContext.request.contextPath}/cabinet/show-activity-requests">
         <input type="hidden" name="command" value="show_activity_requests"/>
         <input type="hidden" name="currentPage" value="1"/>
         <input type="hidden" name="rowsPerPage" value="5"/>
