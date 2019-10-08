@@ -6,13 +6,11 @@
 </head>
 <body>
     <h2>
-        <c:if test="${not empty activityRecords.elements}">
-            <fmt:message key='title.user.activity.records'>
-                <fmt:param value='${activityRecords.userFirstName}'/>
-                <fmt:param value='${activityRecords.userLastName}'/>
-                <fmt:param value='${activityRecords.activityName}'/>
-            </fmt:message>
-        </c:if>
+        <fmt:message key='title.user.activity.records'>
+            <fmt:param value='${activityRecords.userFirstName}'/>
+            <fmt:param value='${activityRecords.userLastName}'/>
+            <fmt:param value='${activityRecords.activityName}'/>
+        </fmt:message>
     </h2>
     <c:if test="${user.roleName eq 'USER' and activityRecords.assigned}">
         <%@ include file="/WEB-INF/jspf/add-activity-record.jspf"%>
