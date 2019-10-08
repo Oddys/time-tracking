@@ -18,7 +18,7 @@
         </fmt:message>
     </h2>
     <c:if test="${not empty messageKey}">
-        <fmt:message key="${messageKey}"/>
+        <div class="text-info"><fmt:message key="${messageKey}"/></div>
         <c:remove var="messageKey" scope="session"/>
     </c:if>
     <table class="table table-hover table-striped table-bordered">
@@ -61,9 +61,10 @@
                 <c:if test="${user.roleName eq 'USER'}">
                     <td>
                         <c:if test="${currentUserActivity.assigned and not currentUserActivity.statusChangeRequested}">
-                            <form action="controller" method="post">
+                            <form action="${pageContext.request.contextPath}/cabinet/stop-activity" method="post">
                                 <input type="hidden" name="command" value="stop_activity"/>
                                 <input type="hidden" name="userActivityId" value="${currentUserActivity.id}"/>
+                                <input type="hidden" name="userId" value="${userActivities.userId}"/>
                                 <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.activity.stop"/>"/>
                             </form>
                         </c:if>
