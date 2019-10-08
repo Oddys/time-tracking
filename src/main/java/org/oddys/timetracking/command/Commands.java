@@ -49,9 +49,9 @@ public enum Commands {
         }
     },
 
-    ASSIGN_ACTIVITY {
+    REQUEST_ACTIVITY {
         {
-            command = AssignActivityCommand.getInstance();
+            command = RequestActivityCommand.getInstance();
         }
     },
 
