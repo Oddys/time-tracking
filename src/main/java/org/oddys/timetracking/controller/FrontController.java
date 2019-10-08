@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet("/")
 public class FrontController extends HttpServlet {
@@ -42,7 +44,10 @@ public class FrontController extends HttpServlet {
         Command command = CommandFactory.COMMAND_FACTORY.getCommand(
                 req.getParameter("command"));
         String viewName = command.execute(req);
-        if (viewName.startsWith("redirect:")) {
+        if (viewName.startsWith("SC=")) {
+            req.setAttribute("javax.servlet.error.status_code", getErrorCode(viewName));
+            req.getRequestDispatcher(resolveView("/error")).forward(req, resp);
+        } else if (viewName.startsWith("redirect:")) {
             LOGGER.debug("View name: " + viewName);
             resp.sendRedirect(viewName.replace("redirect:", ""));
         } else {
@@ -53,6 +58,16 @@ public class FrontController extends HttpServlet {
     }
 
     private String resolveView(String page) {
-        return PREFIX + page + SUFFIX;
+        String prefix = "/error".equals(page) ? "/WEB-INF" : PREFIX;
+        return  prefix + page + SUFFIX;
+    }
+
+    private int getErrorCode(String s) {
+        Matcher m = Pattern.compile("SC=(\\d+)").matcher(s);
+        if (m.matches()) {
+            return Integer.parseInt(m.group(1));
+        } else {
+            return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+        }
     }
 }

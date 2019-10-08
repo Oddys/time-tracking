@@ -50,7 +50,7 @@
                     </c:choose>
                 </td>
                 <td>
-                    <form action="controller">
+                    <form action="activity-records">
                         <input type="hidden" name="command" value="show_activity_records">
                         <input type="hidden" name="userActivityId" value="${currentUserActivity.id}"/>
                         <input type="hidden" name="userActivityAssigned" value="${currentUserActivity.assigned}"/>

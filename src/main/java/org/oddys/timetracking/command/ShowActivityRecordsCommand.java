@@ -6,6 +6,7 @@ import org.oddys.timetracking.service.ActivityRecordServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowActivityRecordsCommand implements Command {
@@ -20,10 +21,18 @@ public class ShowActivityRecordsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
-        long currentPage = Long.parseLong(req.getParameter("currentPage")); // TODO Check for exceptions
-        Boolean userActivityAssigned = Boolean.valueOf(req.getParameter("userActivityAssigned"));
-        int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
+        long userActivityId = 0;
+        long currentPage = 0; // TODO Check for exceptions
+        Boolean userActivityAssigned = null;
+        int rowsPerPage = 0;
+        try {
+            userActivityId = Long.parseLong(req.getParameter("userActivityId"));
+            currentPage = Long.parseLong(req.getParameter("currentPage"));
+            userActivityAssigned = Boolean.valueOf(req.getParameter("userActivityAssigned"));
+            rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
+        } catch (NumberFormatException e) {
+            return "SC=" + HttpServletResponse.SC_BAD_REQUEST;
+        }
         List<ActivityRecordDto> records = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
         req.getSession().setAttribute("activityRecords", records);  // TODO Move to a helper class
         req.getSession().setAttribute("numPages",
@@ -32,6 +41,7 @@ public class ShowActivityRecordsCommand implements Command {
         req.getSession().setAttribute("userActivityAssigned", userActivityAssigned);
         req.getSession().setAttribute("currentPage", currentPage);
         req.getSession().setAttribute("rowsPerPage", rowsPerPage);
-        return ConfigManager.getInstance().getProperty("path.activity.records");
+//        return ConfigManager.getInstance().getProperty("path.activity.records");
+        return "/activity-records";
     }
 }
