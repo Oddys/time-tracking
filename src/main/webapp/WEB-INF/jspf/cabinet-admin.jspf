@@ -3,16 +3,9 @@
 </head>
 <body>
     <h3><fmt:message key="title.user.add"/> </h3>
-    <form action="controller">
-        <input type="hidden" name="command" value="forward"/>
-        <input type="hidden" name="targetPage" value="/WEB-INF/pages/user-data.jsp"/>
+    <form action="${pageContext.request.contextPath}/cabinet/user-data">
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
     </form>
-<%--    <h3><fmt:message key="activity.suggestions"/></h3>--%>
-<%--    <form action="controller">--%>
-<%--        <input type="hidden" name="command" value="show_suggested_activities">--%>
-<%--        <input type="submit" value="<fmt:message key="button.show"/>"/>--%>
-<%--    </form>--%>
     <h3><fmt:message key="title.activities"/></h3>
     <form action="cabinet/activities">
         <input type="hidden" name="command" value="show_activities"/>
@@ -27,7 +20,7 @@
         <input type="hidden" name="rowsPerPage" value="5"/>
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
     </form>
-    <h3><fmt:message key="user.find"/></h3>
+<%--    <h3><fmt:message key="user.find"/></h3>--%>
 <%--    <form action="controller">--%>
 <%--        <input type="hidden" name="command" value="find_user"/>--%>
 <%--        <fmt:message key="user.lastname"/>:--%>
