@@ -19,7 +19,7 @@ public class MysqlRoleDao implements RoleDao {
     private static final MysqlRoleDao INSTANCE = new MysqlRoleDao();
     private static final String CREATE = "INSERT INTO roles (name) VALUES (?)";
     private static final String FIND_BY_ID = "SELECT * FROM roles WHERE role_id = ?";
-    private static final String FIND_ALL = "SELECT * FROM roles";
+    private static final String FIND_ALL = "SELECT * FROM roles ORDER BY role_name";
     private static final String UPDATE = "UPDATE roles SET name = ? WHERE role_id = ?";
     private static final String DELETE = "DELETE FROM roles WHERE role_id = ?";
 

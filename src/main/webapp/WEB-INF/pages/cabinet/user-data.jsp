@@ -1,4 +1,5 @@
 <%--@elvariable id="messageKey" type="java.lang.String"--%>
+<%--@elvariable id="roles" type="java.util.List"--%>
 <html>
 <head>
     <title>User data</title>
@@ -48,8 +49,11 @@
                     <label for="role">Role</label>
                     <!-- FIXME Display all roles from DB -->
                     <select class="custom-select form-inline" name="role" id="role">
-                        <option value="User">User</option>
-                        <option value="Admin">Admin</option>
+<%--                        <option value="User">User</option>--%>
+<%--                        <option value="Admin">Admin</option>--%>
+                        <c:forEach var="role" items="${roles}">
+                            <option value="role.id"><fmt:message key="${role.roleName}"/></option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>

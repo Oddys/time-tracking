@@ -4,6 +4,7 @@
 <body>
     <h3><fmt:message key="title.user.add"/> </h3>
     <form action="${pageContext.request.contextPath}/cabinet/user-data">
+        <input type="hidden" name="command" value="prepare_user_form"/>
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
     </form>
     <h3><fmt:message key="title.activities"/></h3>

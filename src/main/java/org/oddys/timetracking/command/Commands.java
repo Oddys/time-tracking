@@ -83,6 +83,12 @@ public enum Commands {
         {
             command = AddActivityCommand.getInstance();
         }
+    },
+
+    PREPARE_USER_FORM {
+        {
+            command = PrepareUserFormCommand.getInstance();
+        }
     };
 
     Command command;
