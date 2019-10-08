@@ -1,25 +1,20 @@
-<%--@elvariable id="activityRecords" type="java.util.List"--%>
-<%--@elvariable id="currentPage" type="java.util.Long"--%>
-<%--@elvariable id="numPages" type="java.util.Long"--%>
-<%--@elvariable id="rowsPerPage" type="java.util.Integer"--%>
-<%--@elvariable id="userActivityId" type="java.util.Long"--%>
 <%--@elvariable id="user" type="org.oddys.timetracking.dto.UserDto"--%>
-<%--@elvariable id="userActivityAssigned" type="java.lang.Boolean"--%>
+<%--@elvariable id="activityRecords" type="org.oddys.timetracking.dto.ActivityRecordsPage"--%>
 <html>
 <head>
     <title><fmt:message key="title.activity.records"/></title>
 </head>
 <body>
     <h2>
-        <c:if test="${not empty activityRecords}">
+        <c:if test="${not empty activityRecords.elements}">
             <fmt:message key='title.user.activity.records'>
-                <fmt:param value='${activityRecords[0].userFirstName}'/>
-                <fmt:param value='${activityRecords[0].userLastName}'/>
-                <fmt:param value='${activityRecords[0].activityName}'/>
+                <fmt:param value='${activityRecords.elements[0].userFirstName}'/>
+                <fmt:param value='${activityRecords.elements[0].userLastName}'/>
+                <fmt:param value='${activityRecords.elements[0].activityName}'/>
             </fmt:message>
         </c:if>
     </h2>
-    <c:if test="${user.roleName eq 'USER' and userActivityAssigned}">
+    <c:if test="${user.roleName eq 'USER' and activityRecords.assigned}">
         <%@ include file="/WEB-INF/jspf/add-activity-record.jspf"%>
     </c:if>
     <table class="table table-hover table-striped table-bordered">
@@ -27,17 +22,17 @@
             <th><fmt:message key="table.column.date"/></th>
             <th><fmt:message key="table.column.duration"/></th>
         </tr>
-        <c:forEach items="${activityRecords}" var="record">
+        <c:forEach items="${activityRecords.elements}" var="record">
             <tr>
                 <td>${record.activityDate}</td>
                 <td>${record.duration}</td>
             </tr>
         </c:forEach>
     </table>
-    <c:if test="${not empty activityRecords}">
+    <c:if test="${not empty activityRecords.elements}">
         <nav>
             <ul class="pagination pagination-lg px-1 py-1">
-                <c:if test="${currentPage != 1}">
+                <c:if test="${activityRecords.currentPage != 1}">
                    <li class="page-item">
                         <span class="border px-2 py-1">
                             <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}">
@@ -46,12 +41,11 @@
                         </span>
                     </li>
                 </c:if>
-                <c:forEach begin="1" end="${numPages}" var="i">
-
+                <c:forEach begin="1" end="${activityRecords.numPages}" var="i">
                     <li class="page-item">
                         <span class="border px-2 py-1">
                             <c:choose>
-                                <c:when test="${currentPage eq i}">
+                                <c:when test="${activityRecords.currentPage eq i}">
                                     ${i}
                                 </c:when>
                                 <c:otherwise>
@@ -62,7 +56,7 @@
                     </li>
 
                 </c:forEach>
-                <c:if test="${currentPage lt numPages}">
+                <c:if test="${activityRecords.currentPage lt activityRecords.numPages}">
                     <li class="page-item">
                         <span class="border px-2 py-1">
                             <a href="${pageContext.request.contextPath}/controller?command=show_activity_records&userActivityAssigned=${userActivityAssigned}&userActivityId=${userActivityId}&rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}">

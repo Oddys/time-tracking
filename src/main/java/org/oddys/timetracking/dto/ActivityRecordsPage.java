@@ -8,8 +8,8 @@ public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
 
     public ActivityRecordsPage() {}
 
-    public ActivityRecordsPage(List<ActivityRecordDto> elements, int currentPage,
-            int rowsPerPage, int numPages, Long userActivityId, Boolean assigned) {
+    public ActivityRecordsPage(List<ActivityRecordDto> elements, long currentPage,
+            int rowsPerPage, long numPages, Long userActivityId, Boolean assigned) {
         super(elements, currentPage, rowsPerPage, numPages);
         this.userActivityId = userActivityId;
         this.assigned = assigned;

@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.oddys.timetracking.dao.ActivityRecordDao;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
-import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.ActivityRecordDto;
+import org.oddys.timetracking.dto.ActivityRecordsPage;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
@@ -36,12 +36,27 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
         return numRows % rowsPerPage == 0 ? numPages : ++numPages;
     }
 
+//    @Override
+//    public List<ActivityRecordDto> findActivityRecords(long userActivityId, long currentPage, int recordsPerPage) {
+//        return dao.findAllByUserActivityId(userActivityId, currentPage, recordsPerPage)
+//                .stream()
+//                .map(ar -> ModelMapperWrapper.getMapper().map(ar, ActivityRecordDto.class))
+//                .collect(Collectors.toCollection(ArrayList::new));
+//    }
+
     @Override
-    public List<ActivityRecordDto> findActivityRecords(long userActivityId, long currentPage, int recordsPerPage) {
-        return dao.findAllByUserActivityId(userActivityId, currentPage, recordsPerPage)
+    public ActivityRecordsPage findActivityRecords(long userActivityId, long currentPage, int rowsPerPage) {
+        ActivityRecordsPage page = new ActivityRecordsPage();
+        List<ActivityRecordDto> records = dao.findAllByUserActivityId(userActivityId, currentPage, rowsPerPage)
                 .stream()
                 .map(ar -> ModelMapperWrapper.getMapper().map(ar, ActivityRecordDto.class))
                 .collect(Collectors.toCollection(ArrayList::new));
+        page.setNumPages(getNumberOfPages(userActivityId, rowsPerPage));
+        page.setElements(records);
+        page.setUserActivityId(userActivityId);
+        page.setCurrentPage(currentPage);
+        page.setRowsPerPage(rowsPerPage);
+        return page;
     }
 
     @Override

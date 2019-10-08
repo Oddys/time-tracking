@@ -1,6 +1,7 @@
 package org.oddys.timetracking.command;
 
 import org.oddys.timetracking.dto.ActivityRecordDto;
+import org.oddys.timetracking.dto.ActivityRecordsPage;
 import org.oddys.timetracking.service.ActivityRecordService;
 import org.oddys.timetracking.service.ActivityRecordServiceImpl;
 import org.oddys.timetracking.util.ConfigManager;
@@ -33,15 +34,17 @@ public class ShowActivityRecordsCommand implements Command {
         } catch (NumberFormatException e) {
             return "SC=" + HttpServletResponse.SC_BAD_REQUEST;
         }
-        List<ActivityRecordDto> records = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
-        req.getSession().setAttribute("activityRecords", records);  // TODO Move to a helper class
-        req.getSession().setAttribute("numPages",
-                service.getNumberOfPages(userActivityId, rowsPerPage));
-        req.getSession().setAttribute("userActivityId", userActivityId);
-        req.getSession().setAttribute("userActivityAssigned", userActivityAssigned);
-        req.getSession().setAttribute("currentPage", currentPage);
-        req.getSession().setAttribute("rowsPerPage", rowsPerPage);
-//        return ConfigManager.getInstance().getProperty("path.activity.records");
+        ActivityRecordsPage page = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
+        page.setAssigned(userActivityAssigned);
+        req.setAttribute("activityRecords", page);
+//        List<ActivityRecordDto> records = service.findActivityRecords(userActivityId, currentPage, rowsPerPage);
+//        req.getSession().setAttribute("activityRecords", records);  // TODO Move to a helper class
+//        req.getSession().setAttribute("numPages",
+//                service.getNumberOfPages(userActivityId, rowsPerPage));
+//        req.getSession().setAttribute("userActivityId", userActivityId);
+//        req.getSession().setAttribute("userActivityAssigned", userActivityAssigned);
+//        req.getSession().setAttribute("currentPage", currentPage);
+//        req.getSession().setAttribute("rowsPerPage", rowsPerPage);
         return "/activity-records";
     }
 }

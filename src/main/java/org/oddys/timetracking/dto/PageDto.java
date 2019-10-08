@@ -4,13 +4,13 @@ import java.util.List;
 
 public class PageDto<E> {
     private List<E> elements;
-    private int currentPage;
+    private long currentPage;
     private int rowsPerPage;
-    private int numPages;
+    private long numPages;
 
     public PageDto() {}
 
-    public PageDto(List<E> elements, int currentPage, int rowsPerPage, int numPages) {
+    public PageDto(List<E> elements, long currentPage, int rowsPerPage, long numPages) {
         this.elements = elements;
         this.currentPage = currentPage;
         this.rowsPerPage = rowsPerPage;
@@ -25,11 +25,11 @@ public class PageDto<E> {
         this.elements = elements;
     }
 
-    public int getCurrentPage() {
+    public long getCurrentPage() {
         return currentPage;
     }
 
-    public void setCurrentPage(int currentPage) {
+    public void setCurrentPage(long currentPage) {
         this.currentPage = currentPage;
     }
 
@@ -41,11 +41,11 @@ public class PageDto<E> {
         this.rowsPerPage = rowsPerPage;
     }
 
-    public int getNumPages() {
+    public long getNumPages() {
         return numPages;
     }
 
-    public void setNumPages(int numPages) {
+    public void setNumPages(long numPages) {
         this.numPages = numPages;
     }
 }
