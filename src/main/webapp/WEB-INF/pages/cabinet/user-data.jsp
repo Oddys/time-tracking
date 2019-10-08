@@ -56,9 +56,9 @@
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="role">Role</label>
-                    <select class="custom-select form-inline" name="role" id="role">
+                    <select class="custom-select form-inline" name="roleId" id="role">
                         <c:forEach var="role" items="${roles}">
-                            <option value="role.id"><fmt:message key="${role.roleName}"/></option>
+                            <option value="${role.roleId}"><fmt:message key="${role.roleName}"/></option>
                         </c:forEach>
                     </select>
                 </div>

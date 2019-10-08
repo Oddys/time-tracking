@@ -50,7 +50,7 @@ public class EntityMapper {
     }
 
     public User mapUser(HttpServletRequest req) {
-        Role role = new Role(null, req.getParameter("role").toUpperCase());
+        Role role = new Role(Long.valueOf(req.getParameter("roleId")), null);
         return new User(null,
                         req.getParameter("login"),
                         PasswordManager.getInstance().hashPassword(

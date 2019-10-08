@@ -67,7 +67,7 @@ public class MysqlUserDao implements UserDao {
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getLastName());
-            statement.setString(5, user.getRole().getName());
+            statement.setLong(5, user.getRole().getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error("Failed to add User", e);
