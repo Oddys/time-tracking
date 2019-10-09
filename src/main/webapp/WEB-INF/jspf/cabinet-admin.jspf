@@ -8,7 +8,7 @@
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
     </form>
     <h3><fmt:message key="title.activities"/></h3>
-    <form action="cabinet/activities">
+    <form action="${pageContext.request.contextPath}/cabinet/activities">
         <input type="hidden" name="command" value="show_activities"/>
         <input type="hidden" name="currentPage" value="1"/>
         <input type="hidden" name="rowsPerPage" value="5"/>
