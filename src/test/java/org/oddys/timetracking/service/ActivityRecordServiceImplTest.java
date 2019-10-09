@@ -1,6 +1,5 @@
 package org.oddys.timetracking.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
