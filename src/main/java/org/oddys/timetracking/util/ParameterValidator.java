@@ -3,6 +3,8 @@ package org.oddys.timetracking.util;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,12 +20,22 @@ public class ParameterValidator {
     }
 
     public boolean isValidAddActivityRecord(HttpServletRequest request) {
-        if (StringUtils.isBlank(request.getParameter("date"))) {
-            request.setAttribute("messageKey", "param.empty.date");
+        String dateString = request.getParameter("date");
+        if (StringUtils.isBlank(dateString)) {
+            request.getSession().setAttribute("messageKey", "param.empty.date");
             return false;
         }
-        if (StringUtils.isBlank(request.getParameter("duration"))) {
-            request.setAttribute("messageKey", "param.empty.duration");
+        String durationString = request.getParameter("duration");
+        if (StringUtils.isBlank(durationString)) {
+            request.getSession().setAttribute("messageKey", "param.empty.duration");
+            return false;
+        }
+        String idString = request.getParameter("userActivityId");
+        try {
+            LocalDate.parse(dateString);
+            Long.valueOf(durationString);
+            Long.valueOf(idString);
+        } catch (DateTimeParseException | NumberFormatException e) {
             return false;
         }
         return true;

@@ -7,16 +7,19 @@ import org.oddys.timetracking.util.ParameterValidator;
 import org.oddys.timetracking.util.RequestParametersEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class AddActivityRecordCommand implements Command {
     private static final Command INSTANCE = new AddActivityRecordCommand();
     private ActivityRecordService service = TransactionProxy.getInstance()
             .getProxy(ActivityRecordServiceImpl.getInstance());
-    private final RequestParametersEncoder encoder;
+    private final RequestParametersEncoder ENCODER;
+    private final ParameterValidator VALIDATOR;
 
     private AddActivityRecordCommand() {
-        encoder = RequestParametersEncoder.getInstance();
+        ENCODER = RequestParametersEncoder.getInstance();
+        VALIDATOR = ParameterValidator.getInstance();
     }
 
     public static Command getInstance() {
@@ -31,13 +34,15 @@ public class AddActivityRecordCommand implements Command {
                 "currentPage", "1",
                 "command", "show_activity_records"
         );
-        String path = encoder.encodeQueryParameters(
+        String path = ENCODER.encodeQueryParameters(
                 "redirect:/time-tracking/cabinet/activity-records", parameters);
-        if (!ParameterValidator.getInstance().isValidAddActivityRecord(req)) {
-            return path;
+        if (!VALIDATOR.isValidAddActivityRecord(req)) {
+            return req.getSession().getAttribute("messageKey") == null ? SC_BAD_REQUEST : path;
         }
-        boolean added = service.addActivityRecord(req.getParameter("date"),
-                req.getParameter("duration"), req.getParameter("userActivityId"));
+        boolean added = service.addActivityRecord(
+                LocalDate.parse(req.getParameter("date")),
+                Long.parseLong(req.getParameter("duration")),
+                Long.parseLong(req.getParameter("userActivityId")));
         String messageKey = added ? "activity.record.add.success"
                                    : "activity.record.add.fail";
         req.getSession().setAttribute("messageKey", messageKey);

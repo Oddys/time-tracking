@@ -10,7 +10,6 @@ import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,18 +53,10 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     }
 
     @Override
-    public boolean addActivityRecord(String dateString, String durationString,
-            String userActivityIdString) {
-        try {
-            LocalDate date = LocalDate.parse(dateString);
-            Long duration = Long.valueOf(durationString);
-            Long userActivityId = Long.valueOf(userActivityIdString);
-            if (activityRecordDao.exists(date, userActivityId)) {
-                return false;
-            }
-            return activityRecordDao.add(date, duration, userActivityId) > 0;
-        } catch (DateTimeParseException | NumberFormatException e) {
-            throw new ServiceException("ActivityRecordService failed to parse parameters", e); // FIXME
+    public boolean addActivityRecord(LocalDate date, long duration, long userActivityId) {
+        if (activityRecordDao.exists(date, userActivityId)) {
+            return false;
         }
+        return activityRecordDao.add(date, duration, userActivityId) > 0;
     }
 }
