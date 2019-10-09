@@ -1,9 +1,10 @@
 package org.oddys.timetracking.dto;
 
+import java.util.Objects;
+
 public class ActivityDto {
     private Long id;
     private String name;
-//    private Boolean approved;
 
     public ActivityDto() {
     }
@@ -11,7 +12,6 @@ public class ActivityDto {
     public ActivityDto(Long id, String name) {
         this.id = id;
         this.name = name;
-//        this.approved = approved;
     }
 
     public Long getId() {
@@ -30,11 +30,17 @@ public class ActivityDto {
         this.name = name;
     }
 
-//    public Boolean getApproved() {
-//        return approved;
-//    }
-//
-//    public void setApproved(Boolean approved) {
-//        this.approved = approved;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ActivityDto)) return false;
+        ActivityDto that = (ActivityDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }

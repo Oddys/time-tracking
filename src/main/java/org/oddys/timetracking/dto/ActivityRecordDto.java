@@ -1,6 +1,7 @@
 package org.oddys.timetracking.dto;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class ActivityRecordDto {
     private Long id;
@@ -14,6 +15,21 @@ public class ActivityRecordDto {
     private Long activityId;
 
     public ActivityRecordDto() {}
+
+    public ActivityRecordDto(Long id, String activityName,
+            Boolean userActivityStatusChangeRequested, LocalDate activityDate,
+            Long duration, Long userId, String userFirstName,
+            String userLastName, Long activityId) {
+        this.id = id;
+        this.activityName = activityName;
+        this.userActivityStatusChangeRequested = userActivityStatusChangeRequested;
+        this.activityDate = activityDate;
+        this.duration = duration;
+        this.userId = userId;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.activityId = activityId;
+    }
 
     public Long getId() {
         return id;
@@ -85,5 +101,35 @@ public class ActivityRecordDto {
 
     public void setActivityId(Long activityId) {
         this.activityId = activityId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ActivityRecordDto)) return false;
+        ActivityRecordDto that = (ActivityRecordDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(activityName, that.activityName) &&
+                Objects.equals(userActivityStatusChangeRequested,
+                        that.userActivityStatusChangeRequested) &&
+                Objects.equals(activityDate, that.activityDate) &&
+                Objects.equals(duration, that.duration) &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(userFirstName, that.userFirstName) &&
+                Objects.equals(userLastName, that.userLastName) &&
+                Objects.equals(activityId, that.activityId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id,
+                activityName,
+                userActivityStatusChangeRequested,
+                activityDate,
+                duration,
+                userId,
+                userFirstName,
+                userLastName,
+                activityId);
     }
 }

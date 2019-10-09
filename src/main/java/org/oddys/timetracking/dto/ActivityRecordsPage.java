@@ -2,6 +2,8 @@ package org.oddys.timetracking.dto;
 
 import org.oddys.timetracking.entity.UserActivity;
 
+import java.util.Objects;
+
 public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
     private Long userActivityId;
     private Boolean assigned;
@@ -71,5 +73,30 @@ public class ActivityRecordsPage extends PageDto<ActivityRecordDto> {
 
     public boolean isEmpty() {
         return userActivityId == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ActivityRecordsPage)) return false;
+        if (!super.equals(o)) return false;
+        ActivityRecordsPage that = (ActivityRecordsPage) o;
+        return Objects.equals(userActivityId, that.userActivityId) &&
+                Objects.equals(assigned, that.assigned) &&
+                Objects.equals(activityName, that.activityName) &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(userFirstName, that.userFirstName) &&
+                Objects.equals(userLastName, that.userLastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(),
+                userActivityId,
+                assigned,
+                activityName,
+                userId,
+                userFirstName,
+                userLastName);
     }
 }

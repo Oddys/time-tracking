@@ -1,5 +1,7 @@
 package org.oddys.timetracking.dto;
 
+import java.util.Objects;
+
 public class UserActivityDto {
     private Long id;
     private Boolean assigned;
@@ -83,5 +85,35 @@ public class UserActivityDto {
 
     public void setStatusChangeRequested(Boolean statusChangeRequested) {
         this.statusChangeRequested = statusChangeRequested;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserActivityDto)) return false;
+        UserActivityDto that = (UserActivityDto) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(assigned, that.assigned) &&
+                Objects.equals(activityId, that.activityId) &&
+                Objects.equals(activityName, that.activityName) &&
+                Objects.equals(activityApproved, that.activityApproved) &&
+                Objects.equals(statusChangeRequested,
+                        that.statusChangeRequested) &&
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(userFirstName, that.userFirstName) &&
+                Objects.equals(userLastName, that.userLastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id,
+                assigned,
+                activityId,
+                activityName,
+                activityApproved,
+                statusChangeRequested,
+                userId,
+                userFirstName,
+                userLastName);
     }
 }

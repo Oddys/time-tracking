@@ -2,7 +2,6 @@ package org.oddys.timetracking.entity;
 
 public class Activity extends Entity {
     private String name;
-//    private Boolean approved;
 
     public Activity() {
     }
@@ -10,7 +9,6 @@ public class Activity extends Entity {
     public Activity(Long id, String name) {
         super(id);
         this.name = name;
-//        this.approved = approved;
     }
 
     public String getName() {
@@ -20,12 +18,4 @@ public class Activity extends Entity {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public Boolean isApproved() {
-//        return approved;
-//    }
-
-//    public void setApproved(Boolean approved) {
-//        this.approved = approved;
-//    }
 }

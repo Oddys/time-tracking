@@ -1,6 +1,7 @@
 package org.oddys.timetracking.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PageDto<E> {
     private List<E> elements;
@@ -47,5 +48,21 @@ public class PageDto<E> {
 
     public void setNumPages(long numPages) {
         this.numPages = numPages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PageDto)) return false;
+        PageDto<?> pageDto = (PageDto<?>) o;
+        return currentPage == pageDto.currentPage &&
+                rowsPerPage == pageDto.rowsPerPage &&
+                numPages == pageDto.numPages &&
+                Objects.equals(elements, pageDto.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elements, currentPage, rowsPerPage, numPages);
     }
 }

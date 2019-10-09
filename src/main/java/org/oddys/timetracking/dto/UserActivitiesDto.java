@@ -1,6 +1,7 @@
 package org.oddys.timetracking.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserActivitiesDto {
     private Long userId;
@@ -44,5 +45,21 @@ public class UserActivitiesDto {
 
     public boolean isEmpty() {
         return userId == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserActivitiesDto)) return false;
+        UserActivitiesDto that = (UserActivitiesDto) o;
+        return Objects.equals(userId, that.userId) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(userActivities, that.userActivities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, firstName, lastName, userActivities);
     }
 }
