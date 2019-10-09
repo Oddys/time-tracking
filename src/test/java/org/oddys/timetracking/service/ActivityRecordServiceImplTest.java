@@ -43,6 +43,7 @@ public class ActivityRecordServiceImplTest {
         assertEquals(expectedPageCount, service.getNumberOfPages(1L, rowsPerPage));
     }
 
+    @Test
     public void returnOneIfNumRowsEqualsRowsPerPage() {
         int rowsPerPage = 5;
         when(activityRecordDao.getNumberOfRows(any(Long.class))).thenReturn((long) rowsPerPage);

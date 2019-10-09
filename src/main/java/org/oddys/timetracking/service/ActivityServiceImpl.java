@@ -2,7 +2,6 @@ package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dao.ActivityDao;
 import org.oddys.timetracking.dao.DaoFactoryProvider;
-import org.oddys.timetracking.dao.DaoException;
 import org.oddys.timetracking.dto.ActivityDto;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
