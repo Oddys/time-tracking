@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.oddys.timetracking.dto.UserDto;
 import org.oddys.timetracking.service.UserService;
-import org.oddys.timetracking.util.ConfigManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,11 +19,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignInCommandTest {
-    private final String CABINET_PAGE_URL = ConfigManager.getInstance()
-            .getProperty("path.cabinet");
-    private final String HOME_PAGE_URL = ConfigManager.getInstance()
-            .getProperty("path.home");
-
     @Mock
     private UserService service;
 
@@ -52,14 +46,13 @@ public class SignInCommandTest {
         when(service.signIn(any(String.class), any(char[].class))).thenReturn(userDto);
         String page = signInCommand.execute(request);
         verify(session).setAttribute("user", userDto);
-        assertEquals(CABINET_PAGE_URL, page);
+        assertEquals("redirect:/time-tracking/cabinet", page);
     }
 
     @Test
     public void setErrorMessageKeyAttrInSessionAndReturnHomePageIfNonValidCredentials() {
         when(service.signIn(any(String.class), any(char[].class))).thenReturn(null);
-        String page = signInCommand.execute(request);
-        verify(request).setAttribute("messageKey", "auth.error.notfound");
-        assertEquals(HOME_PAGE_URL, page);
+        signInCommand.execute(request);
+        verify(session).setAttribute("messageKey", "auth.error.notfound");
     }
 }
