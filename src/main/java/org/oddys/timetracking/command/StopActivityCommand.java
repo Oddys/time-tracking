@@ -23,7 +23,7 @@ public class StopActivityCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         Long userActivityId = Long.valueOf(req.getParameter("userActivityId"));
-        String messageKey = service.requestStatusChange(userActivityId)
+        String messageKey = service.requestUserActivityStop(userActivityId)
                 ? "user.activity.stop.success"
                 : "user.activity.stop.fail";
         req.getSession().setAttribute("messageKey", messageKey);

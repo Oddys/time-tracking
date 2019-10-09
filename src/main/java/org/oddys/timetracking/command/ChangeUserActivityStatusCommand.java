@@ -29,7 +29,7 @@ public class ChangeUserActivityStatusCommand implements Command {
         }
         long userActivityId = Long.parseLong(req.getParameter("userActivityId"));
         boolean currentAssigned = Boolean.parseBoolean(req.getParameter("currentAssigned"));
-        if (!service.changeUserActivityStatus(userActivityId, currentAssigned)) {
+        if (!service.changeStatus(userActivityId, currentAssigned)) {
             return SC_BAD_REQUEST;
         }
         req.getSession().setAttribute("messageKey", "user.activity.status.changed");

@@ -26,7 +26,15 @@ public class EntityStubProvider {
         return new Activity(1L, "Doing Stuff");
     }
 
-    public UserActivity getUserActivityStatusChangeNotRequestedStub() {
+    public UserActivity getUserActivityAssignedAndStatusChangeNotRequestedStub() {
         return new UserActivity(1L, true, false, getUserStub(), getActivityStub());
+    }
+
+    public UserActivity getUserActivityNotAssignedAndStatusChangeNotRequestedStub() {
+        return new UserActivity(2L, false, false, getUserStub(), getActivityStub());
+    }
+
+    public UserActivity getUserActivityAssignedAndStatusChangeRequestedStub() {
+        return new UserActivity(3L, true, true, getUserStub(), getActivityStub());
     }
 }

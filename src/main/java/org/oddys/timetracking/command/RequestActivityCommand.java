@@ -26,7 +26,7 @@ public class RequestActivityCommand implements Command {
     public String execute(HttpServletRequest req) {
         Long userId = Long.valueOf(req.getParameter("userId"));
         Long activityId = Long.valueOf(req.getParameter("activityId"));
-        String messageKey = service.assignActivity(userId, activityId)
+        String messageKey = service.requestActivityAssigned(userId, activityId)
                 ? "user.activity.request.success"
                 : "user.activity.request.fail";
         req.getSession().setAttribute("messageKey", messageKey);

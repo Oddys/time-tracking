@@ -27,7 +27,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public boolean assignActivity(Long userId, Long activityId) {
+    public boolean requestActivityAssigned(Long userId, Long activityId) {
         UserActivity userActivity = dao.findByUserIdAndActivityId(userId, activityId);
         if (userActivity == null) {
             return dao.add(userId, activityId, false, true) > 0;
@@ -39,7 +39,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public boolean requestStatusChange(Long userActivityId) {
+    public boolean requestUserActivityStop(Long userActivityId) {
         return dao.requestStatusChange(userActivityId) > 0;
     }
 
@@ -65,7 +65,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public boolean changeUserActivityStatus(Long userActivityId, boolean currentValue) {
+    public boolean changeStatus(Long userActivityId, boolean currentValue) {
         UserActivity userActivity = dao.findById(userActivityId);
         if (userActivity == null || !userActivity.getStatusChangeRequested()) {
             return false;
