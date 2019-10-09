@@ -10,10 +10,10 @@ import java.util.Map;
 public class StopActivityCommand implements Command {
     private static final Command INSTANCE = new StopActivityCommand();
     private UserActivityService service = UserActivityServiceImpl.getInstance();
-    private final RequestParametersEncoder encoder;
+    private final RequestParametersEncoder ENCODER;
 
     private StopActivityCommand() {
-        encoder = RequestParametersEncoder.getInstance();
+        ENCODER = RequestParametersEncoder.getInstance();
     }
 
     public static Command getInstance() {
@@ -30,7 +30,7 @@ public class StopActivityCommand implements Command {
         Map<String, String> parameters = Map.of(
                 "userId", req.getParameter("userId"),
                 "command", "show_user_activities");
-        return encoder.encodeQueryParameters(
+        return ENCODER.encodeQueryParameters(
                 "redirect:/time-tracking/cabinet/user-activities",
                 parameters);
     }

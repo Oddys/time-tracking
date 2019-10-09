@@ -12,9 +12,9 @@ import java.util.Map;
 
 public class AddUserCommand implements Command {
     private static final Command INSTANCE = new AddUserCommand();
-    private ParameterValidator validator = ParameterValidator.getInstance();
     private UserService service = TransactionProxy.getInstance().getProxy(
             UserServiceImpl.getInstance());
+    private final ParameterValidator VALIDATOR = ParameterValidator.getInstance();
     private final RequestParametersEncoder ENCODER;
     private final EntityMapper MAPPER;
 
@@ -32,7 +32,7 @@ public class AddUserCommand implements Command {
         String path = ENCODER.encodeQueryParameters(
                 "redirect:/time-tracking/cabinet/user-data",
                 Map.of("command", "prepare_user_form"));
-        Map<String, Boolean> errors = validator.validateAddUser(req);
+        Map<String, Boolean> errors = VALIDATOR.validateAddUser(req);
         if (!errors.isEmpty()) {
             req.getSession().setAttribute("errors", errors);
             return path;

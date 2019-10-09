@@ -40,7 +40,6 @@ public class FrontController extends HttpServlet {
             rd.forward(req, resp);
             return;
         }
-        LOGGER.debug("Controller path: " + req.getRequestURI());
         Command command = CommandFactory.COMMAND_FACTORY.getCommand(
                 req.getParameter("command"));
         String viewName = command.execute(req);
@@ -48,11 +47,9 @@ public class FrontController extends HttpServlet {
             req.setAttribute("javax.servlet.error.status_code", getErrorCode(viewName));
             req.getRequestDispatcher(resolveView("/error")).forward(req, resp);
         } else if (viewName.startsWith("redirect:")) {
-            LOGGER.debug("View name: " + viewName);
             resp.sendRedirect(viewName.replace("redirect:", ""));
         } else {
             String viewPath = resolveView(viewName);
-            LOGGER.debug("View path: " + viewPath);
             req.getRequestDispatcher(viewPath).forward(req, resp);
         }
     }

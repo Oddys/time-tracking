@@ -19,12 +19,6 @@ public enum Commands {
         }
     },
 
-    FIND_USER {
-        {
-            command = FindUserCommand.getInstance();
-        }
-    },
-
     SHOW_USER_ACTIVITIES {
         {
             command = ShowUserActivitiesCommand.getInstance();

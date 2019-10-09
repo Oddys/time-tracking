@@ -12,10 +12,10 @@ public class RequestActivityCommand implements Command {
     private static final Command INSTANCE = new RequestActivityCommand();
     private UserActivityService service = TransactionProxy.getInstance().getProxy(
             UserActivityServiceImpl.getInstance());
-    private final RequestParametersEncoder encoder;
+    private final RequestParametersEncoder ENCODER;
 
     private RequestActivityCommand() {
-        encoder = RequestParametersEncoder.getInstance();
+        ENCODER = RequestParametersEncoder.getInstance();
     }
 
     public static Command getInstance() {
@@ -35,7 +35,7 @@ public class RequestActivityCommand implements Command {
                 "command", "show_activities",
                 "currentPage", "1",
                 "rowsPerPage", req.getParameter("rowsPerPage"));
-        return encoder.encodeQueryParameters(
+        return ENCODER.encodeQueryParameters(
                 "redirect:/time-tracking/cabinet/activities", parameters);
     }
 }

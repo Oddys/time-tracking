@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ChangeLangCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ChangeLangCommand INSTANCE = new ChangeLangCommand();
+    private static final Command INSTANCE = new ChangeLangCommand();
     private final String PREFIX = "/WEB-INF/pages";
     private final String SUFFIX = ".jsp";
 
     private ChangeLangCommand() {}
 
-    public static ChangeLangCommand getInstance() {
+    public static Command getInstance() {
         return INSTANCE;
     }
 
