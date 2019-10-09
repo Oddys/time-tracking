@@ -11,6 +11,14 @@ public class UserActivitiesDto {
 
     public UserActivitiesDto() {}
 
+    public UserActivitiesDto(Long userId, String firstName, String lastName,
+            List<UserActivityDto> userActivities) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userActivities = userActivities;
+    }
+
     public Long getUserId() {
         return userId;
     }

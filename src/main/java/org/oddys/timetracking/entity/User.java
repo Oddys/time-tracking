@@ -2,7 +2,6 @@ package org.oddys.timetracking.entity;
 
 public class User extends Entity {
     private String login;
-//    private char[] password;
     private String password;
     private String firstName;
     private String lastName;
@@ -32,19 +31,6 @@ public class User extends Entity {
     public void setLogin(String login) {
         this.login = login;
     }
-
-//    public char[] getPassword() {
-//        return Arrays.copyOf(password, password.length);
-//    }
-//
-//    public void setPassword(char[] password) {
-//        this.password = Arrays.copyOf(password, password.length);
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password.toCharArray();
-//    }
-
 
     public String getPassword() {
         return password;

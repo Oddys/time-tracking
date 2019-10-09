@@ -7,13 +7,24 @@ public class UserActivityDto {
     private Boolean assigned;
     private Long activityId;
     private String activityName;
-    private Boolean activityApproved;
     private Boolean statusChangeRequested;
     private Long userId;
     private String userFirstName;
     private String userLastName;
 
     public UserActivityDto() {}
+
+    public UserActivityDto(Long id, Boolean assigned, Long activityId, String activityName,
+            Boolean statusChangeRequested, Long userId, String userFirstName, String userLastName) {
+        this.id = id;
+        this.assigned = assigned;
+        this.activityId = activityId;
+        this.activityName = activityName;
+        this.statusChangeRequested = statusChangeRequested;
+        this.userId = userId;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+    }
 
     public Long getId() {
         return id;
@@ -45,14 +56,6 @@ public class UserActivityDto {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
-    }
-
-    public Boolean getActivityApproved() {
-        return activityApproved;
-    }
-
-    public void setActivityApproved(Boolean activityApproved) {
-        this.activityApproved = activityApproved;
     }
 
     public Long getUserId() {
@@ -96,7 +99,6 @@ public class UserActivityDto {
                 Objects.equals(assigned, that.assigned) &&
                 Objects.equals(activityId, that.activityId) &&
                 Objects.equals(activityName, that.activityName) &&
-                Objects.equals(activityApproved, that.activityApproved) &&
                 Objects.equals(statusChangeRequested,
                         that.statusChangeRequested) &&
                 Objects.equals(userId, that.userId) &&
@@ -110,7 +112,6 @@ public class UserActivityDto {
                 assigned,
                 activityId,
                 activityName,
-                activityApproved,
                 statusChangeRequested,
                 userId,
                 userFirstName,

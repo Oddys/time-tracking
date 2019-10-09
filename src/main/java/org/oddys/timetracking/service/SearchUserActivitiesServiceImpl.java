@@ -9,7 +9,6 @@ import org.oddys.timetracking.entity.User;
 import org.oddys.timetracking.util.ConfigManager;
 import org.oddys.timetracking.util.ModelMapperWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +39,7 @@ public class SearchUserActivitiesServiceImpl implements SearchUserActivitiesServ
         dto.setLastName(user.getLastName());
         List<UserActivityDto> activities = userActivityDao.findAllByUserId(userId).stream()
                 .map(ua -> ModelMapperWrapper.getMapper().map(ua, UserActivityDto.class))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toList());
         dto.setUserActivities(activities);
         return dto;
     }
