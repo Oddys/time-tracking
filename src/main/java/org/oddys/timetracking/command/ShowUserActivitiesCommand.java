@@ -1,8 +1,8 @@
 package org.oddys.timetracking.command;
 
 import org.oddys.timetracking.dto.UserActivitiesDto;
-import org.oddys.timetracking.service.SearchUserActivitiesService;
-import org.oddys.timetracking.service.SearchUserActivitiesServiceImpl;
+import org.oddys.timetracking.service.UserActivityService;
+import org.oddys.timetracking.service.UserActivityServiceImpl;
 import org.oddys.timetracking.transaction.TransactionProxy;
 import org.oddys.timetracking.util.ParameterValidator;
 
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ShowUserActivitiesCommand implements Command {
     private static final Command INSTANCE = new ShowUserActivitiesCommand();
-    private SearchUserActivitiesService searchService = TransactionProxy.getInstance()
-            .getProxy(SearchUserActivitiesServiceImpl.getInstance());
+    private UserActivityService searchService = TransactionProxy.getInstance()
+            .getProxy(UserActivityServiceImpl.getInstance());
 
     private ShowUserActivitiesCommand() {}
 

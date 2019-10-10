@@ -1,6 +1,7 @@
 package org.oddys.timetracking.service;
 
 import org.oddys.timetracking.dto.PageDto;
+import org.oddys.timetracking.dto.UserActivitiesDto;
 import org.oddys.timetracking.dto.UserActivityDto;
 
 public interface UserActivityService {
@@ -13,4 +14,6 @@ public interface UserActivityService {
     boolean requestActivityAssigned(Long userId, Long activityId);
 
     boolean changeStatus(Long userActivityId, boolean currentValue);
+
+    UserActivitiesDto searchUserActivitiesByUserId(Long userId);
 }
