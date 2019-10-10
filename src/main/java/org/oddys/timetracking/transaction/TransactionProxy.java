@@ -7,6 +7,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 
+/**
+ * A proxy class that provides a transaction functionality
+ * for methods that involve database operations.
+ */
 public class TransactionProxy {
     private static final Logger LOGGER = LogManager.getLogger();
     private static TransactionProxy INSTANCE = new TransactionProxy();
@@ -14,10 +18,22 @@ public class TransactionProxy {
 
     private TransactionProxy() {}
 
+    /**
+     * Returns an instance of TransactionProxy
+     *
+     * @return a TransactionProxy instance
+     */
     public static TransactionProxy getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Wraps a given object in a TransactionProxy.
+     *
+     * @param object an object that needs a transaction functionality
+     * @param <T> the type of the object to be wrapped in a TransactionProxy
+     * @return a proxy object
+     */
     public <T> T getProxy(T object) {
         Class<?> targetClass = object.getClass();
         ClassLoader classLoader = targetClass.getClassLoader();

@@ -6,6 +6,12 @@ import org.oddys.timetracking.connection.ConnectionWrapper;
 
 import java.sql.SQLException;
 
+/**
+ * A class for managing JDBC transactions.
+ *
+ * All methods can throw a TransactionException if a database error occurs
+ * during their execution
+ */
 public class TransactionManager {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TransactionManager INSTANCE = new TransactionManager();
@@ -13,10 +19,20 @@ public class TransactionManager {
 
     private TransactionManager() {}
 
+    /**
+     * Provides an instance of this class.
+     *
+     * @return a TransactionManager instance
+     */
     public static TransactionManager getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Sets the beginning of a transaction.
+     *
+     * @throws TransactionException
+     */
     public void beginTransaction() {
         connectionWrapper.setTransaction(true);
         try {
@@ -27,6 +43,11 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Commits a current transaction.
+     *
+     * @throws TransactionException
+     */
     public void commit() {
         try {
             connectionWrapper.getConnection().commit();
@@ -36,6 +57,11 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Rolls back a current transaction.
+     *
+     * @throws TransactionException
+     */
     public void rollback() {
         try {
             connectionWrapper.getConnection().rollback();
@@ -45,6 +71,11 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Performs a cleanup after finishing a transaction.
+     *
+     * @throws TransactionException
+     */
     public void endTransaction() {
         connectionWrapper.setTransaction(false);
         try {

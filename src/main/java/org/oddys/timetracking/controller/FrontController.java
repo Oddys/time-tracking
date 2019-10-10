@@ -15,18 +15,29 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * HttpServlet implementation
+ *
+ * @see HttpServlet
+ */
 @WebServlet("/")
 public class FrontController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
     private final String PREFIX = "/WEB-INF/pages";
     private final String SUFFIX = ".jsp";
 
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         process(req, resp);
     }
 
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

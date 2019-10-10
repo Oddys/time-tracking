@@ -11,6 +11,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * A connection pool implementation.
+ */
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ConnectionPool INSTANCE = new ConnectionPool();
@@ -29,10 +32,22 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Returns an instance of a ConnectionPool.
+     *
+     * @return an instance of a ConnectionPool
+     */
     public static ConnectionPool getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Attempts to provide a connection from this ConnectionPool object.
+     *
+     * @return a connection to the data source
+     *
+     * @throws ConnectionPoolException if attempt to obtain a connection failed
+     */
     public Connection getConnection() {
         try {
             return DATA_SOURCE.getConnection();

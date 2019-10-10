@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Filter implementation that restricts access to certain pages
+ *
+ * @see javax.servlet.Filter
+ */
 @WebFilter("/cabinet/*")
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -27,6 +32,11 @@ public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {}
 
+    /**
+     * Restricts access to certain pages.
+     *
+     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
