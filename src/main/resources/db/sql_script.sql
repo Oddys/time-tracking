@@ -29,8 +29,6 @@ create table users (
 create table activities (
     activity_id serial,
     activity_name varchar(180) unique not null,
---     approved boolean not null,
-
     primary key (activity_id)
 );
 
