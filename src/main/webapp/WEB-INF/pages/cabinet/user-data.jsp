@@ -10,7 +10,7 @@
         <div class="text-info"><fmt:message key="${messageKey}"/></div>
         <c:remove scope="session" var="messageKey"/>
     </c:if>
-    <div class="container">
+    <div style="width: 50%">
         <form action="${pageContext.request.contextPath}/cabinet/add-user" class="needs-validation" novalidate method="post">
             <input type="hidden" name="command" value="add_user"/>
             <div class="form-row">
@@ -67,7 +67,7 @@
         </form>
         <c:remove var="errors" scope="session"/>
     </div>
-    <form action="${pageContext.request.contextPath}">
+    <form action="${pageContext.request.contextPath}/cabinet">
         <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.main"/>"/>
     </form>
 

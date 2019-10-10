@@ -2,24 +2,30 @@
 <head>
 </head>
 <body>
-    <h3><fmt:message key="title.user.add"/> </h3>
-    <form action="${pageContext.request.contextPath}/cabinet/user-data">
-        <input type="hidden" name="command" value="prepare_user_form"/>
-        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
-    </form>
-    <h3><fmt:message key="title.activities"/></h3>
-    <form action="${pageContext.request.contextPath}/cabinet/activities">
-        <input type="hidden" name="command" value="show_activities"/>
-        <input type="hidden" name="currentPage" value="1"/>
-        <input type="hidden" name="rowsPerPage" value="5"/>
-        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
-    </form>
-    <h3><fmt:message key="title.user.activity.requests"/></h3>
-    <form action="${pageContext.request.contextPath}/cabinet/show-activity-requests">
-        <input type="hidden" name="command" value="show_activity_requests"/>
-        <input type="hidden" name="currentPage" value="1"/>
-        <input type="hidden" name="rowsPerPage" value="5"/>
-        <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
-    </form>
+    <div class="my-1">
+        <h3><fmt:message key="title.user.add"/> </h3>
+        <form action="${pageContext.request.contextPath}/cabinet/user-data">
+            <input type="hidden" name="command" value="prepare_user_form"/>
+            <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.add"/>"/>
+        </form>
+    </div>
+    <div class="my-1">
+        <h3><fmt:message key="title.activities"/></h3>
+        <form action="${pageContext.request.contextPath}/cabinet/activities">
+            <input type="hidden" name="command" value="show_activities"/>
+            <input type="hidden" name="currentPage" value="1"/>
+            <input type="hidden" name="rowsPerPage" value="5"/>
+            <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
+        </form>
+    </div>
+    <div class="my-1">
+        <h3><fmt:message key="title.user.activity.requests"/></h3>
+        <form action="${pageContext.request.contextPath}/cabinet/show-activity-requests">
+            <input type="hidden" name="command" value="show_activity_requests"/>
+            <input type="hidden" name="currentPage" value="1"/>
+            <input type="hidden" name="rowsPerPage" value="5"/>
+            <input class="btn btn-secondary" type="submit" value="<fmt:message key="button.show"/>"/>
+        </form>
+    </div>
 </body>
 </html>

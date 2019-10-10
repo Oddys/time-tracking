@@ -9,29 +9,21 @@
         </div>
         <c:remove var="messageKey" scope="session"/>
     </c:if>
-   <form class="" action="signin" method="post">
+   <form action="signin" method="post">
         <input type="hidden" name="command" value="signin"/>
         <div class="form-group">
-            <label for="login" class="control-label col-sm-2"><fmt:message key="auth.login"/></label>
-            <div class="col-sm-10">
-                <input type="text" name="login" id="login" class="form-control" value="" required
-                       oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nologin"/>')"
-                       oninput="setCustomValidity('')"/>
-            </div>
+            <label for="login" style="width: 100px"><fmt:message key="auth.login"/></label>
+            <input type="text" name="login" id="login" value="" required
+                   oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nologin"/>')"
+                   oninput="setCustomValidity('')"/>
         </div>
         <div class="form-group">
-            <label for="password" class="control-label col-sm-2"><fmt:message key="auth.password"/></label>
-            <div class="col-sm-10">
-                <input type="password" name="password" id="password" class="form-control" value="" required
-                       oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nopassword"/>')"
-                       oninput="setCustomValidity('')"/>
-            </div>
+            <label for="password" style="width: 100px"><fmt:message key="auth.password"/></label>
+            <input type="password" name="password" id="password" value="" required
+                   oninvalid="this.setCustomValidity('<fmt:message key="auth.error.nopassword"/>')"
+                   oninput="setCustomValidity('')"/>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-primary" value="<fmt:message key="button.signin"/>"/>
-            </div>
-        </div>
+        <input type="submit" class="btn btn-primary" value="<fmt:message key="button.signin"/>"/>
     </form>
 </body>
 </html>

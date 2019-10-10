@@ -7,9 +7,13 @@
 <html lang="${not empty lang ? lang : 'en'}">
     <head>
         <title><fmt:message key="title.main"/>&nbsp;${requestScope['javax.servlet.error.status_code']}</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap-4.3.1-dist/css/bootstrap.min.css"/>
+        <script src="${pageContext.request.contextPath}/static/scripts/script.js"></script>
     </head>
-    <body>
-    <h2><fmt:message key="error.error"/>&nbsp;<c:out value="${requestScope['javax.servlet.error.status_code']}"/></h2>
+    <body class="mx-5 my-2 px-4 py-2">
+    <header class="mb-3 pb-1">
+        <h2><fmt:message key="error.error"/>&nbsp;<c:out value="${requestScope['javax.servlet.error.status_code']}"/></h2>
+    </header>
     <c:choose>
         <c:when test="${requestScope['javax.servlet.error.status_code'] == 400}">
             <fmt:message key="error.400"/>
